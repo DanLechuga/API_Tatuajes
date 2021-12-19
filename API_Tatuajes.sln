@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_Tatuajes", "API_Tatuajes\API_Tatuajes.csproj", "{FC8BC81A-9A7E-4EC1-8E4D-33C6E221F884}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_DominioTatuajes", "API_DominioTatuajes\API_DominioTatuajes.csproj", "{5985E9C5-CD72-4D2B-A3A5-2C544B00FE36}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_Aplicacion", "API_Aplicacion\API_Aplicacion.csproj", "{4C8BD7FA-73C8-42A8-BA2D-4B6A073305D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_Infraestructura", "API_Infraestructura\API_Infraestructura.csproj", "{2F9E5ABD-24C9-4213-8BF3-8101445F429C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_Comun", "API_Comun\API_Comun.csproj", "{4426DB3D-1CFA-4EA5-A476-9D9E8C282C43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebasTatuajes", "PruebasTatuajes\PruebasTatuajes.csproj", "{97DEE954-5503-4262-A51A-339E264C3CCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC8BC81A-9A7E-4EC1-8E4D-33C6E221F884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC8BC81A-9A7E-4EC1-8E4D-33C6E221F884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC8BC81A-9A7E-4EC1-8E4D-33C6E221F884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC8BC81A-9A7E-4EC1-8E4D-33C6E221F884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5985E9C5-CD72-4D2B-A3A5-2C544B00FE36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5985E9C5-CD72-4D2B-A3A5-2C544B00FE36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5985E9C5-CD72-4D2B-A3A5-2C544B00FE36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5985E9C5-CD72-4D2B-A3A5-2C544B00FE36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C8BD7FA-73C8-42A8-BA2D-4B6A073305D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C8BD7FA-73C8-42A8-BA2D-4B6A073305D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C8BD7FA-73C8-42A8-BA2D-4B6A073305D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C8BD7FA-73C8-42A8-BA2D-4B6A073305D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F9E5ABD-24C9-4213-8BF3-8101445F429C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F9E5ABD-24C9-4213-8BF3-8101445F429C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9E5ABD-24C9-4213-8BF3-8101445F429C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F9E5ABD-24C9-4213-8BF3-8101445F429C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4426DB3D-1CFA-4EA5-A476-9D9E8C282C43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4426DB3D-1CFA-4EA5-A476-9D9E8C282C43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4426DB3D-1CFA-4EA5-A476-9D9E8C282C43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4426DB3D-1CFA-4EA5-A476-9D9E8C282C43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97DEE954-5503-4262-A51A-339E264C3CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97DEE954-5503-4262-A51A-339E264C3CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97DEE954-5503-4262-A51A-339E264C3CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97DEE954-5503-4262-A51A-339E264C3CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2EAE27B3-4960-4995-8EE7-E8CC7368CCD1}
+	EndGlobalSection
+EndGlobal
