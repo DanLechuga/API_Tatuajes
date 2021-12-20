@@ -31,7 +31,9 @@ namespace API_DominioTatuajes.ObjetosDeValor
                 if (!contrasenia.Contains(ArregloDeLetrasMayusculas[i].ToLower())) contadorDeLetrasMinusculas++;
             }
             if (contadorDeLetrasMayusculas == ArregloDeLetrasMayusculas.Length) throw new Exception("La contrasenia no contiene letras mayusculas");
-            if (contadorDeLetrasMinusculas == 26) throw new Exception("La contrasenia no contiene letas minusculas");    
+            if (contadorDeLetrasMinusculas == 26) throw new Exception("La contrasenia no contiene letas minusculas");
+            this.ContraseniaValida = contrasenia;
+            this.EsContraseniaValida = true;
         }
         public static Password Crear(string contrasenia)
         {

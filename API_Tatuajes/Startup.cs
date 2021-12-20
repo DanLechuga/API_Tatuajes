@@ -1,4 +1,6 @@
 using API_Comun;
+using API_Infraestructura.Interfaces;
+using API_Infraestructura.Repositorios;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +32,7 @@ namespace API_Tatuajes
 
             services.AddControllers();
             services.AddTransient<IUnidadDeTrabajo>(unidad => new UnidadDetrabajo(Configuration.GetConnectionString("Base1")));
+            services.AddTransient<IRepositorioCliente, RepositorioCliente>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_Tatuajes", Version = "v1" });

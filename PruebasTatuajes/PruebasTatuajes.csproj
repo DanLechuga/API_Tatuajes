@@ -21,12 +21,12 @@
 
   <ItemGroup>
     <Folder Include="PruebasUI\" />
-    <Folder Include="PruebasInfraestructura\" />
     <Folder Include="PruebasAplicacion\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\API_DominioTatuajes\API_DominioTatuajes.csproj" />
+    <ProjectReference Include="..\API_Infraestructura\API_Infraestructura.csproj" />
   </ItemGroup>
 
 </Project>

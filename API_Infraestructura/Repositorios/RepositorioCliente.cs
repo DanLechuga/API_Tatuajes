@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace API_Infraestructura.Repositorios
 {
+     class DTOCliente
+    {
+        public Guid Cliente_id { get; set; }
+        public string Cliente_nombre { get; set; }
+        public string Cliente_correo { get; set; }
+        public string Cliente_numeroTel { get; set; }
+        public string Cliente_password { get; set; }
+    }
     public class RepositorioCliente : IRepositorioCliente
     {
         public IUnidadDeTrabajo UnidadDeTrabajo { get; }
