@@ -59,7 +59,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
         public void Update(Usuario agregado)
         {
             Usuario usuarioAEliminar = ListaUsuarios.FirstOrDefault(x => x.Id == agregado.Id);
-            ListaUsuarios.Remove(usuarioAEliminar);
+            if(usuarioAEliminar != null) ListaUsuarios.Remove(usuarioAEliminar);
             ListaUsuarios.Add(agregado);
         }
     }
