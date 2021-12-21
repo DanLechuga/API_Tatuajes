@@ -18,7 +18,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
             ListaUsuarios = new();
             ListaUsuarios.Add(Usuario.CrearUsuarioCliente(Guid.Parse("00000000-0000-0000-0000-000000000001")
                                 ,CorreoElectronico.Crear("tester@mail.com")
-                                ,Password.Crear("Contaseña123")));
+                                ,Password.Crear("Contraseña123")));
             ListaUsuarios.Add(Usuario.CrearUsuarioCliente(Guid.Parse("00000000-0000-0000-0000-000000000002")
                                 , CorreoElectronico.Crear("tester1@mail.com")
                                 , Password.Crear("Contaseña123")));
@@ -31,13 +31,19 @@ namespace PruebasTatuajes.PruebasInfraestructura
         }
         public void Agregar(Usuario agregado)
         {
+            if (agregado == null) throw new ArgumentNullException("No se pueden agregar objetos nulos");
             ListaUsuarios.Add(agregado);
         }
 
         public void EliminarPorId(Guid id)
         {
             Usuario usuarioAEliminar = ListaUsuarios.FirstOrDefault(x => x.Id == id);
-            ListaUsuarios.Remove(usuarioAEliminar);
+            if (usuarioAEliminar != null)
+            {
+                ListaUsuarios.Remove(usuarioAEliminar);
+                return;
+            }
+            throw new ArgumentNullException("No se pueden eliminar valores nulos");
         }
 
         public Usuario GetUsuarioPorCorreo(string correo)
@@ -58,6 +64,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
 
         public void Update(Usuario agregado)
         {
+            if (agregado == null) throw new ArgumentNullException("No se puede utilizar valores nulos");
             Usuario usuarioAEliminar = ListaUsuarios.FirstOrDefault(x => x.Id == agregado.Id);
             if(usuarioAEliminar != null) ListaUsuarios.Remove(usuarioAEliminar);
             ListaUsuarios.Add(agregado);

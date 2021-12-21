@@ -1,3 +1,5 @@
+using API_Aplicacion.Implementacion;
+using API_Aplicacion.Interfaces;
 using API_Comun;
 using API_Infraestructura.Interfaces;
 using API_Infraestructura.Repositorios;
@@ -32,7 +34,9 @@ namespace API_Tatuajes
 
             services.AddControllers();
             services.AddTransient<IUnidadDeTrabajo>(unidad => new UnidadDetrabajo(Configuration.GetConnectionString("Base1")));
-            services.AddTransient<IRepositorioCliente, RepositorioCliente>();
+            services.AddTransient<IRepositorioUsuario, RepositorioUsuario>();
+            services.AddTransient<IServicioValidacionUsuarios, ServicioValidacionUsuarios>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_Tatuajes", Version = "v1" });

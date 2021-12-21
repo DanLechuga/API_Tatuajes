@@ -29,7 +29,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
         public void RepositorioUsuario_GetUsuarioPorCorreo_ConsultaUnUsuarioExistente()
         {            
             RepositorioUsuario repositorioUsuario = new(UnidadDeTrabajo);
-            Usuario usuarioprueba = repositorioUsuario.GetUsuarioPorCorreo("jvm1365@yopmail.com");
+             Usuario usuarioprueba = repositorioUsuario.GetUsuarioPorCorreo("jvm1365@yopmail.com");
             Assert.NotNull(usuarioprueba);
         }
         [Fact]
