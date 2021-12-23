@@ -13,9 +13,11 @@ namespace API_Aplicacion.Implementacion
     public class ServicioValidacionUsuarios : IServicioValidacionUsuarios
     {
         public IRepositorioUsuario RepositorioUsuario { get; }
-        public ServicioValidacionUsuarios(IRepositorioUsuario repositorioUsuario)
+        public IRepositorioCliente RepositorioCliente { get; }
+        public ServicioValidacionUsuarios(IRepositorioUsuario repositorioUsuario, IRepositorioCliente repositorioCliente)
         {
             this.RepositorioUsuario = repositorioUsuario;
+            this.RepositorioCliente = repositorioCliente;
         }
         public DTOUsuario ValidacionUsuario(DTOUsuario usuario)
         {
@@ -28,6 +30,22 @@ namespace API_Aplicacion.Implementacion
             DTOUsuario UsuarioConsultado = new(usuarioDeBase.UsuarioCorreo.Cadenavalida, usuarioDeBase.UsuarioPassword.ContraseniaValida) { EsCliente = usuarioDeBase.UsuarioEsCliente, Estatuador = usuarioDeBase.UsuarioEsTatuador, EsUsuarioValido = true};
             
             return UsuarioConsultado;
+        }
+
+        public DTOCliente ConsultaInformacionCliente(DTOUsuario usuario)
+        {
+            if (usuario == null) throw new ArgumentNullException("No se puede usar valores nulos");
+            if (string.IsNullOrEmpty(usuario.Username)) throw new ArgumentNullException("No se pueden usar valores vacios");
+            Cliente clienteConsultado = this.RepositorioCliente.GetClintePorCorreo(usuario.Username);
+            if (clienteConsultado == null) throw new ArgumentNullException("No se encontro usuario para el correo ingresado");
+            DTOCliente dTOCliente = new() {
+                IdCliente = clienteConsultado.Id,
+                CorreoCliente = clienteConsultado.Cliente_correo.Cadenavalida,
+                PasswordCliente = clienteConsultado.Password.ContraseniaValida,
+                NombreCliente = clienteConsultado.Cliente_nombre,
+                NumeroTelefonico = clienteConsultado.Cliente_numeroTel
+            };
+            return dTOCliente;
         }
     }
 }

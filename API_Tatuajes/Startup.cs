@@ -35,6 +35,7 @@ namespace API_Tatuajes
             services.AddControllers();
             services.AddTransient<IUnidadDeTrabajo>(unidad => new UnidadDetrabajo(Configuration.GetConnectionString("Base1")));
             services.AddTransient<IRepositorioUsuario, RepositorioUsuario>();
+            services.AddTransient<IRepositorioCliente, RepositorioCliente>();
             services.AddTransient<IServicioValidacionUsuarios, ServicioValidacionUsuarios>();
             
             services.AddSwaggerGen(c =>

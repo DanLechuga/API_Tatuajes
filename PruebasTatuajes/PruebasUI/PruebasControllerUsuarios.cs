@@ -18,47 +18,65 @@ namespace PruebasTatuajes.PruebasUI
     {
         public IRepositorioUsuario RepositorioUsuario { get;  }
         public IServicioValidacionUsuarios ServicioValidacionUsuarios { get;  }
+        public IRepositorioCliente RepositorioCliente { get; set; }
+        public UsuarioController UsuarioController { get; set; }
         public PruebasControllerUsuarios()
         {
+            RepositorioCliente = new MockRepositorioCliente();
             RepositorioUsuario = new MockRepositorioUsuario();
-            ServicioValidacionUsuarios = new ServicioValidacionUsuarios(RepositorioUsuario);
+            ServicioValidacionUsuarios = new ServicioValidacionUsuarios(RepositorioUsuario,RepositorioCliente);
+            UsuarioController = new(ServicioValidacionUsuarios);
         }
         [Fact]
         public void UsuarioController_ValidarUsuario_ValidarUsuarioConModeloNulo()
         {
-            
-            UsuarioController usuarioController = new(ServicioValidacionUsuarios);
+                        
             ModeloUsuario modeloUsuario = null;
-            Assert.Throws<ArgumentNullException>(() => { usuarioController.ValidarUsuario(modeloUsuario); });   
+            Assert.Throws<ArgumentNullException>(() => { UsuarioController.ValidarUsuario(modeloUsuario); });   
         }
         [Fact]
         public void UsuarioController_ValidarUsuario_ValidarUsuarioConModeloVacio()
-        {
-
-            UsuarioController usuarioController = new(ServicioValidacionUsuarios);
+        {            
             ModeloUsuario modeloUsuario = new();
-            Assert.Throws<ArgumentNullException>(() => { usuarioController.ValidarUsuario(modeloUsuario); });
+            Assert.Throws<ArgumentNullException>(() => { UsuarioController.ValidarUsuario(modeloUsuario); });
         }
         [Fact]
         public void UsuarioController_ValidarUsuario_ValidarUsuarioConModeloConSoloCorreo()
         {
-
-            UsuarioController usuarioController = new(ServicioValidacionUsuarios);
+            
             ModeloUsuario modeloUsuario = new();
             modeloUsuario.Username = "tester";
-            Assert.Throws<ArgumentNullException>(() => { usuarioController.ValidarUsuario(modeloUsuario); });
+            Assert.Throws<ArgumentNullException>(() => { UsuarioController.ValidarUsuario(modeloUsuario); });
         }
         [Fact]
         public void UsuarioController_ValidarUsuario_ValidarUsuarioConModeloCompleto()
         {
-
-            UsuarioController usuarioController = new(ServicioValidacionUsuarios);
             ModeloUsuario modeloUsuario = new();
             modeloUsuario.Username = "tester@mail.com";
             modeloUsuario.Password = "Contraseña123";
-            JsonResult result =  usuarioController.ValidarUsuario(modeloUsuario);
+            JsonResult result =  UsuarioController.ValidarUsuario(modeloUsuario);
             Assert.NotNull(result);
             Assert.Equal(200,result.StatusCode); 
+        }
+        [Fact]
+        public void UsuarioController_ConsultaInfoCliente_ConsultarCorreoVacio()
+        {            
+            Assert.Throws<ArgumentNullException>(() => { JsonResult result = UsuarioController.ConsultaInfoCliente(""); }); 
+        }
+        [Fact]
+        public void UsuarioController_ConsultaInfoCliente_ConsultarCorreoInexistente()
+        {
+            JsonResult result = UsuarioController.ConsultaInfoCliente("danlechuga@live.com");
+            Assert.NotNull(result);
+            Assert.Equal(500, result.StatusCode);
+        }
+        [Fact]
+        public void UsuarioController_ConsultaInfoCliente_ConsultarCorreoExistente()
+        {
+            JsonResult result = UsuarioController.ConsultaInfoCliente("tester@mail.com");
+            Assert.NotNull(result);
+            Assert.Equal(200, result.StatusCode);
+
         }
     }
 }

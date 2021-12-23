@@ -9,7 +9,7 @@ namespace API_Aplicacion.Interfaces
 {
    public interface IServicioValidacionUsuarios
     {
-        DTOUsuario ValidacionUsuario(DTOUsuario usuario); 
-         
+        DTOUsuario ValidacionUsuario(DTOUsuario usuario);
+        DTOCliente ConsultaInformacionCliente(DTOUsuario usuario);
     }
 }

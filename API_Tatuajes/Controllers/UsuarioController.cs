@@ -43,5 +43,28 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
+        [HttpGet]
+        [Route("/ConsultaInfoCliente")]
+        public JsonResult ConsultaInfoCliente(string correoUsuario)
+        {
+            if (string.IsNullOrEmpty(correoUsuario)) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
+            JsonResult result = new(true);
+            result.StatusCode = 403;
+            try
+            {
+                DTOUsuario dTOUsuario = new(correoUsuario, "");
+                DTOCliente clienteConsultado = ServicioValidacionUsuarios.ConsultaInformacionCliente(dTOUsuario);
+                result.Value = clienteConsultado;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.Value = ex.Message;
+                result.StatusCode = 500;
+    
+            }
+            return result;
+
+        }
     }
 }

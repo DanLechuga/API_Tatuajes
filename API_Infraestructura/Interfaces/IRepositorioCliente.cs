@@ -11,6 +11,7 @@ namespace API_Infraestructura.Interfaces
     {
         IEnumerable<Cliente> GetClientes();
         Cliente GetClientePorId(Guid id);
+        Cliente GetClintePorCorreo(string correoElectronico);
 
     }
 }
