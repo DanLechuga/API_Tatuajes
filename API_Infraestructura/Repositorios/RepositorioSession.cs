@@ -19,14 +19,22 @@ namespace API_Infraestructura.Repositorios
         }
         public void Agregar(Session agregado)
         {
-            DynamicParameters parameters = new();
-            parameters.Add("@idSession", agregado.Id,System.Data.DbType.Guid);
-            parameters.Add("@idSessionUsuario", agregado.SessionIdUsuario,System.Data.DbType.Guid);
-            parameters.Add("@idSessionCliente", agregado.SessionIdCliente,System.Data.DbType.Guid);
-            parameters.Add("@idSessionTatuador",agregado.SessionIdTatuador,System.Data.DbType.Guid);
-            parameters.Add("@SessionActiva",agregado.SessionActiva,System.Data.DbType.Boolean);
-            CommandDefinition command = new("CrearSession",parameters,commandType:System.Data.CommandType.StoredProcedure,commandTimeout: 0);
-            UnidadDeTrabajo.SqlConnection.Execute(command);
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idSession", agregado.Id, System.Data.DbType.Guid);
+                parameters.Add("@idSessionUsuario", agregado.SessionIdUsuario, System.Data.DbType.Guid);
+                parameters.Add("@idSessionCliente", agregado.SessionIdCliente, System.Data.DbType.Guid);
+                parameters.Add("@idSessionTatuador", agregado.SessionIdTatuador, System.Data.DbType.Guid);
+                parameters.Add("@SessionActiva", agregado.SessionActiva, System.Data.DbType.Boolean);
+                CommandDefinition command = new("CrearSession", parameters, commandType: System.Data.CommandType.StoredProcedure, commandTimeout: 0);
+                UnidadDeTrabajo.SqlConnection.Execute(command);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }            
         }
 
         public void EliminarPorId(Guid id)
