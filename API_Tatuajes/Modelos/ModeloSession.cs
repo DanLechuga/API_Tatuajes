@@ -7,10 +7,10 @@ namespace API_Tatuajes.Modelos
 {
     public class ModeloSession
     {
-        public Guid IdSession { get; set; }
-        public Guid IdSessionUsuario { get; set; }
-        public Guid IdSessionCliente { get; set; }
-        public Guid IdSessionTatuador { get; set; }
-        public bool SessionActiva { get; set; }
+        public Guid idSession { get; set; }
+        public Guid idSessionUsuario { get; set; }
+        public Guid idSessionCliente { get; set; }
+        public Guid idSessionTatuador { get; set; }
+        public bool sessionActiva { get; set; }
     }
 }

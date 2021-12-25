@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace API_Tatuajes.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]    
     public class SessionController : ControllerBase
     {
         public IServicioSession ServicioSession { get; }
@@ -20,18 +20,18 @@ namespace API_Tatuajes.Controllers
             this.ServicioSession = servicioSession;
         }
 
-        [Route("/CrearSession")]
         [HttpPost]
+        [Route("/VerificaSession")]        
         public JsonResult CrearSession(ModeloSession modeloSession)
         {
             if (modeloSession == null) throw new ArgumentNullException("No se puede usar valores nulos");
-            if (modeloSession.IdSession == Guid.Empty) throw new ArgumentNullException("No se puede usar valores en 0");
-            if (modeloSession.IdSessionUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar valores en 0");
+            if (modeloSession.idSession == Guid.Empty) throw new ArgumentNullException("No se puede usar valores en 0");
+            if (modeloSession.idSessionUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar valores en 0");
             JsonResult result = new(true);
             result.StatusCode = 403;
             try
             {
-                DTOSession DtoSession = new() { IdSession = modeloSession.IdSession,IdSessionUsuario = modeloSession.IdSessionUsuario, IdSessionCliente = modeloSession.IdSessionCliente, IdSessionTatuador = modeloSession.IdSessionTatuador, SessionActiva = modeloSession.SessionActiva};
+                DTOSession DtoSession = new() { IdSession = modeloSession.idSession,IdSessionUsuario = modeloSession.idSessionUsuario, IdSessionCliente = modeloSession.idSessionCliente, IdSessionTatuador = modeloSession.idSessionTatuador, SessionActiva = modeloSession.sessionActiva};
                 ServicioSession.CrearSession(DtoSession);
                 result.StatusCode = 200;
                 result.Value = true;
@@ -42,6 +42,27 @@ namespace API_Tatuajes.Controllers
                 result.StatusCode = 500;
                 result.Value = ex.Message;
                 
+            }
+            return result;
+        }
+        [HttpGet]
+        [Route("/ConsultaSession")]
+        public JsonResult ConsultaSession(Guid idCliente)
+        {
+            if (idCliente == Guid.Empty) throw new ArgumentNullException("No se puede utilizar id en 0");
+            JsonResult result = new(true);
+            result.StatusCode = 403;
+            try
+            {
+
+                result.StatusCode = 200;
+                result.Value = null;
+            }
+            catch (Exception ex)
+            {
+
+                result.StatusCode = 500;
+                result.Value = ex.Message;
             }
             return result;
         }

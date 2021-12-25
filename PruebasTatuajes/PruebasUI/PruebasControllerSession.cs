@@ -3,6 +3,7 @@ using API_Aplicacion.Interfaces;
 using API_Infraestructura.Interfaces;
 using API_Tatuajes.Controllers;
 using API_Tatuajes.Modelos;
+using Microsoft.AspNetCore.Mvc;
 using PruebasTatuajes.PruebasInfraestructura;
 using System;
 using System.Collections.Generic;
@@ -34,21 +35,28 @@ namespace PruebasTatuajes.PruebasUI
         [Fact]
         public void SessionController_CrearSession_CrearSessionConIdSessionVacio()
         {
-            ModeloSession modelo = new() { IdSession = Guid.Empty};
+            ModeloSession modelo = new() { idSession = Guid.Empty};
             Assert.Throws<ArgumentNullException>(() => { SessionController.CrearSession(modelo); });
         }
         [Fact]
         public void SessionController_CrearSession_CrearSessionConIdUsuarioVacio()
         {
-            ModeloSession modelo = new() { IdSession = Guid.NewGuid(), IdSessionUsuario = Guid.Empty };
+            ModeloSession modelo = new() { idSession = Guid.NewGuid(), idSessionUsuario = Guid.Empty };
             Assert.Throws<ArgumentNullException>(() => { SessionController.CrearSession(modelo); });
         }
         [Fact]
         public void SessionController_CrearSession_CrearSessionCorrecto()
         {
-            ModeloSession modelo = new() { IdSession = Guid.NewGuid(),IdSessionUsuario = Guid.NewGuid(),IdSessionTatuador = Guid.NewGuid(),IdSessionCliente = Guid.Empty,SessionActiva = true};
+            ModeloSession modelo = new() { idSession = Guid.NewGuid(),idSessionUsuario = Guid.NewGuid(),idSessionTatuador = Guid.NewGuid(),idSessionCliente = Guid.Empty,sessionActiva = true};
             SessionController.CrearSession(modelo);
             Assert.Equal(6,RepositorioSession.GetSessions().ToList().Count);
+
+        }
+        [Fact]
+        public void SessionController_ConsultaSession_ConsultarSessionConIdVacio()
+        {
+            Guid FakeIdVacio = Guid.Empty;
+            Assert.Throws<ArgumentNullException>(() => { SessionController.ConsultaSession(FakeIdVacio); });
 
         }
     }

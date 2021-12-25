@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace API_Tatuajes.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class UsuarioController : ControllerBase
     {
         public IServicioValidacionUsuarios ServicioValidacionUsuarios { get; }
