@@ -24,7 +24,7 @@ namespace API_Tatuajes.Controllers
         [Route("/VerificaSession")]        
         public JsonResult CrearSession(ModeloSession modeloSession)
         {
-            if (modeloSession == null) throw new ArgumentNullException("No se puede usar valores nulos");
+            if (modeloSession ==    null) throw new ArgumentNullException("No se puede usar valores nulos");
             if (modeloSession.idSession == Guid.Empty) throw new ArgumentNullException("No se puede usar valores en 0");
             if (modeloSession.idSessionUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar valores en 0");
             JsonResult result = new(true);
@@ -54,9 +54,9 @@ namespace API_Tatuajes.Controllers
             result.StatusCode = 403;
             try
             {
-
+                 DTOSession sessionConsultada = ServicioSession.ConsultaSessionCliente(new DTOCliente() { IdCliente = idCliente});                
                 result.StatusCode = 200;
-                result.Value = null;
+                result.Value = sessionConsultada;
             }
             catch (Exception ex)
             {
@@ -66,5 +66,6 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
+        
     }
 }

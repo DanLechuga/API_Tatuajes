@@ -34,7 +34,23 @@ namespace API_Infraestructura.Repositorios
 
         public Cliente GetClientePorId(Guid id)
         {
-            throw new NotImplementedException();
+            Cliente cliente = null;
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idCliente", id,System.Data.DbType.Guid);
+                CommandDefinition command = new("ConsultaInformacionClientePorId", parameters,commandType:System.Data.CommandType.StoredProcedure,commandTimeout: 0);
+                DTOCliente clienteConsultado = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOCliente>(command);
+                if (clienteConsultado == null) throw new ArgumentNullException("No se encontro cliente para el id ingresado");
+                cliente = Cliente.Crear(clienteConsultado.Cliente_id,clienteConsultado.Cliente_nombre,CorreoElectronico.Crear(clienteConsultado.Cliente_correo),Password.Crear(clienteConsultado.Cliente_password),clienteConsultado.Cliente_numeroTel);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return cliente;
         }
 
         public void Agregar(Cliente agregado)

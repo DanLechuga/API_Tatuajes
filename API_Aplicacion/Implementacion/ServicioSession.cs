@@ -26,5 +26,22 @@ namespace API_Aplicacion.Implementacion
             RepositorioSession.Agregar(sessionAgregar);
             
         }
+
+        public DTOSession ConsultaSessionCliente(DTOCliente cliente)
+        {
+            if (cliente == null) throw new ArgumentNullException("No se pueden usar elementos nulos");
+            if (cliente.IdCliente == Guid.Empty) throw new ArgumentNullException("No se puede usar valores con 0");
+            Session SessionConsultada = RepositorioSession.GetSessionPorUsuario(cliente.IdCliente);
+            if (SessionConsultada == null) throw new ArgumentNullException("No se encontro usuario para el id ingresado");
+            return new DTOSession()
+            {
+                IdSession = SessionConsultada.Id,
+                IdSessionUsuario = SessionConsultada.SessionIdUsuario,
+                IdSessionCliente = SessionConsultada.SessionIdCliente,
+                IdSessionTatuador = SessionConsultada.SessionIdTatuador,
+                SessionActiva = SessionConsultada.SessionActiva
+            };
+            
+        }
     }
 }

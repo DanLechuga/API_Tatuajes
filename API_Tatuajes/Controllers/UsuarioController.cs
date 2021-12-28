@@ -19,7 +19,11 @@ namespace API_Tatuajes.Controllers
         {
             this.ServicioValidacionUsuarios = servicioValidacionUsuarios;
         }
-
+        /// <summary>
+        /// Peticion Post para validar el usuario y password que se ingresan
+        /// </summary>
+        /// <param name="modeloUsuario"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("/ValidarUsuario")]
         public JsonResult ValidarUsuario(ModeloUsuario modeloUsuario)
@@ -43,6 +47,11 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
+        /// <summary>
+        /// Peticion Get para consultar la informacion del cliente por correo o email
+        /// </summary>
+        /// <param name="correoUsuario"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("/ConsultaInfoCliente")]
         public JsonResult ConsultaInfoCliente(string correoUsuario)
@@ -65,6 +74,31 @@ namespace API_Tatuajes.Controllers
             }
             return result;
 
+        }
+        /// <summary>
+        /// Peticion Get para consultar la informacion del cliente por IdUsuario
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/ConsultaCliente")]
+        public JsonResult ConsultaCliente(Guid idUsuario)
+        {
+            if (idUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar valor en 0");
+            JsonResult result = new(true);
+            try
+            {
+                DTOCliente cliente = new() { IdCliente = idUsuario};
+                DTOCliente clienteConsultado = ServicioValidacionUsuarios.ConsultaInformacionCliente(cliente);
+                result.Value = clienteConsultado;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.Value = ex.Message;
+                result.StatusCode = 500;
+            }
+            return result;
         }
     }
 }

@@ -10,5 +10,6 @@ namespace API_Aplicacion.Interfaces
    public interface IServicioSession
     {
         void CrearSession(DTOSession dTOSession);
+        DTOSession ConsultaSessionCliente(DTOCliente cliente);
     }
 }

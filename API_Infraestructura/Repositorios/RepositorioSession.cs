@@ -10,8 +10,18 @@ using Dapper;
 
 namespace API_Infraestructura.Repositorios
 {
+    class DTOSession {
+        public Guid SessionId { get; set; }
+        public Guid SessionIdUsuario { get; set; }
+        public Guid SessionIdCliente { get; set; }
+        public Guid SessionIdTatuador { get; set; }
+        public bool SessionActiva { get; set; }
+        
+
+    }
     public class RepositorioSession : IRepositorioSession
     {
+
         public IUnidadDeTrabajo UnidadDeTrabajo { get; }
         public RepositorioSession(IUnidadDeTrabajo unidadDeTrabajo)
         {
@@ -49,7 +59,23 @@ namespace API_Infraestructura.Repositorios
 
         public Session GetSessionPorUsuario(Guid idUsuario)
         {
-            throw new NotImplementedException();
+            Session SessionConsultada = null;
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idCliente",idUsuario,System.Data.DbType.Guid);
+                CommandDefinition command = new("ConsultaSessionPorCliente",parameters,commandTimeout:0,commandType:System.Data.CommandType.StoredProcedure);
+                DTOSession Dtosession = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOSession>(command);
+                if (Dtosession == null) throw new ArgumentNullException("No se encontro el usuario para el id ingresado ");
+                SessionConsultada = Session.Crear(Dtosession.SessionId,Dtosession.SessionIdUsuario,Dtosession.SessionIdCliente,Dtosession.SessionIdTatuador,Dtosession.SessionActiva);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return SessionConsultada;
         }
 
         public IEnumerable<Session> GetSessions()

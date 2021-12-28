@@ -19,6 +19,11 @@ namespace API_Aplicacion.Implementacion
             this.RepositorioUsuario = repositorioUsuario;
             this.RepositorioCliente = repositorioCliente;
         }
+        /// <summary>
+        /// Revisa si es un usuario ingresado en la base de datos
+        /// </summary>
+        /// <param name="usuario">Username,Password</param>
+        /// <returns></returns>
         public DTOUsuario ValidacionUsuario(DTOUsuario usuario)
         {
             if (usuario == null) throw new ArgumentNullException("No se puede usar objetos nulos");
@@ -31,21 +36,45 @@ namespace API_Aplicacion.Implementacion
             
             return UsuarioConsultado;
         }
-
+        /// <summary>
+        /// Consulta la informacion de un cliente mediante su correo electronico
+        /// </summary>
+        /// <param name="usuario">Username</param>
+        /// <returns></returns>
         public DTOCliente ConsultaInformacionCliente(DTOUsuario usuario)
         {
             if (usuario == null) throw new ArgumentNullException("No se puede usar valores nulos");
             if (string.IsNullOrEmpty(usuario.Username)) throw new ArgumentNullException("No se pueden usar valores vacios");
             Cliente clienteConsultado = this.RepositorioCliente.GetClintePorCorreo(usuario.Username);
             if (clienteConsultado == null) throw new ArgumentNullException("No se encontro usuario para el correo ingresado");
-            DTOCliente dTOCliente = new() {
+            return  new DTOCliente() {
                 IdCliente = clienteConsultado.Id,
                 CorreoCliente = clienteConsultado.Cliente_correo.Cadenavalida,
                 PasswordCliente = clienteConsultado.Password.ContraseniaValida,
                 NombreCliente = clienteConsultado.Cliente_nombre,
                 NumeroTelefonico = clienteConsultado.Cliente_numeroTel
             };
-            return dTOCliente;
+            
+        }
+        /// <summary>
+        /// Consulta la informacion de un cliente registrado en base por el id ingresado
+        /// </summary>
+        /// <param name="cliente"></param>
+        /// <returns></returns>
+        public DTOCliente ConsultaInformacionCliente(DTOCliente cliente)
+        {
+            if (cliente == null) throw new ArgumentNullException("No se pueden usar valores vacios");
+            if (cliente.IdCliente == Guid.Empty) throw new ArgumentNullException("No se pueden usar valores en 0");
+            Cliente clienteConsultado = RepositorioCliente.GetClientePorId(cliente.IdCliente);
+            if (cliente == null) throw new ArgumentNullException("No se encontro cliente para el id ingresado");
+            return new DTOCliente() { 
+            IdCliente = clienteConsultado.Id,
+            CorreoCliente = clienteConsultado.Cliente_correo.Cadenavalida,
+            NombreCliente = clienteConsultado.Cliente_nombre,
+            NumeroTelefonico = clienteConsultado.Cliente_numeroTel,
+            PasswordCliente = clienteConsultado.Password.ContraseniaValida
+            };
+            
         }
     }
 }

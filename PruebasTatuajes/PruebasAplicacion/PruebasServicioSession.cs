@@ -49,6 +49,29 @@ namespace PruebasTatuajes.PruebasAplicacion
             ServicioSession.CrearSession(dTOSession);
             Assert.Equal(6,RepositorioSession.GetSessions().ToList().Count);
         }
+        [Fact]
+        public void ServicioSession_ConsultaSessionCliente_SessionConDTONulo()
+        {
+            DTOCliente dTOCliente = null;
+            Assert.Throws<ArgumentNullException>(() => { ServicioSession.ConsultaSessionCliente(dTOCliente); }); 
+            
+        } 
+        [Fact]
+        public void ServicioSession_ConsultaSessionCliente_SessionidClienteVacio()
+        {
+            DTOCliente dTOCliente = new() { IdCliente = Guid.Empty};
+            Assert.Throws<ArgumentNullException>(() => { ServicioSession.ConsultaSessionCliente(dTOCliente); });
+        }
+        [Fact]
+        public void ServicioSession_ConsultaSessionCliente_ConsultaDTOSession()
+        {
+            DTOCliente dTOCliente = new() { IdCliente = Guid.Parse("00000000-0000-0000-0000-000000000001") };
+            DTOSession dTOSession = ServicioSession.ConsultaSessionCliente(dTOCliente);
+            Assert.NotNull(dTOSession);
+            Assert.True(dTOSession.SessionActiva);
+        }
+
+
 
     }
 }

@@ -59,5 +59,22 @@ namespace PruebasTatuajes.PruebasUI
             Assert.Throws<ArgumentNullException>(() => { SessionController.ConsultaSession(FakeIdVacio); });
 
         }
+        [Fact]
+        public void SessionController_ConsultaSession_ConsultarSessionConInexistente()
+        {
+            Guid FakeIdAleatorio = Guid.NewGuid();
+            
+           JsonResult result = SessionController.ConsultaSession(FakeIdAleatorio);
+            Assert.NotNull(result);
+            Assert.Equal(500, result.StatusCode);
+        }
+        [Fact]
+        public void SessionController_ConsultaSession_ConsultarSessionConIdExistente()
+        {
+            Guid FakeIdExistente = Guid.Parse("00000000-0000-0000-0000-000000000001");
+            JsonResult result = SessionController.ConsultaSession(FakeIdExistente);
+            Assert.NotNull(result);
+            Assert.Equal(200, result.StatusCode);
+        }
     }
 }
