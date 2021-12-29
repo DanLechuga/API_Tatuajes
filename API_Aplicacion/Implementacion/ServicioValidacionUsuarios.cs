@@ -66,7 +66,7 @@ namespace API_Aplicacion.Implementacion
             if (cliente == null) throw new ArgumentNullException("No se pueden usar valores vacios");
             if (cliente.IdCliente == Guid.Empty) throw new ArgumentNullException("No se pueden usar valores en 0");
             Cliente clienteConsultado = RepositorioCliente.GetClientePorId(cliente.IdCliente);
-            if (cliente == null) throw new ArgumentNullException("No se encontro cliente para el id ingresado");
+            if (clienteConsultado == null) throw new ArgumentNullException("No se encontro cliente para el id ingresado");
             return new DTOCliente() { 
             IdCliente = clienteConsultado.Id,
             CorreoCliente = clienteConsultado.Cliente_correo.Cadenavalida,

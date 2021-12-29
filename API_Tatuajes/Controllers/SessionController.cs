@@ -15,9 +15,11 @@ namespace API_Tatuajes.Controllers
     public class SessionController : ControllerBase
     {
         public IServicioSession ServicioSession { get; }
-        public SessionController(IServicioSession servicioSession)
+        public IServicioError ServicioError { get; }
+        public SessionController(IServicioSession servicioSession, IServicioError servicioError)
         {
             this.ServicioSession = servicioSession;
+            this.ServicioError = servicioError;
         }
 
         [HttpPost]
@@ -41,7 +43,7 @@ namespace API_Tatuajes.Controllers
             {
                 result.StatusCode = 500;
                 result.Value = ex.Message;
-                
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
             return result;
         }
@@ -60,9 +62,9 @@ namespace API_Tatuajes.Controllers
             }
             catch (Exception ex)
             {
-
                 result.StatusCode = 500;
                 result.Value = ex.Message;
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
             return result;
         }

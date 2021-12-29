@@ -18,12 +18,16 @@ namespace PruebasTatuajes.PruebasUI
     {
         public IRepositorioSession RepositorioSession { get;  }
         public IServicioSession ServicioSession { get;  }
+        public IRepositorioError RepositorioError { get;  }
+        public IServicioError ServicioError { get;  }
         public SessionController SessionController { get;  }
         public PruebasControllerSession()
         {
             this.RepositorioSession = new MockRepositorioSession();
             this.ServicioSession = new ServicioSession(RepositorioSession);
-            this.SessionController = new(ServicioSession);
+            this.RepositorioError = new MockRepositorioError();
+            this.ServicioError = new ServicioError(RepositorioError);
+            this.SessionController = new(ServicioSession,ServicioError);
         }
         [Fact]
         public void SessionController_CrearSession_CrearSessionConModeloNulo()

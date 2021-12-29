@@ -18,14 +18,18 @@ namespace PruebasTatuajes.PruebasUI
     {
         public IRepositorioUsuario RepositorioUsuario { get;  }
         public IServicioValidacionUsuarios ServicioValidacionUsuarios { get;  }
-        public IRepositorioCliente RepositorioCliente { get; set; }
-        public UsuarioController UsuarioController { get; set; }
+        public IRepositorioCliente RepositorioCliente { get;  }
+        public IServicioError ServicioError { get;  }
+        public IRepositorioError RepositorioError { get;  }
+        public UsuarioController UsuarioController { get; }
         public PruebasControllerUsuarios()
         {
             RepositorioCliente = new MockRepositorioCliente();
             RepositorioUsuario = new MockRepositorioUsuario();
             ServicioValidacionUsuarios = new ServicioValidacionUsuarios(RepositorioUsuario,RepositorioCliente);
-            UsuarioController = new(ServicioValidacionUsuarios);
+            RepositorioError = new MockRepositorioError();
+            ServicioError = new ServicioError(RepositorioError);
+            UsuarioController = new(ServicioValidacionUsuarios,ServicioError);
         }
         [Fact]
         public void UsuarioController_ValidarUsuario_ValidarUsuarioConModeloNulo()

@@ -15,9 +15,11 @@ namespace API_Tatuajes.Controllers
     public class UsuarioController : ControllerBase
     {
         public IServicioValidacionUsuarios ServicioValidacionUsuarios { get; }
-        public UsuarioController(IServicioValidacionUsuarios servicioValidacionUsuarios)
+        public IServicioError ServicioError { get; }
+        public UsuarioController(IServicioValidacionUsuarios servicioValidacionUsuarios,IServicioError servicioError)
         {
             this.ServicioValidacionUsuarios = servicioValidacionUsuarios;
+            this.ServicioError = servicioError;
         }
         /// <summary>
         /// Peticion Post para validar el usuario y password que se ingresan
@@ -44,6 +46,7 @@ namespace API_Tatuajes.Controllers
             {
                 result.Value = ex.Message;
                 result.StatusCode = 500;
+                ServicioError.RegistrarError(new DTOException() { Exception = ex});
             }
             return result;
         }
@@ -70,7 +73,7 @@ namespace API_Tatuajes.Controllers
             {
                 result.Value = ex.Message;
                 result.StatusCode = 500;
-    
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
             return result;
 
@@ -97,6 +100,7 @@ namespace API_Tatuajes.Controllers
             {
                 result.Value = ex.Message;
                 result.StatusCode = 500;
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
             return result;
         }
