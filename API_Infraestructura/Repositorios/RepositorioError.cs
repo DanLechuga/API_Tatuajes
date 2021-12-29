@@ -28,6 +28,7 @@ namespace API_Infraestructura.Repositorios
                 parameters.Add("@ExceptionStackTrace", StackTrace, System.Data.DbType.String);
                 CommandDefinition command = new("AgregarException", parameters, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
                 UnidadDeTrabajo.SqlConnection.Execute(command);
+                UnidadDeTrabajo.SaveChanges();
             }
             catch (Exception)
             {
