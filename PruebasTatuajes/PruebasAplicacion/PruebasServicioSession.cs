@@ -14,7 +14,7 @@ namespace PruebasTatuajes.PruebasAplicacion
 {
    public class PruebasServicioSession
     {
-        public IRepositorioSession RepositorioSession { get; set; }
+        public IRepositorioSession RepositorioSession { get; }
         public IServicioSession ServicioSession { get;  }
         public PruebasServicioSession()
         {

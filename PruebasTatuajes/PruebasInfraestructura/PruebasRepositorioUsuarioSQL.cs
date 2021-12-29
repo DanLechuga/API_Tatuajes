@@ -12,7 +12,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
 {
    public class PruebasRepositorioUsuarioSQL
     {
-        public IUnidadDeTrabajo UnidadDeTrabajo { get; set; }
+        public IUnidadDeTrabajo UnidadDeTrabajo { get; }
         public PruebasRepositorioUsuarioSQL()
         {
             UnidadDeTrabajo = new UnidadDetrabajo("Server=localhost;Database=Tatuajes;Trusted_Connection=True;");

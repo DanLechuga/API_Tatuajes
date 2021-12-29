@@ -11,7 +11,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
 {
    public class PruebasRepositorioUsuarioMock
     {
-        public MockRepositorioUsuario MockRepositorio { get; set; }
+        public MockRepositorioUsuario MockRepositorio { get; }
         public PruebasRepositorioUsuarioMock()
         {
             this.MockRepositorio = new();

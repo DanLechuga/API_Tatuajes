@@ -14,9 +14,9 @@ namespace PruebasTatuajes.PruebasAplicacion
 {
     public class PruebasServicioValidacionUsuarios
     {
-        public IRepositorioUsuario Repositorio { get; set; }
-        public IServicioValidacionUsuarios ServicioValidacion { get; set; }
-        public IRepositorioCliente RepositorioCliente { get; set; }
+        public IRepositorioUsuario Repositorio { get; }
+        public IServicioValidacionUsuarios ServicioValidacion { get; }
+        public IRepositorioCliente RepositorioCliente { get;  }
         public PruebasServicioValidacionUsuarios()
         {
             this.Repositorio = new MockRepositorioUsuario();
