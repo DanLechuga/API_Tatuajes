@@ -12,5 +12,6 @@ namespace API_Aplicacion.Interfaces
         DTOUsuario ValidacionUsuario(DTOUsuario usuario);
         DTOCliente ConsultaInformacionCliente(DTOUsuario usuario);
         DTOCliente ConsultaInformacionCliente(DTOCliente cliente);
+        void CrearUsuarioCliente(DTORegistroDeCliente dTORegistroDeCliente);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using API_Aplicacion.DTOs;
 using API_Aplicacion.Interfaces;
 using API_DominioTatuajes.Agregados;
+using API_DominioTatuajes.ObjetosDeValor;
 using API_Infraestructura.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,16 @@ namespace API_Aplicacion.Implementacion
             NumeroTelefonico = clienteConsultado.Cliente_numeroTel,
             PasswordCliente = clienteConsultado.Password.ContraseniaValida
             };
+            
+        }
+
+        public void CrearUsuarioCliente(DTORegistroDeCliente dTORegistroDeCliente)
+        {
+            if (dTORegistroDeCliente == null) throw new ArgumentNullException("No se puede utilizar valores nulos para crear solicitud");
+            Usuario usuario = Usuario.CrearUsuarioCliente(Guid.NewGuid(), CorreoElectronico.Crear(dTORegistroDeCliente.CorreoElectronico), Password.Crear(dTORegistroDeCliente.Password));
+            Cliente cliente = Cliente.Crear(Guid.NewGuid(),dTORegistroDeCliente.NombreCliente,CorreoElectronico.Crear(dTORegistroDeCliente.CorreoElectronico),Password.Crear(dTORegistroDeCliente.Password),dTORegistroDeCliente.NumeroTelefonico);
+            RepositorioUsuario.Agregar(usuario);
+            RepositorioCliente.Agregar(cliente);
             
         }
     }

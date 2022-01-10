@@ -51,7 +51,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
             return ListaUsuarios.FirstOrDefault(x => x.UsuarioCorreo.Cadenavalida == correo);
         }
 
-        public Usuario GetUsuarioPorId(Guid id)
+        public Usuario GetUsuarioCliente(Guid id)
         {
             return ListaUsuarios.FirstOrDefault(x => x.Id == id);
             

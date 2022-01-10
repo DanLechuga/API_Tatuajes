@@ -27,6 +27,7 @@ namespace API_Infraestructura.Repositorios
                 parameters.Add("@ExceptionInnerMessage", InnerException, System.Data.DbType.String);
                 parameters.Add("@ExceptionStackTrace", StackTrace, System.Data.DbType.String);
                 CommandDefinition command = new("AgregarException", parameters, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
+                if(UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
                 UnidadDeTrabajo.SqlConnection.Execute(command);
                 UnidadDeTrabajo.SaveChanges();
             }

@@ -37,19 +37,19 @@ namespace PruebasTatuajes.PruebasInfraestructura
         [Fact]
         public void MockRepositorioUsuario_GetUsuarioPorId_ConsultaIdInexistente()
         {
-            Usuario FakeUsuario = this.MockRepositorio.GetUsuarioPorId(Guid.Parse("00000000-0000-0000-0000-000000000009"));
+            Usuario FakeUsuario = this.MockRepositorio.GetUsuarioCliente(Guid.Parse("00000000-0000-0000-0000-000000000009"));
             Assert.Null(FakeUsuario);
         }
         [Fact]
         public void MockRepositorioUsuario_GetUsuarioPorId_ConsultaIdExistente()
         {
-            Usuario FakeUsuario = this.MockRepositorio.GetUsuarioPorId(Guid.Parse("00000000-0000-0000-0000-000000000002"));
+            Usuario FakeUsuario = this.MockRepositorio.GetUsuarioCliente(Guid.Parse("00000000-0000-0000-0000-000000000002"));
             Assert.NotNull(FakeUsuario);
         }
         [Fact]
         public void MockRepositorioUsuario_GetUsuarioPorId_ConsultaIdVacio()
         {
-            Usuario FakeUsuario = this.MockRepositorio.GetUsuarioPorId(Guid.Empty);
+            Usuario FakeUsuario = this.MockRepositorio.GetUsuarioCliente(Guid.Empty);
             Assert.Null(FakeUsuario);
         }
         [Fact]
@@ -60,7 +60,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
             Password FakePassword = Password.Crear("Contaseña123");
             Usuario FakeUsuario = Usuario.CrearUsuarioCliente(FakeIdUsuario,FakeEmail,FakePassword);
             this.MockRepositorio.Agregar(FakeUsuario);
-            Usuario usuarioConsultado = this.MockRepositorio.GetUsuarioPorId(FakeIdUsuario);
+            Usuario usuarioConsultado = this.MockRepositorio.GetUsuarioCliente(FakeIdUsuario);
             Assert.Equal(FakeEmail,usuarioConsultado.UsuarioCorreo);
         }
         [Fact]
@@ -105,7 +105,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
                                 , CorreoElectronico.Crear("tester@mail.com")
                                 , Password.Crear("Contaseña123456"));
             MockRepositorio.Update(FakeUsuarioActualizar);
-            Usuario usuarioConsultado = MockRepositorio.GetUsuarioPorId(Guid.Parse("00000000-0000-0000-0000-000000000001"));
+            Usuario usuarioConsultado = MockRepositorio.GetUsuarioCliente(Guid.Parse("00000000-0000-0000-0000-000000000001"));
             Assert.Equal(FakeUsuarioActualizar.UsuarioPassword.ContraseniaValida,usuarioConsultado.UsuarioPassword.ContraseniaValida);
         }
         [Fact]

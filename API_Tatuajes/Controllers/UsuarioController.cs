@@ -104,5 +104,27 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
+        [HttpPost]
+        [Route("/CrearUsuarioCliente")]
+        public JsonResult CrearUsuarioCliente(ModeloRegistrarCliente modeloRegistrarCliente)
+        {
+            if (modeloRegistrarCliente == null) throw new ArgumentNullException("No se puede utilizar valores nulos");
+            JsonResult result = new(true);
+            try
+            {
+                DTORegistroDeCliente dTORegistroDeCliente = new() {NombreCliente = modeloRegistrarCliente.nombreDeCliente,CorreoElectronico = modeloRegistrarCliente.correoElectronico, Password = modeloRegistrarCliente.password, NumeroTelefonico = modeloRegistrarCliente.numeroTelefonico };
+                ServicioValidacionUsuarios.CrearUsuarioCliente(dTORegistroDeCliente);
+                result.StatusCode = 200;
+                result.Value = true;
+                
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Value = ex.Message;
+                ServicioError.RegistrarError(new DTOException() { Exception = ex});
+            }
+            return result;
+        }
     }
 }

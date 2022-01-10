@@ -8,6 +8,7 @@ namespace API_Aplicacion.DTOs
 {
    public class DTOUsuario
     {
+        public Guid IdUsaurio { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public bool EsUsuarioValido { get; set; }

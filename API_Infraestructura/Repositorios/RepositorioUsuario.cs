@@ -30,7 +30,24 @@ namespace API_Infraestructura.Repositorios
         }
         public void Agregar(Usuario agregado)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idUsuario",agregado.Id,System.Data.DbType.Guid);
+                parameters.Add("@Correo",agregado.UsuarioCorreo.Cadenavalida,System.Data.DbType.String);
+                parameters.Add("@Password",agregado.UsuarioPassword.ContraseniaValida,System.Data.DbType.String);
+                parameters.Add("@UsuarioCliente",agregado.UsuarioEsCliente,System.Data.DbType.Boolean);
+                CommandDefinition command = new("CrearUsuarioCliente",parameters,commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
+                UnidadDeTrabajo.SqlConnection.Execute(command);
+                UnidadDeTrabajo.SaveChanges();
+                UnidadDeTrabajo.SqlConnection.Close();
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public void EliminarPorId(Guid id)
@@ -38,14 +55,14 @@ namespace API_Infraestructura.Repositorios
             throw new NotImplementedException();
         }
 
-        public Usuario GetUsuarioPorId(Guid id)
+        public Usuario GetUsuarioCliente(Guid id)
         {
             try
             {
                 Usuario usuarioConsultado = null;
                 DynamicParameters parameters = new();
                 parameters.Add("@id",id,System.Data.DbType.Guid);
-                CommandDefinition command = new("ConsultarUsuarioPorId",parameters,commandType: System.Data.CommandType.StoredProcedure, commandTimeout:0);
+                CommandDefinition command = new("ConsultarUsuarioPorId", parameters,commandType: System.Data.CommandType.StoredProcedure, commandTimeout:0);
                 DTOUsuario dTOUsuario = this.UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOUsuario>(command);
                 if (dTOUsuario == null) throw new ArgumentNullException("No se encontro usuario para el id ingresado");
                 if (dTOUsuario.UsuarioEsCliente) usuarioConsultado = Usuario.CrearUsuarioCliente(dTOUsuario.UsuarioId, CorreoElectronico.Crear(dTOUsuario.UsuarioCorreo), Password.Crear(dTOUsuario.UsuarioPassword));

@@ -38,9 +38,13 @@ namespace API_Tatuajes
             services.AddTransient<IRepositorioCliente, RepositorioCliente>();
             services.AddTransient<IRepositorioSession, RepositorioSession>();
             services.AddTransient<IRepositorioError, RepositorioError>();
+            services.AddTransient<IRepositorioCita, RepositorioCita>();
+            services.AddTransient<IRepositorioClienteCita, RepositorioClienteCita>();
+            services.AddTransient<IServicioDeCitas, ServicioCitas>();
             services.AddTransient<IServicioError, ServicioError>();
             services.AddTransient<IServicioSession, ServicioSession>();
             services.AddTransient<IServicioValidacionUsuarios, ServicioValidacionUsuarios>();
+            
             
             services.AddSwaggerGen(c =>
             {

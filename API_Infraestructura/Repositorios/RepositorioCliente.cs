@@ -55,7 +55,26 @@ namespace API_Infraestructura.Repositorios
 
         public void Agregar(Cliente agregado)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@Cliente_id", agregado.Id, System.Data.DbType.Guid);
+                parameters.Add("@Cliente_nombre", agregado.Cliente_nombre, System.Data.DbType.String);
+                parameters.Add("@Cliente_correo", agregado.Cliente_correo.Cadenavalida, System.Data.DbType.String);
+                parameters.Add("@Cliente_numeroTel", agregado.Cliente_numeroTel, System.Data.DbType.String);
+                parameters.Add("@Cliente_password", agregado.Password.ContraseniaValida, System.Data.DbType.String);
+                CommandDefinition command = new("CrearCliente", parameters, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
+                if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
+                UnidadDeTrabajo.SqlConnection.Execute(command);
+                UnidadDeTrabajo.SaveChanges();
+                UnidadDeTrabajo.SqlConnection.Close();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public void Update(Cliente agregado)

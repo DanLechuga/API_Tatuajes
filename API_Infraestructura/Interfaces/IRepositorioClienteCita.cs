@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace API_Infraestructura.Interfaces
 {
-   public interface IRepositorioUsuario : IRepositorio<Usuario>
+   public interface IRepositorioClienteCita : IRepositorio<CitaCliente>
     {
-        IEnumerable<Usuario> GetUsuarios();
-        Usuario GetUsuarioCliente(Guid id);
-        Usuario GetUsuarioPorCorreo(string correo);
+        IEnumerable<CitaCliente> ConsultaCitaCliente(Usuario usuario);
     }
 }
