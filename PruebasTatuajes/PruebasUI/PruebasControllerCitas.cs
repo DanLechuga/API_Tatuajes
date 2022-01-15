@@ -19,14 +19,18 @@ namespace PruebasTatuajes.PruebasUI
         public IRepositorioUsuario RepositorioUsuario { get; set; }
         public IRepositorioClienteCita RepositorioClienteCita { get; set; }
         public IServicioDeCitas ServicioDeCitas { get; set; }
+        public IRepositorioError RepositorioError { get; set; }
+        public IServicioError ServicioError { get; set; }
         public CitasController CitasController { get; set; }
         public PruebasControllerCitas()
         {
             RepositorioUsuario = new MockRepositorioUsuario();
             RepositorioCita = new MockRepositorioCita();
             RepositorioClienteCita = new MockRepositorioClienteCita();
+            RepositorioError = new MockRepositorioError();
+            ServicioError = new ServicioError(RepositorioError);
             ServicioDeCitas = new ServicioCitas(RepositorioCita,RepositorioClienteCita,RepositorioUsuario);
-            CitasController = new(ServicioDeCitas);
+            CitasController = new(ServicioDeCitas,ServicioError);
         }
         [Fact]
         public void ConsultaDeCitas_Citas_ErrorDeCosnultaPorIdInexistente()

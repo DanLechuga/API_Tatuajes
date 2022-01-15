@@ -15,10 +15,12 @@ namespace PruebasTatuajes.PruebasDominio
         {
             DateTime FechaCreacion = DateTime.Parse("15/12/2004");
             Guid idCitaCliente = Guid.NewGuid();
+            Guid idCita = Guid.NewGuid();
+            Guid idCliente = Guid.NewGuid();
             bool esConAnticipo = false;
             double AnticipoNulo = 0.0;
             Guid idTatuador = Guid.NewGuid();
-            CitaCliente citaCliente = CitaCliente.Crear(idCitaCliente,FechaCreacion,esConAnticipo,AnticipoNulo,idTatuador);
+            CitaCliente citaCliente = CitaCliente.Crear(idCitaCliente,idCita,idCliente,FechaCreacion,esConAnticipo,AnticipoNulo,idTatuador);
             Assert.NotNull(citaCliente);
         }
     }

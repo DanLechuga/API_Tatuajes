@@ -15,11 +15,11 @@ namespace PruebasTatuajes.PruebasInfraestructura
         public MockRepositorioClienteCita()
         {
             ListaCitasCliente = new();
-            ListaCitasCliente.Add(CitaCliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000001"),DateTime.Now,true,350.50,Guid.Parse("00000000-0000-0000-0000-000000000002")));
-            ListaCitasCliente.Add(CitaCliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000002"), DateTime.Now, false, 0.0, Guid.Parse("00000000-0000-0000-0000-000000000002")));
-            ListaCitasCliente.Add(CitaCliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000003"), DateTime.Now, false, 0.0, Guid.Parse("00000000-0000-0000-0000-000000000003")));
-            ListaCitasCliente.Add(CitaCliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000004"), DateTime.Now, true, 350.50, Guid.Parse("00000000-0000-0000-0000-000000000002")));
-            ListaCitasCliente.Add(CitaCliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000005"), DateTime.Now, true, 150.95, Guid.Parse("00000000-0000-0000-0000-000000000001")));
+            ListaCitasCliente.Add(CitaCliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Parse("00000000-0000-0000-0000-000000000001"), DateTime.Now,true,350.50,Guid.Parse("00000000-0000-0000-0000-000000000002")));
+            ListaCitasCliente.Add(CitaCliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000002"), Guid.Parse("00000000-0000-0000-0000-000000000002"), Guid.Parse("00000000-0000-0000-0000-000000000002"), DateTime.Now, false, 0.0, Guid.Parse("00000000-0000-0000-0000-000000000002")));
+            ListaCitasCliente.Add(CitaCliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000003"), Guid.Parse("00000000-0000-0000-0000-000000000003"), Guid.Parse("00000000-0000-0000-0000-000000000003"), DateTime.Now, false, 0.0, Guid.Parse("00000000-0000-0000-0000-000000000003")));
+            ListaCitasCliente.Add(CitaCliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000004"), Guid.Parse("00000000-0000-0000-0000-000000000004"), Guid.Parse("00000000-0000-0000-0000-000000000004"), DateTime.Now, true, 350.50, Guid.Parse("00000000-0000-0000-0000-000000000002")));
+            ListaCitasCliente.Add(CitaCliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000005"), Guid.Parse("00000000-0000-0000-0000-000000000005"), Guid.Parse("00000000-0000-0000-0000-000000000005"), DateTime.Now, true, 150.95, Guid.Parse("00000000-0000-0000-0000-000000000001")));
         }
         public void Agregar(CitaCliente agregado)
         {

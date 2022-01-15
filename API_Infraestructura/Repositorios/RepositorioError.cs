@@ -30,6 +30,7 @@ namespace API_Infraestructura.Repositorios
                 if(UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
                 UnidadDeTrabajo.SqlConnection.Execute(command);
                 UnidadDeTrabajo.SaveChanges();
+                UnidadDeTrabajo.Dispose();
             }
             catch (Exception)
             {
