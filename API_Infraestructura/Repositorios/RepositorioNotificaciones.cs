@@ -18,8 +18,7 @@ namespace API_Infraestructura.Repositorios
 
         }
         public void EnviarCorreoNotificacion(Usuario usuario)
-        {
-            string msg = "Error al enviar correo";
+        {            
             string from = "danlechuga@live.com";
             string displayname = "Developer@Support";
             string body = $"<style>"+
@@ -27,7 +26,7 @@ namespace API_Infraestructura.Repositorios
                             "h2{color:black;}" +
                             "</style>"+
                             "<h1>Su contraseña es:"+usuario.UsuarioPassword.ContraseniaValida+"</h1><br />"+
-                            "<h2>Si no recibio este mensaje envie un email este correo.<br /> Gracias</h2>";
+                            "<h2>Si no empezo el proceso de recuperacion de password envie un email este correo.<br /> Gracias</h2>";
             try
             {
                 MailMessage mail = new();
