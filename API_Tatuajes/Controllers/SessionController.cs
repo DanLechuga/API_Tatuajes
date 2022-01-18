@@ -68,6 +68,29 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
-        
+        [HttpPost]
+        [Route("/CerrarSession")]
+        public JsonResult CerrarSession(ModeloCerrarSession modeloCerrarSession)
+        {
+            if (modeloCerrarSession == null) throw new ArgumentNullException("No se puede cerrar session debido a falta de argumentos para crear la solicitud");
+            if (modeloCerrarSession.idCliente == Guid.Empty) throw new ArgumentNullException("No se puede crear solicitud debido a falta de argumentos para crear la solicitud");
+            JsonResult result = new(true);
+            try
+            {
+                ServicioSession.CerrarSession(new DTOUsuario("", "") { IdUsaurio = modeloCerrarSession.idCliente });
+                result.Value = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Value = ex.Message;
+                ServicioError.RegistrarError(new DTOException() { Exception = ex});
+           
+            }
+          return  result;
+        }
+
+
     }
 }

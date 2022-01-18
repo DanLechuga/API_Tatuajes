@@ -87,5 +87,22 @@ namespace API_Infraestructura.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public void CerrarSession(Session session)
+        {
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idSession", session.Id,System.Data.DbType.Guid);
+                parameters.Add("@idUsuario", session.SessionIdUsuario,System.Data.DbType.Guid);
+                CommandDefinition command = new("CerrarSessionUsuario",parameters,commandTimeout: 0, commandType:System.Data.CommandType.StoredProcedure);
+                UnidadDeTrabajo.SqlConnection.Execute(command);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

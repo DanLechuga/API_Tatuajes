@@ -11,5 +11,6 @@ namespace API_Aplicacion.Interfaces
     {
         void CrearSession(DTOSession dTOSession);
         DTOSession ConsultaSessionCliente(DTOCliente cliente);
+        void CerrarSession(DTOUsuario dTOUsuario);
     }
 }

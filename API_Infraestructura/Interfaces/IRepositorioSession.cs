@@ -13,5 +13,6 @@ namespace API_Infraestructura.Interfaces
         IEnumerable<Session> GetSessions();
         Session GetSessionPorId(Guid id);
         Session GetSessionPorUsuario(Guid idUsuario);
+        void CerrarSession(Session session);
     }
 }

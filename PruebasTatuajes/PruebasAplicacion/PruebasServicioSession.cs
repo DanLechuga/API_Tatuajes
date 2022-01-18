@@ -15,10 +15,12 @@ namespace PruebasTatuajes.PruebasAplicacion
    public class PruebasServicioSession
     {
         public IRepositorioSession RepositorioSession { get; }
+        
         public IServicioSession ServicioSession { get;  }
         public PruebasServicioSession()
         {
             this.RepositorioSession = new MockRepositorioSession();
+        
             this.ServicioSession = new ServicioSession(RepositorioSession);
         }
         [Fact]

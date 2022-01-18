@@ -13,9 +13,11 @@ namespace API_Aplicacion.Implementacion
     public class ServicioSession : IServicioSession
     {
         public IRepositorioSession RepositorioSession { get; }
+      
         public ServicioSession(IRepositorioSession repositorioSession)
         {
             this.RepositorioSession = repositorioSession;
+            
         }
         public void CrearSession(DTOSession dTOSession)
         {
@@ -41,6 +43,16 @@ namespace API_Aplicacion.Implementacion
                 IdSessionTatuador = SessionConsultada.SessionIdTatuador,
                 SessionActiva = SessionConsultada.SessionActiva
             };
+            
+        }
+
+        public void CerrarSession(DTOUsuario dTOUsuario)
+        {
+            if (dTOUsuario == null) throw new ArgumentNullException("No se puede realizar accion falta objeto para trabajar");
+            if (dTOUsuario.IdUsaurio == Guid.Empty) throw new ArgumentNullException("No se puede realizar operacion falta de argumentos validos");
+            
+            Session session = RepositorioSession.GetSessionPorUsuario(dTOUsuario.IdUsaurio);
+            RepositorioSession.CerrarSession(session);
             
         }
     }

@@ -54,5 +54,13 @@ namespace PruebasTatuajes.PruebasInfraestructura
             if (sessionConsultada != null) ListaDeSessions.Remove(agregado);
             ListaDeSessions.Add(agregado);
         }
+
+        public void CerrarSession(Session session)
+        {
+            Session sessionConsultada = ListaDeSessions.FirstOrDefault(x => x.Id == session.Id);
+            if (sessionConsultada != null) ListaDeSessions.Remove(session);
+            sessionConsultada.SessionActiva = false;
+            ListaDeSessions.Add(sessionConsultada);
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace PruebasTatuajes.PruebasUI
    public class PruebasControllerSession
     {
         public IRepositorioSession RepositorioSession { get;  }
+        
         public IServicioSession ServicioSession { get;  }
         public IRepositorioError RepositorioError { get;  }
         public IServicioError ServicioError { get;  }
@@ -24,6 +25,7 @@ namespace PruebasTatuajes.PruebasUI
         public PruebasControllerSession()
         {
             this.RepositorioSession = new MockRepositorioSession();
+        
             this.ServicioSession = new ServicioSession(RepositorioSession);
             this.RepositorioError = new MockRepositorioError();
             this.ServicioError = new ServicioError(RepositorioError);
