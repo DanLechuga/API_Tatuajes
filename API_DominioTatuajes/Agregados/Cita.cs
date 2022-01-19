@@ -14,7 +14,7 @@ namespace API_DominioTatuajes.Agregados
             this.Id = idCita;
             this.FechaCreacion = fechaCreacion;
             this.FechaModificacion = fechaModificacion;
-            this.FechaEliminacion = FechaEliminacion;
+            this.FechaEliminacion = fechaEliminacion;
         }
         public static Cita Crear(Guid idCita, DateTime fechaCreacion, DateTime fechaModificacion, DateTime fechaEliminacion)
         {

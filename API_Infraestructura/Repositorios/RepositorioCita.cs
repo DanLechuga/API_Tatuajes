@@ -32,9 +32,9 @@ namespace API_Infraestructura.Repositorios
             {
                 DynamicParameters parameters = new();
                 parameters.Add("@idCita",agregado.Id,System.Data.DbType.Guid);
-                parameters.Add("@fechaCreacion",agregado.FechaCreacion.Date,System.Data.DbType.Date);
-                parameters.Add("@fechaModificacion", agregado.FechaModificacion.Date,System.Data.DbType.Date);
-                parameters.Add("@fechaTermino",agregado.FechaEliminacion,System.Data.DbType.Date);
+                parameters.Add("@fechaCreacion",agregado.FechaCreacion,System.Data.DbType.DateTime);
+                parameters.Add("@fechaModificacion", agregado.FechaModificacion,System.Data.DbType.DateTime);
+                parameters.Add("@fechaTermino",agregado.FechaEliminacion,System.Data.DbType.DateTime);
                 CommandDefinition command = new("CrearCita", parameters, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
                 if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
                 UnidadDeTrabajo.SqlConnection.Execute(command);

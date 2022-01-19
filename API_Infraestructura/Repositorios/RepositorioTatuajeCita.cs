@@ -24,7 +24,7 @@ namespace API_Infraestructura.Repositorios
                 DynamicParameters parameters = new();
                 parameters.Add("@idTatuajeCita", agregado.Id, System.Data.DbType.Guid);
                 parameters.Add("@idCatalogo", agregado.TatuajeCita_IdCatalogo, System.Data.DbType.Int32);
-                parameters.Add("@idTatuajeCita", agregado.TatuajeCita_IdCita, System.Data.DbType.Guid);
+                parameters.Add("@idCita", agregado.TatuajeCita_IdCita, System.Data.DbType.Guid);
                 CommandDefinition command = new("CrearTatuajeCita", parameters,commandTimeout:0,commandType: System.Data.CommandType.StoredProcedure);
                 if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
                 UnidadDeTrabajo.SqlConnection.Execute(command);

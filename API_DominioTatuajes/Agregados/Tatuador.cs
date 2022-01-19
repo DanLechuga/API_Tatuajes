@@ -18,7 +18,7 @@ namespace API_DominioTatuajes.Agregados
             this.Id = tatuadorId;
             this.Tatuador_Correo = tatuadorCorreo ?? throw new ArgumentNullException("No se puede utilizar valores nulos");
             this.Tatuador_Nombre = tatuadorNombre;
-            if (tatuadorNumTel.Length > 12) throw new ArgumentOutOfRangeException("El numero telefonico no puede exceder los 12 caracteres");
+            if (tatuadorNumTel.Length > 16) throw new ArgumentOutOfRangeException("El numero telefonico no puede exceder los 12 caracteres");
             if (string.IsNullOrEmpty(tatuadorNumTel)) throw new ArgumentNullException("El campo numero telefonico es obligatorio");
             if (string.IsNullOrWhiteSpace(tatuadorNumTel)) throw new ArgumentNullException("El campo numero telefonico esta mal escrito, por favor corregir");
             this.Tatuador_NumTel = tatuadorNumTel;
