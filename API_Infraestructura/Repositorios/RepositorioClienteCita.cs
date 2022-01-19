@@ -28,7 +28,27 @@ namespace API_Infraestructura.Repositorios
         }
         public void Agregar(CitaCliente agregado)
         {
-            throw new NotImplementedException();
+            //@idCitaCliente uniqueidentifier, @fechacita datetime, @idCliente uniqueidentifier, @anticipo bit, @montoanticipo numeric(18, 4),@idTatuador uniqueidentifier
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idCitaCliente",agregado.Id,System.Data.DbType.Guid);
+                parameters.Add("@fechacita", agregado.FechaCitaRegistrada, System.Data.DbType.DateTime);
+                parameters.Add("@idCliente", agregado.IdCliente, System.Data.DbType.Guid);
+                parameters.Add("@anticipo", agregado.EsConAnticipo, System.Data.DbType.Boolean);
+                parameters.Add("@montoanticipo", agregado.CantidadDeposito, System.Data.DbType.Double);
+                parameters.Add("@idTatuador", agregado.IdTatuador, System.Data.DbType.Guid);
+                CommandDefinition command = new("CrearClienteCita",parameters,commandTimeout:0,commandType: System.Data.CommandType.StoredProcedure);
+                if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
+                UnidadDeTrabajo.SqlConnection.Execute(command);
+                UnidadDeTrabajo.Dispose();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public IEnumerable<CitaCliente> ConsultaCitaCliente(Usuario usuario)

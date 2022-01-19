@@ -10,5 +10,6 @@ namespace API_Aplicacion.DTOs
         public bool EsConAnticipo { get; set; }
         public double CantidadDeposito { get; set; }
         public Guid IdTatuador { get; set; }
+        public int IdCatalogo { get; set; }
     }
 }

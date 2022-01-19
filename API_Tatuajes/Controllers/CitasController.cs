@@ -1,5 +1,6 @@
 ﻿using API_Aplicacion.DTOs;
 using API_Aplicacion.Interfaces;
+using API_Tatuajes.Modelos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -40,6 +41,27 @@ namespace API_Tatuajes.Controllers
                 ServicioError.RegistrarError(new DTOException() { Exception = ex }) ;
             }
             
+            return result;
+        }
+        [HttpPost]
+        [Route("/CrearCita")]
+        public JsonResult CrearCita(ModeloCrearCita modeloCrearCita)
+        {
+            if (modeloCrearCita == null) throw new ArgumentNullException("No se puede realizar la peticion por falta de argumentos vacios o nulos");
+            JsonResult result = new(true);
+            try
+            {
+                ServicioDeCitas.CrearCita(new DTOCitas() { IdCita = Guid.NewGuid(), IdUsuario = modeloCrearCita.idUsuario, EsConAnticipo = modeloCrearCita.esAnticipo, CantidadDeposito = modeloCrearCita.montoAnticipo, FechaCreacion = modeloCrearCita.fechaCita, IdCatalogo = modeloCrearCita.listaDeTatuajes });
+                result.StatusCode = 200;
+                result.Value = true;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Value = ex.Message;
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                
+            }
             return result;
         }
     }

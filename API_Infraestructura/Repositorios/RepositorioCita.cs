@@ -27,7 +27,24 @@ namespace API_Infraestructura.Repositorios
         }
         public void Agregar(Cita agregado)
         {
-            throw new NotImplementedException();
+            //@idCita uniqueidentifier, @fechaCreacion date,@fechaModificacion date,@fechaTermino date
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idCita",agregado.Id,System.Data.DbType.Guid);
+                parameters.Add("@fechaCreacion",agregado.FechaCreacion.Date,System.Data.DbType.Date);
+                parameters.Add("@fechaModificacion", agregado.FechaModificacion.Date,System.Data.DbType.Date);
+                parameters.Add("@fechaTermino",agregado.FechaEliminacion,System.Data.DbType.Date);
+                CommandDefinition command = new("CrearCita", parameters, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
+                if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
+                UnidadDeTrabajo.SqlConnection.Execute(command);
+                UnidadDeTrabajo.Dispose();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public IEnumerable<Cita> ConsultaCita(Usuario usuario)

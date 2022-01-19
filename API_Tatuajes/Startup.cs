@@ -42,6 +42,9 @@ namespace API_Tatuajes
             services.AddTransient<IRepositorioClienteCita, RepositorioClienteCita>();
             services.AddTransient<IRepositorioCatalogoDeTatuajes, RepositorioCatalogoDeTatuajes>();
             services.AddTransient<IRepositorioNotificaciones, RepositorioNotificaciones>();
+            services.AddTransient<IRepositorioTatuador, RepositorioTatuador>();
+            services.AddTransient<IRepositorioTatuadorCita, RepositorioTatuadorCita>();
+            services.AddTransient<IRepositorioTatuajeCita, RepositorioTatuajeCita>();
             services.AddTransient<IServicioNotificaciones, ServicioNotificaciones>();
             services.AddTransient<IServicioDeCitas, ServicioCitas>();
             services.AddTransient<IServicioError, ServicioError>();

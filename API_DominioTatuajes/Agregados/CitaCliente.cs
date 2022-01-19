@@ -15,8 +15,7 @@ namespace API_DominioTatuajes.Agregados
         public bool EsConAnticipo { get; set; }
         public double CantidadDeposito { get; set; }
         public Guid IdTatuador { get; set; }
-        public Guid IdCitaCliente { get; }
-        public DateTime FechaRegistro { get; }
+        public Guid IdCitaCliente { get; }       
         public double CantidadAnticipo { get; }
 
         private CitaCliente(Guid idCitaCliente,Guid idCita,Guid idCliente,DateTime fechaRegistro, bool esConAnticipo, double cantidadAnticipo,Guid idTatuador)

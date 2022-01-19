@@ -7,6 +7,6 @@ namespace API_Aplicacion.Interfaces
     public interface IServicioDeCitas
     {
         IEnumerable<DTOCitas> ConsultarCitas(DTOUsuario dTOUsuario);
-
+        void CrearCita(DTOCitas dTOCitas);
     }
 }

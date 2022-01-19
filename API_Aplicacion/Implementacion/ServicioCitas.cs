@@ -14,13 +14,20 @@ namespace API_Aplicacion.Implementacion
    public class ServicioCitas : IServicioDeCitas
     {
         public IRepositorioCita RepositorioCita { get; }
-        public IRepositorioClienteCita RepositorioClienteCita { get; set; }
+        public IRepositorioClienteCita RepositorioClienteCita { get;  }
+        public IRepositorioTatuadorCita RepositorioTatuadorCita { get; }
+        public IRepositorioTatuajeCita RepositorioTatuajeCita { get;  }
+
         public IRepositorioUsuario RepositorioUsuario { get; set; }
-        public ServicioCitas(IRepositorioCita repositorioCita, IRepositorioClienteCita repositorioClienteCita, IRepositorioUsuario repositorioUsuario)
+        public IRepositorioTatuador RepositorioTatuador { get; set; }
+        public ServicioCitas(IRepositorioCita repositorioCita, IRepositorioClienteCita repositorioClienteCita, IRepositorioUsuario repositorioUsuario, IRepositorioTatuador repositorioTatuador, IRepositorioTatuadorCita repositorioTatuadorCita, IRepositorioTatuajeCita repositorioTatuajeCita)
         {
             this.RepositorioCita = repositorioCita;
             this.RepositorioClienteCita = repositorioClienteCita;
             this.RepositorioUsuario = repositorioUsuario;
+            this.RepositorioTatuador = repositorioTatuador;
+            this.RepositorioTatuadorCita = repositorioTatuadorCita;
+            this.RepositorioTatuajeCita = repositorioTatuajeCita;
         }
 
         public IEnumerable<DTOCitas> ConsultarCitas(DTOUsuario usuario)
@@ -41,7 +48,24 @@ namespace API_Aplicacion.Implementacion
             return ListaDto;
             
         }
+
+        public void CrearCita(DTOCitas dTOCitas)
+        {
+            if (dTOCitas == null) throw new ArgumentNullException("No se puede usar un valor vacio o nulo");
+            IEnumerable<Tatuador> ListaTatuadores = RepositorioTatuador.ConsultarTodosLosTatuadores();
+            Tatuador tatuador = ListaTatuadores.FirstOrDefault();
+            if (tatuador == null) throw new ArgumentNullException("No existe tatuadores registrados en el sistema");
+            Cita cita = Cita.Crear(dTOCitas.IdCita,dTOCitas.FechaCreacion, dTOCitas.FechaCreacion, dTOCitas.FechaCreacion);
+            CitaCliente citaCliente = CitaCliente.Crear(Guid.NewGuid(),cita.Id,dTOCitas.IdUsuario,cita.FechaCreacion,dTOCitas.EsConAnticipo,dTOCitas.CantidadDeposito,tatuador.Id);
+            TatuadorCita tatuadorCita = TatuadorCita.Crear(Guid.NewGuid(), tatuador.Id, cita.Id);
+            TatuajeCita tatuajeCita = TatuajeCita.Crear(Guid.NewGuid(),cita.Id,dTOCitas.IdCatalogo);
+
+            RepositorioCita.Agregar(cita);
+            RepositorioClienteCita.Agregar(citaCliente);
+            RepositorioTatuadorCita.Agregar(tatuadorCita);
+            RepositorioTatuajeCita.Agregar(tatuajeCita);
+        }
     }
 
-
+  
 }

@@ -21,6 +21,9 @@ namespace PruebasTatuajes.PruebasUI
         public IServicioDeCitas ServicioDeCitas { get; set; }
         public IRepositorioError RepositorioError { get; set; }
         public IServicioError ServicioError { get; set; }
+        public IRepositorioTatuador RepositorioTatuador { get; set; }
+        public IRepositorioTatuadorCita RepositorioTatuadorCita { get; set; }
+        public IRepositorioTatuajeCita RepositorioTatuajeCita { get; set; }
         public CitasController CitasController { get; set; }
         public PruebasControllerCitas()
         {
@@ -28,8 +31,11 @@ namespace PruebasTatuajes.PruebasUI
             RepositorioCita = new MockRepositorioCita();
             RepositorioClienteCita = new MockRepositorioClienteCita();
             RepositorioError = new MockRepositorioError();
+            RepositorioTatuador = new MockRepositorioTatuador();
+            RepositorioTatuadorCita = new MockRepositorioTatuadorCita();
+            RepositorioTatuajeCita = new MockRepositorioTatuajeCita();
             ServicioError = new ServicioError(RepositorioError);
-            ServicioDeCitas = new ServicioCitas(RepositorioCita,RepositorioClienteCita,RepositorioUsuario);
+            ServicioDeCitas = new ServicioCitas(RepositorioCita,RepositorioClienteCita,RepositorioUsuario, RepositorioTatuador,RepositorioTatuadorCita,RepositorioTatuajeCita);
             CitasController = new(ServicioDeCitas,ServicioError);
         }
         [Fact]
