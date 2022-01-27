@@ -17,8 +17,9 @@ namespace API_DominioTatuajes.Agregados
         public Guid IdTatuador { get; set; }
         public Guid IdCitaCliente { get; }       
         public double CantidadAnticipo { get; }
+        public string NombreTatuador { get;  }
 
-        private CitaCliente(Guid idCitaCliente,Guid idCita,Guid idCliente,DateTime fechaRegistro, bool esConAnticipo, double cantidadAnticipo,Guid idTatuador)
+        private CitaCliente(Guid idCitaCliente,Guid idCita,Guid idCliente,DateTime fechaRegistro, bool esConAnticipo, double cantidadAnticipo,Guid idTatuador,string nombreTatuador)
         {
             this.Id = idCitaCliente;
             IdCita = idCita;
@@ -27,12 +28,12 @@ namespace API_DominioTatuajes.Agregados
             EsConAnticipo = esConAnticipo;
             CantidadDeposito = cantidadAnticipo;
             IdTatuador = idTatuador;
-
+            NombreTatuador = nombreTatuador;
         }
 
-        public static CitaCliente Crear(Guid idCitaCliente, Guid idCita, Guid idCliente, DateTime fechaRegistro, bool esConAnticipo, double cantidadAnticipo, Guid idTatuador)
+        public static CitaCliente Crear(Guid idCitaCliente, Guid idCita, Guid idCliente, DateTime fechaRegistro, bool esConAnticipo, double cantidadAnticipo, Guid idTatuador, string nombreTatuador)
         {
-            return new CitaCliente(idCitaCliente,idCita,idCliente,fechaRegistro,esConAnticipo,cantidadAnticipo,idTatuador);
+            return new CitaCliente(idCitaCliente,idCita,idCliente,fechaRegistro,esConAnticipo,cantidadAnticipo,idTatuador,nombreTatuador);
         }
     }
 }

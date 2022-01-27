@@ -18,6 +18,7 @@ namespace API_Infraestructura.Repositorios
         public bool ClienteCita_Anticipo { get; set; }
         public double ClienteCita_MontoAnticipa { get; set; }
         public Guid ClienteCita_TatuadorId { get; set; }
+        public string Tatuador_Nombre { get; set; }
     }
     public class RepositorioClienteCita : IRepositorioClienteCita
     {
@@ -60,7 +61,7 @@ namespace API_Infraestructura.Repositorios
             IEnumerable<DTOCitaCliente> ListaDTOS = UnidadDeTrabajo.SqlConnection.Query<DTOCitaCliente>(command);
             foreach (var item in ListaDTOS)
             {
-                ListaCitasCliente.Add(CitaCliente.Crear(item.ClienteCita_id,item.ClienteCita_id,item.ClienteCita_ClienteId,item.ClienteCita_Fecha,item.ClienteCita_Anticipo,item.ClienteCita_MontoAnticipa,item.ClienteCita_TatuadorId));
+                ListaCitasCliente.Add(CitaCliente.Crear(item.ClienteCita_id,item.ClienteCita_id,item.ClienteCita_ClienteId,item.ClienteCita_Fecha,item.ClienteCita_Anticipo,item.ClienteCita_MontoAnticipa,item.ClienteCita_TatuadorId,item.Tatuador_Nombre));
             }
             return ListaCitasCliente;
             

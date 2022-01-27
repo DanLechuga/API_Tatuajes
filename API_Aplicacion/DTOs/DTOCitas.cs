@@ -11,5 +11,6 @@ namespace API_Aplicacion.DTOs
         public double CantidadDeposito { get; set; }
         public Guid IdTatuador { get; set; }
         public int IdCatalogo { get; set; }
+        public string NombreTatuador { get; set; }
     }
 }
