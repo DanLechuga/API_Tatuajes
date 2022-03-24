@@ -11,5 +11,6 @@ namespace API_Infraestructura.Interfaces
    public interface IRepositorioClienteCita : IRepositorio<CitaCliente>
     {
         IEnumerable<CitaCliente> ConsultaCitaCliente(Usuario usuario);
+        CitaCliente ConsultarCitaClientePorId(Guid idCita);
     }
 }

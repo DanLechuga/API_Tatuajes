@@ -65,6 +65,33 @@ namespace API_Aplicacion.Implementacion
             RepositorioTatuadorCita.Agregar(tatuadorCita);
             RepositorioTatuajeCita.Agregar(tatuajeCita);
         }
+
+        public IEnumerable<Guid> ConsultasIds(DTOUsuario dTOUsuario)
+        {
+            
+            List<Guid> ListaDto = new();
+            if (dTOUsuario == null) throw new ArgumentNullException("No se pude usar valores nulos para consultar citas");
+            Usuario UsuarioConsultado = RepositorioUsuario.GetUsuarioCliente(dTOUsuario.IdUsaurio);
+            //IEnumerable<Cita> ListaCitas = RepositorioCita.ConsultaCita(usuarioConsultado);
+            IEnumerable<CitaCliente> ListaCitaClientes = RepositorioClienteCita.ConsultaCitaCliente(UsuarioConsultado);
+
+            foreach (CitaCliente itemCC in ListaCitaClientes)
+            {
+                ListaDto.Add(itemCC.IdCita);
+
+            }
+
+            return ListaDto;
+        }
+
+        public DTOCitas ConsultarCita(DTOCitas dTOCitas)
+        {
+            if (dTOCitas is null) throw new ArgumentNullException("No se puede ultilizar valores vacios");
+            DTOCitas citas = new();
+            CitaCliente citaCliente = RepositorioClienteCita.ConsultarCitaClientePorId(dTOCitas.IdCita);
+            return citas;
+            
+        }
     }
 
   

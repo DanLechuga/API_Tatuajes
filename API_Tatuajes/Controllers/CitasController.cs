@@ -43,6 +43,27 @@ namespace API_Tatuajes.Controllers
             
             return result;
         }
+        [HttpGet]
+        [Route("/ConsultaCitaPorId")]
+        public JsonResult ConsultaCitaPorId(Guid idCita)
+        {
+            if (idCita == Guid.Empty) throw new ArgumentNullException("No se puede utilizar con un id en 0");
+            JsonResult result = new(true);             
+            try
+            {
+                
+                result.StatusCode = 200;
+                result.Value = ServicioDeCitas.ConsultarCita(new DTOCitas() { IdCita = idCita });
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Value = ex.Message;
+                ServicioError.RegistrarError(new DTOException() { Exception = ex});
+            }
+            return result;
+        }
         [HttpPost]
         [Route("/CrearCita")]
         public JsonResult CrearCita(ModeloCrearCita modeloCrearCita)
@@ -64,5 +85,28 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
+        [HttpGet]
+        [Route("/EditarCita")]
+        public JsonResult EditarCita(Guid idCliente)
+        {
+            if (idCliente == Guid.Empty) throw new ArgumentNullException("No se puede utilizar un id con valor en 0");
+            JsonResult result = new(true);
+            try
+            {
+                DTOUsuario dtoUsuario = new("", "") { IdUsaurio = idCliente };
+                IEnumerable<Guid> ListaCitasPorUsuario = ServicioDeCitas.ConsultasIds(dtoUsuario);
+                result.Value = ListaCitasPorUsuario;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Value = ex.Message;
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            }
+
+            return result;
+        }
+       
     }
 }

@@ -1,4 +1,5 @@
 ﻿using API_Aplicacion.DTOs;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,5 +9,7 @@ namespace API_Aplicacion.Interfaces
     {
         IEnumerable<DTOCitas> ConsultarCitas(DTOUsuario dTOUsuario);
         void CrearCita(DTOCitas dTOCitas);
+        IEnumerable<Guid> ConsultasIds(DTOUsuario dTOUsuario);
+        DTOCitas ConsultarCita(DTOCitas dTOCitas);
     }
 }

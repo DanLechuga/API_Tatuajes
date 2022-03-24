@@ -76,5 +76,17 @@ namespace API_Infraestructura.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public CitaCliente ConsultarCitaClientePorId(Guid idCita)
+        {
+            CitaCliente citaCliente = null;
+            DynamicParameters parameters = new();
+            parameters.Add("@idcita",idCita,System.Data.DbType.Guid);
+            CommandDefinition command = new("ConusltarCitaPorId", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            DTOCitaCliente dTOCitaCliente = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOCitaCliente>(command);
+            if (dTOCitaCliente is null) throw new ArgumentNullException("No se encontro cita para el id ingresado");
+            citaCliente = CitaCliente.Crear(dTOCitaCliente.ClienteCita_id, dTOCitaCliente.ClienteCita_id, dTOCitaCliente.ClienteCita_ClienteId, dTOCitaCliente.ClienteCita_Fecha, dTOCitaCliente.ClienteCita_Anticipo, dTOCitaCliente.ClienteCita_MontoAnticipa, dTOCitaCliente.ClienteCita_TatuadorId,dTOCitaCliente.Tatuador_Nombre);
+            return citaCliente;
+        }
     }
 }
