@@ -48,10 +48,10 @@ namespace API_Infraestructura.Repositorios
                     ListaTatuadores.Add(Tatuador.Crear(item.Tatuador_Id,item.Tatuador_Nombre,CorreoElectronico.Crear(item.Tatuador_Correo),item.Tatuador_NumTel));
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
             return ListaTatuadores;
         }

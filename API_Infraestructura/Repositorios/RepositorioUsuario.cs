@@ -38,15 +38,15 @@ namespace API_Infraestructura.Repositorios
                 parameters.Add("@Password",agregado.UsuarioPassword.ContraseniaValida,System.Data.DbType.String);
                 parameters.Add("@UsuarioCliente",agregado.UsuarioEsCliente,System.Data.DbType.Boolean);
                 CommandDefinition command = new("CrearUsuarioCliente",parameters,commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
+                if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
                 UnidadDeTrabajo.SqlConnection.Execute(command);
-                UnidadDeTrabajo.SaveChanges();
-                UnidadDeTrabajo.SqlConnection.Close();
+                
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 

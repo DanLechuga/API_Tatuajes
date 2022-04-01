@@ -87,8 +87,9 @@ namespace API_Aplicacion.Implementacion
         public DTOCitas ConsultarCita(DTOCitas dTOCitas)
         {
             if (dTOCitas is null) throw new ArgumentNullException("No se puede ultilizar valores vacios");
-            DTOCitas citas = new();
+            
             CitaCliente citaCliente = RepositorioClienteCita.ConsultarCitaClientePorId(dTOCitas.IdCita);
+            DTOCitas citas = new() { EsConAnticipo = citaCliente.EsConAnticipo,CantidadDeposito = citaCliente.CantidadDeposito,FechaCreacion = citaCliente.FechaCitaRegistrada, };
             return citas;
             
         }

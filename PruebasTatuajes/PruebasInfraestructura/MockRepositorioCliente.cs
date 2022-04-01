@@ -20,6 +20,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
             ListaDeClientes.Add(Cliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000003"), "Tester3", CorreoElectronico.Crear("tester2@mail.com"), Password.Crear("Contraseña123"), "(52)5611855113"));
             ListaDeClientes.Add(Cliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000004"), "Tester4", CorreoElectronico.Crear("tester3@mail.com"), Password.Crear("Contraseña123"), "(52)5611855113"));
             ListaDeClientes.Add(Cliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000005"), "Tester5", CorreoElectronico.Crear("tester4@mail.com"), Password.Crear("Contraseña123"), "(52)5611855113"));
+            ListaDeClientes.Add(Cliente.Crear(Guid.Parse("00000000-0000-0000-0000-000000000006"), "Tester6", CorreoElectronico.Crear("danlechuga@live.com"), Password.Crear("Contraseña123"), "(52)5611855113"));
 
         }
         public void Agregar(Cliente agregado)

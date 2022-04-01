@@ -20,7 +20,8 @@ namespace PruebasTatuajes.PruebasDominio
             bool esConAnticipo = false;
             double AnticipoNulo = 0.0;
             Guid idTatuador = Guid.NewGuid();
-            CitaCliente citaCliente = CitaCliente.Crear(idCitaCliente,idCita,idCliente,FechaCreacion,esConAnticipo,AnticipoNulo,idTatuador);
+            string nombreTatuador = "Tester01Tatuador";
+            CitaCliente citaCliente = CitaCliente.Crear(idCitaCliente,idCita,idCliente,FechaCreacion,esConAnticipo,AnticipoNulo,idTatuador,nombreTatuador);
             Assert.NotNull(citaCliente);
         }
     }

@@ -82,7 +82,7 @@ namespace API_Aplicacion.Implementacion
         {
             if (dTORegistroDeCliente == null) throw new ArgumentNullException("No se puede utilizar valores nulos para crear solicitud");
             Usuario usuario = Usuario.CrearUsuarioCliente(Guid.NewGuid(), CorreoElectronico.Crear(dTORegistroDeCliente.CorreoElectronico), Password.Crear(dTORegistroDeCliente.Password));
-            Cliente cliente = Cliente.Crear(Guid.NewGuid(),dTORegistroDeCliente.NombreCliente,CorreoElectronico.Crear(dTORegistroDeCliente.CorreoElectronico),Password.Crear(dTORegistroDeCliente.Password),dTORegistroDeCliente.NumeroTelefonico);
+            Cliente cliente = Cliente.Crear(usuario.Id,dTORegistroDeCliente.NombreCliente,CorreoElectronico.Crear(dTORegistroDeCliente.CorreoElectronico),Password.Crear(dTORegistroDeCliente.Password),dTORegistroDeCliente.NumeroTelefonico);
             RepositorioUsuario.Agregar(usuario);
             RepositorioCliente.Agregar(cliente);
             

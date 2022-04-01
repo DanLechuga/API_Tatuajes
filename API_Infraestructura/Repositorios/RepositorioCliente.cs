@@ -97,7 +97,7 @@ namespace API_Infraestructura.Repositorios
                 parameters.Add("@correo", correoElectronico, System.Data.DbType.String);
                 CommandDefinition command = new("ConsultarClientePorCorreo", parameters, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
                 DTOCliente DtoCliente = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOCliente>(command);
-                if (DtoCliente == null) throw new ArgumentNullException("No se encontro registro para correo ingresado");
+                 if (DtoCliente == null) throw new ArgumentNullException("No se encontro registro para correo ingresado");
                 clienteConsultado = Cliente.Crear(DtoCliente.Cliente_id,DtoCliente.Cliente_nombre,CorreoElectronico.Crear(DtoCliente.Cliente_correo),Password.Crear(DtoCliente.Cliente_password),DtoCliente.Cliente_numeroTel);
                 return clienteConsultado;
             }
