@@ -1,7 +1,7 @@
 ﻿using API_Aplicacion.Implementacion;
 using API_Aplicacion.Interfaces;
 using API_Infraestructura.Interfaces;
-using API_Tatuajes.Controllers;
+using API_Tatuajes.Controllers.sessiones;
 using API_Tatuajes.Modelos;
 using Microsoft.AspNetCore.Mvc;
 using PruebasTatuajes.PruebasInfraestructura;

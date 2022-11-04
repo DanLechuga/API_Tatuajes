@@ -8,20 +8,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API_Tatuajes.Controllers
+namespace API_Tatuajes.Controllers.sessiones
 {
+    ///<Summary></Summary>
     [ApiController]
     [Route("[controller]")]    
     public class SessionController : ControllerBase
     {
+        ///<Summary></Summary>
         public IServicioSession ServicioSession { get; }
+        ///<Summary></Summary>
         public IServicioError ServicioError { get; }
+        ///<Summary></Summary>
         public SessionController(IServicioSession servicioSession, IServicioError servicioError)
         {
             this.ServicioSession = servicioSession;
             this.ServicioError = servicioError;
         }
-
+        ///<Summary></Summary>
         [HttpPost]
         [Route("/VerificaSession")]        
         public JsonResult CrearSession(ModeloSession modeloSession)
@@ -47,6 +51,7 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
+        ///<Summary></Summary>
         [HttpGet]
         [Route("/ConsultaSession")]
         public JsonResult ConsultaSession(Guid idCliente)
@@ -68,6 +73,7 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
+        ///<Summary></Summary>
         [HttpPost]
         [Route("/CerrarSession")]
         public JsonResult CerrarSession(ModeloCerrarSession modeloCerrarSession)

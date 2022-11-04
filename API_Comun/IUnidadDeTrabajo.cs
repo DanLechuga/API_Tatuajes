@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace API_Comun
 {
-   public interface IUnidadDeTrabajo: IDisposable
+   public interface IUnidadDeTrabajo  : IDisposable
     {
         public SqlConnection SqlConnection { get; set; }
         public SqlTransaction SqlTransaction { get; set; }

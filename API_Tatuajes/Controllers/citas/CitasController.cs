@@ -8,19 +8,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API_Tatuajes.Controllers
+namespace API_Tatuajes.Controllers.citas
 {
+    ///<Summary>Control de Citas</Summary>
     [Route("[controller]")]
-    [ApiController]
+    [ApiController]    
     public class CitasController : ControllerBase
     {
+        ///<Summary>Propiedad del servicio de citas solo lectura</Summary>
         public IServicioDeCitas ServicioDeCitas { get; set; }
+        ///<Summary>Propiedad del servicio de errores solo lectura</Summary>
         public IServicioError ServicioError { get; set; }
+        ///<Summary>Contructor de la clase</Summary>
         public CitasController(IServicioDeCitas servicioCitas, IServicioError servicioError)
         {
             this.ServicioDeCitas = servicioCitas;
             this.ServicioError = servicioError;
         }
+        ///<Summary>Consulta una lista de citas por el id del usuario</Summary>
         [HttpGet]
         [Route("/ConsultaDeCitas")]
         public JsonResult ConsultaDeCitas(Guid idUsuario)
@@ -43,6 +48,7 @@ namespace API_Tatuajes.Controllers
             
             return result;
         }
+        ///<Summary>Consulta una cita por el id ingresado</Summary>
         [HttpGet]
         [Route("/ConsultaCitaPorId")]
         public JsonResult ConsultaCitaPorId(Guid idCita)
@@ -64,6 +70,7 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
+        ///<Summary>Crea una cita</Summary>
         [HttpPost]
         [Route("/CrearCita")]
         public JsonResult CrearCita(ModeloCrearCita modeloCrearCita)
@@ -85,6 +92,7 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
+        ///<Summary>Edita una cita</Summary>
         [HttpGet]
         [Route("/EditarCita")]
         public JsonResult EditarCita(Guid idCliente)

@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API_Tatuajes.Controllers
+namespace API_Tatuajes.Controllers.test
 {
+    ///<Summary></Summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -18,11 +19,12 @@ namespace API_Tatuajes.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
+        ///<Summary></Summary>
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
-
+        ///<Summary></Summary>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {

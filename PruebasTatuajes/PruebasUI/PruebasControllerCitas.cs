@@ -2,7 +2,7 @@
 using API_Aplicacion.Implementacion;
 using API_Aplicacion.Interfaces;
 using API_Infraestructura.Interfaces;
-using API_Tatuajes.Controllers;
+using API_Tatuajes.Controllers.citas;
 using PruebasTatuajes.PruebasInfraestructura;
 using System;
 using System.Collections.Generic;

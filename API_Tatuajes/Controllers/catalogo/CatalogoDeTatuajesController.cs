@@ -7,21 +7,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API_Tatuajes.Controllers
+namespace API_Tatuajes.Controllers.catalogo
 {
+    ///<Summary></Summary>
     [Route("[controller]")]
-    [ApiController]
+    [ApiController]    
     public class CatalogoDeTatuajesController : ControllerBase
     {
+        ///<Summary></Summary>
         public IServicioError ServicioError { get;  }
+        ///<Summary></Summary>
         public IServicioCatalogoDeTatuajes ServicioCatalogoDeTatuajes { get; }
 
+        ///<Summary></Summary>
         public CatalogoDeTatuajesController(IServicioCatalogoDeTatuajes servicioCatalogoDeTatuajes, IServicioError servicioError)
         {
             ServicioCatalogoDeTatuajes = servicioCatalogoDeTatuajes;
             ServicioError = servicioError;
         }
-
+        ///<Summary></Summary>
         [HttpGet]
         [Route("/ConsultarCatalogoTatuajes")]        
         public JsonResult ConsultarCatalogoTatuajes()

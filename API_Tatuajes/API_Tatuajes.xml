@@ -1,0 +1,418 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API_Tatuajes</name>
+    </assembly>
+    <members>
+        <member name="T:API_Tatuajes.Controllers.catalogo.CatalogoDeTatuajesController">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.catalogo.CatalogoDeTatuajesController.ServicioError">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.catalogo.CatalogoDeTatuajesController.ServicioCatalogoDeTatuajes">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.catalogo.CatalogoDeTatuajesController.#ctor(API_Aplicacion.Interfaces.IServicioCatalogoDeTatuajes,API_Aplicacion.Interfaces.IServicioError)">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.catalogo.CatalogoDeTatuajesController.ConsultarCatalogoTatuajes">
+            <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Controllers.citas.CitasController">
+            <Summary>Control de Citas</Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.citas.CitasController.ServicioDeCitas">
+            <Summary>Propiedad del servicio de citas solo lectura</Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.citas.CitasController.ServicioError">
+            <Summary>Propiedad del servicio de errores solo lectura</Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.citas.CitasController.#ctor(API_Aplicacion.Interfaces.IServicioDeCitas,API_Aplicacion.Interfaces.IServicioError)">
+            <Summary>Contructor de la clase</Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.citas.CitasController.ConsultaDeCitas(System.Guid)">
+            <Summary>Consulta una lista de citas por el id del usuario</Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.citas.CitasController.ConsultaCitaPorId(System.Guid)">
+            <Summary>Consulta una cita por el id ingresado</Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.citas.CitasController.CrearCita(API_Tatuajes.Modelos.ModeloCrearCita)">
+            <Summary>Crea una cita</Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.citas.CitasController.EditarCita(System.Guid)">
+            <Summary>Edita una cita</Summary>
+        </member>
+        <member name="T:API_Tatuajes.Controllers.notificaciones.NotificacionesController">
+            <Summary>Control de notificaiones</Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.notificaciones.NotificacionesController.ServicioError">
+            <Summary>Propiedad del servicoo de errores solo lectura</Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.notificaciones.NotificacionesController.ServicioNotificaciones">
+            <Summary>Propiedad del servicio de notificaciones solo lectura</Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.notificaciones.NotificacionesController.#ctor(API_Aplicacion.Interfaces.IServicioError,API_Aplicacion.Interfaces.IServicioNotificaciones)">
+            <Summary>Contructor de la clase</Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.notificaciones.NotificacionesController.EnviarNotificacionRecuperacion(System.Guid)">
+            <Summary>Enviar notificaion para recuperar contraseña</Summary>
+        </member>
+        <member name="T:API_Tatuajes.Controllers.sessiones.SessionController">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.sessiones.SessionController.ServicioSession">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.sessiones.SessionController.ServicioError">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.#ctor(API_Aplicacion.Interfaces.IServicioSession,API_Aplicacion.Interfaces.IServicioError)">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.CrearSession(API_Tatuajes.Modelos.ModeloSession)">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.ConsultaSession(System.Guid)">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.CerrarSession(API_Tatuajes.Modelos.ModeloCerrarSession)">
+            <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Controllers.test.WeatherForecastController">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.test.WeatherForecastController.#ctor(Microsoft.Extensions.Logging.ILogger{API_Tatuajes.Controllers.test.WeatherForecastController})">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.test.WeatherForecastController.Get">
+            <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Controllers.usuarios.UsuarioController">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.usuarios.UsuarioController.ServicioValidacionUsuarios">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.usuarios.UsuarioController.ServicioError">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.usuarios.UsuarioController.#ctor(API_Aplicacion.Interfaces.IServicioValidacionUsuarios,API_Aplicacion.Interfaces.IServicioError)">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.usuarios.UsuarioController.ValidarUsuario(API_Tatuajes.Modelos.ModeloUsuario)">
+            <summary>
+            Peticion Post para validar el usuario y password que se ingresan
+            </summary>
+            <param name="modeloUsuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.usuarios.UsuarioController.ConsultaInfoCliente(System.String)">
+            <summary>
+            Peticion Get para consultar la informacion del cliente por correo o email
+            </summary>
+            <param name="correoUsuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.usuarios.UsuarioController.ConsultaCliente(System.Guid)">
+            <summary>
+            Peticion Get para consultar la informacion del cliente por IdUsuario
+            </summary>
+            <param name="idUsuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.usuarios.UsuarioController.CrearUsuarioCliente(API_Tatuajes.Modelos.ModeloRegistrarCliente)">
+            <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Extensions.ConfigureSwaggerUIOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:API_Tatuajes.Extensions.ConfigureSwaggerUIOptions.AddSwaggerEndpointsPath(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="c"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:API_Tatuajes.Extensions.ControllerModelConvention">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:API_Tatuajes.Extensions.ControllerModelConvention.Apply(Microsoft.AspNetCore.Mvc.ApplicationModels.ControllerModel)">
+            <summary>
+            
+            </summary>
+            <param name="controller"></param>
+        </member>
+        <member name="T:API_Tatuajes.Extensions.ServiceInyecionDependencys">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:API_Tatuajes.Extensions.ServiceInyecionDependencys.AddInyeccionDependencias(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="service"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Tatuajes.Extensions.ServiceInyecionDependencys.AddServiceSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:API_Tatuajes.Extensions.SwaggerConst">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.ServiceVersion">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.SwaggerDocCitas">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.CitasServiceTitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.CitasServiceName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.PathCitas">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.SwaggerExtensionXml">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.SwaggerDocUsuarios">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.UsuariosServiceTitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.UsuariosServiceName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.PathUsuarios">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.SwaggerDocCatalogo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.CatalogoServiceTitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.CatalogoServiceName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.PathCatalogo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.SwaggerDocNotificaciones">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.NotificacionesServiceTitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.NotificacionesServiceName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.PathNotificaciones">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.SwaggerDocSession">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.SessionsServiceTitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.SessionsServiceName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.PathSessiones">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.SwaggerDocTest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.TestServiceTitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.TestServiceName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.PathTest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:API_Tatuajes.Modelos.ModeloCerrarSession">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSession.idCliente">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSession.nombreUsuario">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSession.numeroTelefonico">
+            <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Modelos.ModeloCrearCita">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCrearCita.fechaCita">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCrearCita.listaDeTatuajes">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCrearCita.esAnticipo">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCrearCita.montoAnticipo">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCrearCita.idUsuario">
+            <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Modelos.ModeloRegistrarCliente">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloRegistrarCliente.nombreDeCliente">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloRegistrarCliente.correoElectronico">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloRegistrarCliente.password">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloRegistrarCliente.numeroTelefonico">
+            <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Modelos.ModeloSession">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloSession.idSession">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloSession.idSessionUsuario">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloSession.idSessionCliente">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloSession.idSessionTatuador">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloSession.sessionActiva">
+            <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Modelos.ModeloUsuario">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloUsuario.Username">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloUsuario.Password">
+            <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Program">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Program.Main(System.String[])">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Program.CreateHostBuilder(System.String[])">
+            <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Startup">
+            <Summary>StartUp</Summary>
+        </member>
+        <member name="M:API_Tatuajes.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <Summary>Constructor StartUp</Summary>
+        </member>
+        <member name="P:API_Tatuajes.Startup.Configuration">
+            <Summary>Proerty configuration only read</Summary>
+        </member>
+        <member name="M:API_Tatuajes.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <Summary>This method gets called by the runtime. Use this method to add services to the container.</Summary> 
+        </member>
+        <member name="M:API_Tatuajes.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <Summary>This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</Summary>
+        </member>
+        <member name="T:API_Tatuajes.WeatherForecast">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.WeatherForecast.Date">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.WeatherForecast.TemperatureC">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.WeatherForecast.TemperatureF">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.WeatherForecast.Summary">
+            <Summary></Summary>
+        </member>
+    </members>
+</doc>

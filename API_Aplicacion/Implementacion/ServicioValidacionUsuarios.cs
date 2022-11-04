@@ -31,8 +31,8 @@ namespace API_Aplicacion.Implementacion
             if (string.IsNullOrEmpty(usuario.Username)) throw new ArgumentNullException("No se puede usar valores vacios");
             if (string.IsNullOrEmpty(usuario.Password)) throw new ArgumentNullException("No se puede usar valores vacios");
             Usuario usuarioDeBase = RepositorioUsuario.GetUsuarioPorCorreo(usuario.Username);
-            if (usuarioDeBase == null) throw new ArgumentNullException("Usuario no encontrado para el correo ingresado");
-            if (usuarioDeBase.UsuarioPassword.ContraseniaValida != usuario.Password) throw new Exception("Contraseña ingresa no coincide con el usuario ingresado");
+            if (usuarioDeBase == null) throw new ArgumentNullException($"Usuario no encontrado para el correo ingresado {usuario.Username}");
+            if (usuarioDeBase.UsuarioPassword.ContraseniaValida != usuario.Password) throw new Exception($"Contraseña ingresa no coincide con el usuario ingresado {usuario.Username}");
             DTOUsuario UsuarioConsultado = new(usuarioDeBase.UsuarioCorreo.Cadenavalida, usuarioDeBase.UsuarioPassword.ContraseniaValida) { EsCliente = usuarioDeBase.UsuarioEsCliente, Estatuador = usuarioDeBase.UsuarioEsTatuador, EsUsuarioValido = true};
             
             return UsuarioConsultado;
@@ -47,7 +47,7 @@ namespace API_Aplicacion.Implementacion
             if (usuario == null) throw new ArgumentNullException("No se puede usar valores nulos");
             if (string.IsNullOrEmpty(usuario.Username)) throw new ArgumentNullException("No se pueden usar valores vacios");
             Cliente clienteConsultado = this.RepositorioCliente.GetClintePorCorreo(usuario.Username);
-            if (clienteConsultado == null) throw new ArgumentNullException("No se encontro usuario para el correo ingresado");
+            if (clienteConsultado == null) throw new ArgumentNullException($"No se encontro usuario para el correo ingresado {usuario.Username}");
             return  new DTOCliente() {
                 IdCliente = clienteConsultado.Id,
                 CorreoCliente = clienteConsultado.Cliente_correo.Cadenavalida,
@@ -67,7 +67,7 @@ namespace API_Aplicacion.Implementacion
             if (cliente == null) throw new ArgumentNullException("No se pueden usar valores vacios");
             if (cliente.IdCliente == Guid.Empty) throw new ArgumentNullException("No se pueden usar valores en 0");
             Cliente clienteConsultado = RepositorioCliente.GetClientePorId(cliente.IdCliente);
-            if (clienteConsultado == null) throw new ArgumentNullException("No se encontro cliente para el id ingresado");
+            if (clienteConsultado == null) throw new ArgumentNullException($"No se encontro cliente para el id ingresado {cliente.IdCliente}");
             return new DTOCliente() { 
             IdCliente = clienteConsultado.Id,
             CorreoCliente = clienteConsultado.Cliente_correo.Cadenavalida,

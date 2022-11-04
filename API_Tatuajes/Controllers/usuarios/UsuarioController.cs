@@ -8,14 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API_Tatuajes.Controllers
+namespace API_Tatuajes.Controllers.usuarios
 {
+    ///<Summary></Summary>
     [ApiController]
     [Route("[controller]")]
     public class UsuarioController : ControllerBase
     {
+        ///<Summary></Summary>
         public IServicioValidacionUsuarios ServicioValidacionUsuarios { get; }
+        ///<Summary></Summary>
         public IServicioError ServicioError { get; }
+        ///<Summary></Summary>
         public UsuarioController(IServicioValidacionUsuarios servicioValidacionUsuarios,IServicioError servicioError)
         {
             this.ServicioValidacionUsuarios = servicioValidacionUsuarios;
@@ -104,6 +108,7 @@ namespace API_Tatuajes.Controllers
             }
             return result;
         }
+        ///<Summary></Summary>
         [HttpPost]
         [Route("/CrearUsuarioCliente")]
         public JsonResult CrearUsuarioCliente(ModeloRegistrarCliente modeloRegistrarCliente)

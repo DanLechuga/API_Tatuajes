@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 
 namespace API_Tatuajes.Modelos
 {
+    ///<Summary></Summary>
     public class ModeloCerrarSession
     {
+        ///<Summary></Summary>
         public Guid idCliente { get; set; }
+        ///<Summary></Summary>
         public string nombreUsuario { get; set; }
+        ///<Summary></Summary>
         public string numeroTelefonico { get; set; }
     }
 }

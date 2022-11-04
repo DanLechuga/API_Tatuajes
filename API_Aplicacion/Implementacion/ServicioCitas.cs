@@ -89,7 +89,17 @@ namespace API_Aplicacion.Implementacion
             if (dTOCitas is null) throw new ArgumentNullException("No se puede ultilizar valores vacios");
             
             CitaCliente citaCliente = RepositorioClienteCita.ConsultarCitaClientePorId(dTOCitas.IdCita);
-            DTOCitas citas = new() { EsConAnticipo = citaCliente.EsConAnticipo,CantidadDeposito = citaCliente.CantidadDeposito,FechaCreacion = citaCliente.FechaCitaRegistrada, };
+            var tatuador = RepositorioTatuador.ConsultarTodosLosTatuadores();
+
+            DTOCitas citas = new() { EsConAnticipo = citaCliente.EsConAnticipo,
+                                     CantidadDeposito = citaCliente.CantidadDeposito,
+                                     FechaCreacion = citaCliente.FechaCitaRegistrada,
+                                     IdCita = citaCliente.IdCita,
+                                     IdTatuador = citaCliente.IdTatuador,
+                                     IdUsuario = citaCliente.IdCliente,
+                                     NombreTatuador = tatuador.FirstOrDefault(x => x.Id.Equals(citaCliente.IdTatuador)).Tatuador_Nombre,
+                                     
+            };
             return citas;
             
         }
