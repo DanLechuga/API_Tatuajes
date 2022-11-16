@@ -1,5 +1,6 @@
 ﻿using API_Aplicacion.DTOs;
 using API_Aplicacion.Interfaces;
+using API_Tatuajes.Exceptions;
 using API_Tatuajes.Modelos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,13 +28,15 @@ namespace API_Tatuajes.Controllers.sessiones
         }
         ///<Summary></Summary>
         [HttpPost]
-        [Route("/VerificaSession")]        
-        public JsonResult CrearSession(ModeloSession modeloSession)
+        [Route("/VerificaSession")]
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200)]
+        public ObjectResult CrearSession(ModeloSession modeloSession)
         {
             if (modeloSession ==    null) throw new ArgumentNullException("No se puede usar valores nulos");
             if (modeloSession.idSession == Guid.Empty) throw new ArgumentNullException("No se puede usar valores en 0");
             if (modeloSession.idSessionUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar valores en 0");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             result.StatusCode = 403;
             try
             {
@@ -45,8 +48,8 @@ namespace API_Tatuajes.Controllers.sessiones
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.Value = ex.Message;
+                
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
                 ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
             return result;
@@ -54,10 +57,12 @@ namespace API_Tatuajes.Controllers.sessiones
         ///<Summary></Summary>
         [HttpGet]
         [Route("/ConsultaSession")]
-        public JsonResult ConsultaSession(Guid idCliente)
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(DTOSession))]
+        public ObjectResult ConsultaSession(Guid idCliente)
         {
             if (idCliente == Guid.Empty) throw new ArgumentNullException("No se puede utilizar id en 0");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             result.StatusCode = 403;
             try
             {
@@ -67,8 +72,8 @@ namespace API_Tatuajes.Controllers.sessiones
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.Value = ex.Message;
+                
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
                 ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
             return result;
@@ -76,11 +81,13 @@ namespace API_Tatuajes.Controllers.sessiones
         ///<Summary></Summary>
         [HttpPost]
         [Route("/CerrarSession")]
-        public JsonResult CerrarSession(ModeloCerrarSession modeloCerrarSession)
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200)]
+        public ObjectResult CerrarSession(ModeloCerrarSession modeloCerrarSession)
         {
             if (modeloCerrarSession == null) throw new ArgumentNullException("No se puede cerrar session debido a falta de argumentos para crear la solicitud");
             if (modeloCerrarSession.idCliente == Guid.Empty) throw new ArgumentNullException("No se puede crear solicitud debido a falta de argumentos para crear la solicitud");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             try
             {
                 ServicioSession.CerrarSession(new DTOUsuario("", "") { IdUsaurio = modeloCerrarSession.idCliente });
@@ -89,8 +96,8 @@ namespace API_Tatuajes.Controllers.sessiones
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.Value = ex.Message;
+                
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
                 ServicioError.RegistrarError(new DTOException() { Exception = ex});
            
             }

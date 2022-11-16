@@ -2,11 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <AnalysisLevel>none</AnalysisLevel>
+    <StartupObject>API_Tatuajes.Program</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>G:\Proyectos\ASP\TatuajesFocos\API_Tatuajes\API_Tatuajes\API_Tatuajes.xml</DocumentationFile>
-    <WarningLevel>0</WarningLevel>
+    <WarningLevel>5</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>

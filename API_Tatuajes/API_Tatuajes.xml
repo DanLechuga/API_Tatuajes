@@ -124,6 +124,17 @@
         <member name="M:API_Tatuajes.Controllers.usuarios.UsuarioController.CrearUsuarioCliente(API_Tatuajes.Modelos.ModeloRegistrarCliente)">
             <Summary></Summary>
         </member>
+        <member name="T:API_Tatuajes.Exceptions.InternalExpcetionMessage">
+            <summary>
+            Model about Exception Message 
+            </summary>
+        </member>
+        <member name="P:API_Tatuajes.Exceptions.InternalExpcetionMessage.Message">
+            <summary> Property about class </summary>
+        </member>
+        <member name="P:API_Tatuajes.Exceptions.InternalExpcetionMessage.Id">
+            <summary> Property about class </summary>
+        </member>
         <member name="T:API_Tatuajes.Extensions.ConfigureSwaggerUIOptions">
             <summary>
             

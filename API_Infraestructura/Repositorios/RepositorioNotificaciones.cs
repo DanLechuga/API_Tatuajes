@@ -25,7 +25,7 @@ namespace API_Infraestructura.Repositorios
                             "h1{color:black;}"+
                             "h2{color:black;}" +
                             "</style>"+
-                            "<h1>Su contraseña es:"+usuario.UsuarioPassword.ContraseniaValida+"</h1><br />"+
+                            "<h1>Su contraseña es: <br />" + usuario.UsuarioPassword.ContraseniaValida+"</h1><br />"+
                             "<h2>Si no empezo el proceso de recuperacion de password envie un email este correo.<br /> Gracias</h2>";
             try
             {
@@ -37,7 +37,7 @@ namespace API_Infraestructura.Repositorios
                 mail.IsBodyHtml = true;
                 SmtpClient client = new("smtp.office365.com", 587);
                 client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(from, "NOLOSE123mams");
+                client.Credentials = new NetworkCredential(from, "Nolose6267mams");
                 client.EnableSsl = true;
                 client.Send(mail);
             }

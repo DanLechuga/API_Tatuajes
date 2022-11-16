@@ -1,5 +1,6 @@
 ﻿using API_Aplicacion.DTOs;
 using API_Aplicacion.Interfaces;
+using API_Tatuajes.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,10 +28,12 @@ namespace API_Tatuajes.Controllers.catalogo
         }
         ///<Summary></Summary>
         [HttpGet]
-        [Route("/ConsultarCatalogoTatuajes")]        
-        public JsonResult ConsultarCatalogoTatuajes()
+        [Route("/ConsultarCatalogoTatuajes")]
+        [ProducesResponseType(409,Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200,Type =typeof(IEnumerable<DTOCatalogoTatuajes>))]
+        public ObjectResult ConsultarCatalogoTatuajes()
         {
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             try
             {
                 IEnumerable<DTOCatalogoTatuajes> catalogoTatuajes = ServicioCatalogoDeTatuajes.ConsultarCatalogoDeTatuajes();
@@ -39,8 +42,8 @@ namespace API_Tatuajes.Controllers.catalogo
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.Value = ex.Message;
+                
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
                 ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
             return result;

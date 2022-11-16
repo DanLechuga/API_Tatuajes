@@ -1,5 +1,6 @@
 ﻿using API_Aplicacion.DTOs;
 using API_Aplicacion.Interfaces;
+using API_Tatuajes.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,10 +28,12 @@ namespace API_Tatuajes.Controllers.notificaciones
         ///<Summary>Enviar notificaion para recuperar contraseña</Summary>
         [HttpGet]
         [Route("/EnviarNotificacionRecuperacion")]
-        public JsonResult EnviarNotificacionRecuperacion(Guid idUsuario)
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200)]
+        public ObjectResult EnviarNotificacionRecuperacion(Guid idUsuario)
         {
             if (idUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar un id vacio");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             try
             {
                 ServicioNotificaciones.CrearNotificacionRecuperacionPassword(new DTOUsuario("", "") { IdUsaurio = idUsuario});
@@ -39,8 +42,8 @@ namespace API_Tatuajes.Controllers.notificaciones
             }
             catch (Exception ex)
             {
-                result.Value = ex.Message;
-                result.StatusCode = 500;
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
+                
                 ServicioError.RegistrarError(new DTOException() { Exception = ex});
             }
             return result;

@@ -1,5 +1,6 @@
 ﻿using API_Aplicacion.DTOs;
 using API_Aplicacion.Interfaces;
+using API_Tatuajes.Exceptions;
 using API_Tatuajes.Modelos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,12 +33,14 @@ namespace API_Tatuajes.Controllers.usuarios
         /// <returns></returns>
         [HttpPost]
         [Route("/ValidarUsuario")]
-        public JsonResult ValidarUsuario(ModeloUsuario modeloUsuario)
+        [ProducesResponseType(409,Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(DTOUsuario))]
+        public ObjectResult ValidarUsuario(ModeloUsuario modeloUsuario)
         {
             if (modeloUsuario == null) throw new ArgumentNullException("No se puede usar valores nulos");
             if (string.IsNullOrEmpty(modeloUsuario.Username)) throw new ArgumentNullException("No se puede usar valores vacios");
             if(string.IsNullOrEmpty(modeloUsuario.Password)) throw new ArgumentNullException("No se puede usar valores vacios");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             result.StatusCode = 403;
             try
             {
@@ -47,10 +50,9 @@ namespace API_Tatuajes.Controllers.usuarios
                 result.Value = dtoUsuarioConsultado; 
             }
             catch (Exception ex)
-            {
-                result.Value = ex.Message;
-                result.StatusCode = 500;
+            {                
                 ServicioError.RegistrarError(new DTOException() { Exception = ex});
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
             }
             return result;
         }
@@ -61,10 +63,12 @@ namespace API_Tatuajes.Controllers.usuarios
         /// <returns></returns>
         [HttpGet]
         [Route("/ConsultaInfoCliente")]
-        public JsonResult ConsultaInfoCliente(string correoUsuario)
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(DTOCliente))]
+        public ObjectResult ConsultaInfoCliente(string correoUsuario)
         {
             if (string.IsNullOrEmpty(correoUsuario)) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             result.StatusCode = 403;
             try
             {
@@ -75,8 +79,7 @@ namespace API_Tatuajes.Controllers.usuarios
             }
             catch (Exception ex)
             {
-                result.Value = ex.Message;
-                result.StatusCode = 500;
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});                
                 ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
             return result;
@@ -89,10 +92,12 @@ namespace API_Tatuajes.Controllers.usuarios
         /// <returns></returns>
         [HttpGet]
         [Route("/ConsultaCliente")]
-        public JsonResult ConsultaCliente(Guid idUsuario)
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(DTOCliente))]
+        public ObjectResult ConsultaCliente(Guid idUsuario)
         {
             if (idUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar valor en 0");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             try
             {
                 DTOCliente cliente = new() { IdCliente = idUsuario};
@@ -102,8 +107,8 @@ namespace API_Tatuajes.Controllers.usuarios
             }
             catch (Exception ex)
             {
-                result.Value = ex.Message;
-                result.StatusCode = 500;
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
+                
                 ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
             return result;
@@ -111,10 +116,12 @@ namespace API_Tatuajes.Controllers.usuarios
         ///<Summary></Summary>
         [HttpPost]
         [Route("/CrearUsuarioCliente")]
-        public JsonResult CrearUsuarioCliente(ModeloRegistrarCliente modeloRegistrarCliente)
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200)]
+        public ObjectResult CrearUsuarioCliente(ModeloRegistrarCliente modeloRegistrarCliente)
         {
             if (modeloRegistrarCliente == null) throw new ArgumentNullException("No se puede utilizar valores nulos");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             try
             {
                 DTORegistroDeCliente dTORegistroDeCliente = new() {NombreCliente = modeloRegistrarCliente.nombreDeCliente,CorreoElectronico = modeloRegistrarCliente.correoElectronico, Password = modeloRegistrarCliente.password, NumeroTelefonico = modeloRegistrarCliente.numeroTelefonico };
@@ -125,8 +132,8 @@ namespace API_Tatuajes.Controllers.usuarios
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.Value = ex.Message;
+                
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
                 ServicioError.RegistrarError(new DTOException() { Exception = ex});
             }
             return result;

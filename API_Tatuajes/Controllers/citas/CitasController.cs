@@ -1,5 +1,6 @@
 ﻿using API_Aplicacion.DTOs;
 using API_Aplicacion.Interfaces;
+using API_Tatuajes.Exceptions;
 using API_Tatuajes.Modelos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,10 +29,12 @@ namespace API_Tatuajes.Controllers.citas
         ///<Summary>Consulta una lista de citas por el id del usuario</Summary>
         [HttpGet]
         [Route("/ConsultaDeCitas")]
-        public JsonResult ConsultaDeCitas(Guid idUsuario)
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<DTOCitas>))]
+        public ObjectResult ConsultaDeCitas(Guid idUsuario)
         {
             if (idUsuario == Guid.Empty) throw new ArgumentNullException("No se puede utilizar un id con valor en 0");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             try
             {
                 DTOUsuario dtoUsuario = new("", "") { IdUsaurio = idUsuario };
@@ -41,8 +44,8 @@ namespace API_Tatuajes.Controllers.citas
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.Value = ex.Message;
+                
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
                 ServicioError.RegistrarError(new DTOException() { Exception = ex }) ;
             }
             
@@ -51,10 +54,12 @@ namespace API_Tatuajes.Controllers.citas
         ///<Summary>Consulta una cita por el id ingresado</Summary>
         [HttpGet]
         [Route("/ConsultaCitaPorId")]
-        public JsonResult ConsultaCitaPorId(Guid idCita)
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(DTOCitas))]
+        public ObjectResult ConsultaCitaPorId(Guid idCita)
         {
             if (idCita == Guid.Empty) throw new ArgumentNullException("No se puede utilizar con un id en 0");
-            JsonResult result = new(true);             
+            ObjectResult result = new(true);             
             try
             {
                 
@@ -64,8 +69,8 @@ namespace API_Tatuajes.Controllers.citas
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.Value = ex.Message;
+                
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
                 ServicioError.RegistrarError(new DTOException() { Exception = ex});
             }
             return result;
@@ -73,10 +78,12 @@ namespace API_Tatuajes.Controllers.citas
         ///<Summary>Crea una cita</Summary>
         [HttpPost]
         [Route("/CrearCita")]
-        public JsonResult CrearCita(ModeloCrearCita modeloCrearCita)
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200)]
+        public ObjectResult CrearCita(ModeloCrearCita modeloCrearCita)
         {
             if (modeloCrearCita == null) throw new ArgumentNullException("No se puede realizar la peticion por falta de argumentos vacios o nulos");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             try
             {
                 ServicioDeCitas.CrearCita(new DTOCitas() { IdCita = Guid.NewGuid(), IdUsuario = modeloCrearCita.idUsuario, EsConAnticipo = modeloCrearCita.esAnticipo, CantidadDeposito = modeloCrearCita.montoAnticipo, FechaCreacion = modeloCrearCita.fechaCita, IdCatalogo = modeloCrearCita.listaDeTatuajes });
@@ -85,8 +92,8 @@ namespace API_Tatuajes.Controllers.citas
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.Value = ex.Message;
+                
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
                 ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 
             }
@@ -95,10 +102,12 @@ namespace API_Tatuajes.Controllers.citas
         ///<Summary>Edita una cita</Summary>
         [HttpGet]
         [Route("/EditarCita")]
-        public JsonResult EditarCita(Guid idCliente)
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Guid>))]
+        public ObjectResult EditarCita(Guid idCliente)
         {
             if (idCliente == Guid.Empty) throw new ArgumentNullException("No se puede utilizar un id con valor en 0");
-            JsonResult result = new(true);
+            ObjectResult result = new(true);
             try
             {
                 DTOUsuario dtoUsuario = new("", "") { IdUsaurio = idCliente };
@@ -108,8 +117,8 @@ namespace API_Tatuajes.Controllers.citas
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.Value = ex.Message;
+                
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
                 ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
 
