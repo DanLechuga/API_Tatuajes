@@ -31,5 +31,10 @@ namespace PruebasTatuajes.PruebasInfraestructura
         {
             throw new NotImplementedException();
         }
+
+        public TatuajeCita ConsultarPorIdCita(Guid idCita)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

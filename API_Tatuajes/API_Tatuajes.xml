@@ -129,10 +129,10 @@
             Model about Exception Message 
             </summary>
         </member>
-        <member name="P:API_Tatuajes.Exceptions.InternalExpcetionMessage.Message">
+        <member name="P:API_Tatuajes.Exceptions.InternalExpcetionMessage.Id">
             <summary> Property about class </summary>
         </member>
-        <member name="P:API_Tatuajes.Exceptions.InternalExpcetionMessage.Id">
+        <member name="P:API_Tatuajes.Exceptions.InternalExpcetionMessage.Message">
             <summary> Property about class </summary>
         </member>
         <member name="T:API_Tatuajes.Extensions.ConfigureSwaggerUIOptions">

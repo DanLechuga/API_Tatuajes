@@ -9,6 +9,12 @@ using API_Comun;
 using Dapper;
 namespace API_Infraestructura.Repositorios
 {
+    class DTOTatuajeCita{
+        public Guid TatuajeCita_Id { get; set; }
+        public int TatuajeCita_IdCatalogo { get; set; }
+        public Guid TatuajeCita_IdCita { get; set; }
+
+    }
     public class RepositorioTatuajeCita : IRepositorioTatuajeCita
     {
         public IUnidadDeTrabajo UnidadDeTrabajo { get; }
@@ -45,6 +51,18 @@ namespace API_Infraestructura.Repositorios
         public void Update(TatuajeCita agregado)
         {
             throw new NotImplementedException();
+        }
+
+        public TatuajeCita ConsultarPorIdCita(Guid idCita)
+        {
+            TatuajeCita tatuajeCita = null;
+            DynamicParameters parameters = new();
+            parameters.Add("@idCita", idCita, System.Data.DbType.Guid);
+            CommandDefinition command = new("ConsultarTatuajeCitaPorId", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            DTOTatuajeCita dTOTatuajeCita = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOTatuajeCita>(command);
+            if (dTOTatuajeCita is null) throw new Exception("No se encontro informacion para el id ingresado");
+            tatuajeCita = TatuajeCita.Crear(dTOTatuajeCita.TatuajeCita_Id, dTOTatuajeCita.TatuajeCita_IdCita, dTOTatuajeCita.TatuajeCita_IdCatalogo);
+            return tatuajeCita;
         }
     }
 }

@@ -10,5 +10,6 @@ namespace API_Infraestructura.Interfaces
 {
    public interface IRepositorioTatuajeCita :IRepositorio<TatuajeCita>
     {
+        TatuajeCita ConsultarPorIdCita(Guid idCita);
     }
 }

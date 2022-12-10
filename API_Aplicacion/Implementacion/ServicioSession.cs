@@ -21,9 +21,9 @@ namespace API_Aplicacion.Implementacion
         }
         public void CrearSession(DTOSession dTOSession)
         {
-            if (dTOSession == null) throw new ArgumentNullException("No se puede usar valores nulos");
-            if (dTOSession.IdSession == Guid.Empty) throw new ArgumentNullException("No se puede usar un id en 0");
-            if (dTOSession.IdSessionUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar id en 0");
+            if (dTOSession == null) throw new Exception("No se puede usar valores nulos");
+            if (dTOSession.IdSession == Guid.Empty) throw new Exception("No se puede usar un id en 0");
+            if (dTOSession.IdSessionUsuario == Guid.Empty) throw new Exception("No se puede usar id en 0");
             Session sessionAgregar = Session.Crear(dTOSession.IdSession,dTOSession.IdSessionUsuario,dTOSession.IdSessionCliente,dTOSession.IdSessionTatuador,dTOSession.SessionActiva);
             RepositorioSession.Agregar(sessionAgregar);
             
@@ -31,10 +31,10 @@ namespace API_Aplicacion.Implementacion
 
         public DTOSession ConsultaSessionCliente(DTOCliente cliente)
         {
-            if (cliente == null) throw new ArgumentNullException("No se pueden usar elementos nulos");
-            if (cliente.IdCliente == Guid.Empty) throw new ArgumentNullException("No se puede usar valores con 0");
+            if (cliente == null) throw new Exception("No se pueden usar elementos nulos");
+            if (cliente.IdCliente == Guid.Empty) throw new Exception("No se puede usar valores con 0");
             Session SessionConsultada = RepositorioSession.GetSessionPorUsuario(cliente.IdCliente);
-            if (SessionConsultada == null) throw new ArgumentNullException("No se encontro usuario para el id ingresado");
+            if (SessionConsultada == null) throw new Exception("No se encontro usuario para el id ingresado");
             return new DTOSession()
             {
                 IdSession = SessionConsultada.Id,
@@ -48,8 +48,8 @@ namespace API_Aplicacion.Implementacion
 
         public void CerrarSession(DTOUsuario dTOUsuario)
         {
-            if (dTOUsuario == null) throw new ArgumentNullException("No se puede realizar accion falta objeto para trabajar");
-            if (dTOUsuario.IdUsaurio == Guid.Empty) throw new ArgumentNullException("No se puede realizar operacion falta de argumentos validos");
+            if (dTOUsuario == null) throw new Exception("No se puede realizar accion falta objeto para trabajar");
+            if (dTOUsuario.IdUsaurio == Guid.Empty) throw new Exception("No se puede realizar operacion falta de argumentos validos");
             
             Session session = RepositorioSession.GetSessionPorUsuario(dTOUsuario.IdUsaurio);
             RepositorioSession.CerrarSession(session);

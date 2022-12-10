@@ -89,7 +89,7 @@ namespace API_Infraestructura.Repositorios
 
         public Usuario GetUsuarioPorCorreo(string correo)
         {
-            if (string.IsNullOrEmpty(correo)) throw new ArgumentNullException("No se puede utilizar valors vacios");
+            if (string.IsNullOrEmpty(correo)) throw new Exception("No se puede utilizar valors vacios");
             try
             {
                 Usuario usuarioConsultado = null;
@@ -97,7 +97,7 @@ namespace API_Infraestructura.Repositorios
                 parameters.Add("@correo", correo, System.Data.DbType.String);
                 CommandDefinition command = new("ConsultarUsuarioPorCorreo", parameters, commandType: System.Data.CommandType.StoredProcedure, commandTimeout: 0);
                 DTOUsuario dTOUsuario = this.UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOUsuario>(command);
-                if (dTOUsuario == null) throw new ArgumentNullException("No se encontro usuario para el correo ingresado");
+                if (dTOUsuario == null) return null;
                 if (dTOUsuario.UsuarioEsCliente) usuarioConsultado = Usuario.CrearUsuarioCliente(dTOUsuario.UsuarioId, CorreoElectronico.Crear(dTOUsuario.UsuarioCorreo), Password.Crear(dTOUsuario.UsuarioPassword));
                 if (dTOUsuario.UsuarioEsTatuador) usuarioConsultado = Usuario.CrearUsuarioTatuador(dTOUsuario.UsuarioId, CorreoElectronico.Crear(dTOUsuario.UsuarioCorreo), Password.Crear(dTOUsuario.UsuarioPassword));
                 return usuarioConsultado;  

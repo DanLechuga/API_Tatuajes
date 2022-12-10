@@ -18,9 +18,9 @@ namespace API_Aplicacion.Implementacion
         }
         public void RegistrarError(DTOException dTOException)
         {
-            if (dTOException == null) throw new ArgumentNullException("No se puede usar valores nulos");
-            if (dTOException.Exception == null) throw new ArgumentNullException("No se pueden usar valores nulos");
-            if (string.IsNullOrEmpty(dTOException.Exception.Message)) throw new ArgumentNullException("Es necesario ingresar un mensaje a los errores");
+            if (dTOException == null) throw new Exception("No se puede usar valores nulos");
+            if (dTOException.Exception == null) throw new Exception("No se pueden usar valores nulos");
+            if (string.IsNullOrEmpty(dTOException.Exception.Message)) throw new Exception("Es necesario ingresar un mensaje a los errores");
             RepositorioError.RegistrarError(dTOException.Exception.Message, dTOException.Exception.InnerException?.Message, dTOException.Exception.StackTrace);
 
         }
