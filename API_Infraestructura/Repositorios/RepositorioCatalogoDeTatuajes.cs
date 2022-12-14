@@ -36,5 +36,17 @@ namespace API_Infraestructura.Repositorios
             }
             return catalogoDeTatuajes;
         }
+
+        public DetalleDeTatuaje ConsultarDetalleTatuaje(int idTatuaje)
+        {
+            DetalleDeTatuaje detalle;            
+            DynamicParameters parameters = new();
+            parameters.Add("@idTatuaje", idTatuaje, System.Data.DbType.Int32);
+            CommandDefinition command = new("ConsultarDetalleTatuaje",parameters, commandType: System.Data.CommandType.StoredProcedure, commandTimeout: 0);
+            DTOCatalogoDeTatuajes dTOCatalogoDeTatuajes = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOCatalogoDeTatuajes>(command);
+            if (dTOCatalogoDeTatuajes is null) throw new Exception("No se puedo conusltar el tatuaje para el id dado");
+            detalle = DetalleDeTatuaje.Crear(dTOCatalogoDeTatuajes.id_Tatuaje, dTOCatalogoDeTatuajes.nombreTatuaje, dTOCatalogoDeTatuajes.precioTatuaje);
+            return detalle;
+        }
     }
 }

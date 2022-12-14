@@ -27,5 +27,18 @@ namespace API_Aplicacion.Implementacion
             }
             return dTOCatalogos;
         }
+
+        public DTODetalleTatuaje ConsultarDetalleTatuaje(int idTatuaje)
+        {
+            
+            DetalleDeTatuaje detalleDeTatuaje = RepositorioCatalogoDeTatuajes.ConsultarDetalleTatuaje(idTatuaje); 
+            
+            return new DTODetalleTatuaje()
+            {
+                IdTatuaje = detalleDeTatuaje.ID,
+                NombreTatuaje = detalleDeTatuaje.NombreTatuaje,
+                PrecioTatuaje = $"${detalleDeTatuaje.PrecioTatuaje}"
+            };
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace API_Infraestructura.Interfaces
    public interface IRepositorioCatalogoDeTatuajes
     {
         IEnumerable<CatalogoDeTatuajes> ConsultarCatalogoDeTatuajes();
+        DetalleDeTatuaje ConsultarDetalleTatuaje(int idTatuaje);
     }
 }

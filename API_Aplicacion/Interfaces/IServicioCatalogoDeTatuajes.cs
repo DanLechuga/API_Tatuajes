@@ -10,5 +10,6 @@ namespace API_Aplicacion.Interfaces
     public interface IServicioCatalogoDeTatuajes
     {
         IEnumerable<DTOCatalogoTatuajes> ConsultarCatalogoDeTatuajes();
+        DTODetalleTatuaje ConsultarDetalleTatuaje(int idTatuaje);
     }
 }

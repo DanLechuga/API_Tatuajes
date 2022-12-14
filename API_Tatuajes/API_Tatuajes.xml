@@ -19,6 +19,9 @@
         <member name="M:API_Tatuajes.Controllers.catalogo.CatalogoDeTatuajesController.ConsultarCatalogoTatuajes">
             <Summary></Summary>
         </member>
+        <member name="M:API_Tatuajes.Controllers.catalogo.CatalogoDeTatuajesController.ConsultarDetalleTatuaje(System.Int32)">
+            <Summary></Summary>
+        </member>
         <member name="T:API_Tatuajes.Controllers.citas.CitasController">
             <Summary>Control de Citas</Summary>
         </member>
