@@ -41,7 +41,7 @@ namespace API_Aplicacion.Implementacion
             
                 foreach (CitaCliente itemCC in ListaCitaClientes)
                 {
-                    ListaDto.Add(new DTOCitas() { IdUsuario = itemCC.IdCliente, IdCita =itemCC.Id,EsConAnticipo = itemCC.EsConAnticipo, FechaCreacion = itemCC.FechaCitaRegistrada,IdTatuador = itemCC.IdTatuador,CantidadDeposito = itemCC.CantidadDeposito,NombreTatuador = itemCC.NombreTatuador });
+                    ListaDto.Add(new DTOCitas() { IdUsuario = itemCC.IdCliente, IdCita =itemCC.IdCita,EsConAnticipo = itemCC.EsConAnticipo, FechaCreacion = itemCC.FechaCitaRegistrada,IdTatuador = itemCC.IdTatuador,CantidadDeposito = itemCC.CantidadDeposito,NombreTatuador = itemCC.NombreTatuador });
                     
                 }
               
@@ -58,7 +58,7 @@ namespace API_Aplicacion.Implementacion
             Cita cita = Cita.Crear(dTOCitas.IdCita,dTOCitas.FechaCreacion, dTOCitas.FechaCreacion, dTOCitas.FechaCreacion);
             CitaCliente citaCliente = CitaCliente.Crear(Guid.NewGuid(),cita.Id,dTOCitas.IdUsuario,cita.FechaCreacion,dTOCitas.EsConAnticipo,dTOCitas.CantidadDeposito,tatuador.Id,tatuador.Tatuador_Nombre);
             TatuadorCita tatuadorCita = TatuadorCita.Crear(Guid.NewGuid(), tatuador.Id, cita.Id);
-            TatuajeCita tatuajeCita = TatuajeCita.Crear(Guid.NewGuid(),cita.Id,dTOCitas.IdCatalogo);
+            TatuajeCita tatuajeCita = TatuajeCita.Crear(Guid.NewGuid(),cita.Id,dTOCitas.IdCatalogo,dTOCitas.NombreTatuajeCustom);
 
             RepositorioCita.Agregar(cita);
             RepositorioClienteCita.Agregar(citaCliente);

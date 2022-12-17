@@ -86,7 +86,13 @@ namespace API_Tatuajes.Controllers.citas
             ObjectResult result = new(true);
             try
             {
-                ServicioDeCitas.CrearCita(new DTOCitas() { IdCita = Guid.NewGuid(), IdUsuario = modeloCrearCita.idUsuario, EsConAnticipo = modeloCrearCita.esAnticipo, CantidadDeposito = modeloCrearCita.montoAnticipo, FechaCreacion = modeloCrearCita.fechaCita, IdCatalogo = modeloCrearCita.listaDeTatuajes });
+                ServicioDeCitas.CrearCita(new DTOCitas() { IdCita = Guid.NewGuid(),
+                                                           IdUsuario = modeloCrearCita.idUsuario,
+                                                           EsConAnticipo = modeloCrearCita.esAnticipo,
+                                                           CantidadDeposito = modeloCrearCita.montoAnticipo,
+                                                           FechaCreacion = modeloCrearCita.fechaCita,
+                                                           IdCatalogo = modeloCrearCita.listaDeTatuajes,
+                                                           NombreTatuajeCustom  = string.IsNullOrEmpty(modeloCrearCita.nombreTatuajeCustom) ? "" : modeloCrearCita.nombreTatuajeCustom});
                 result.StatusCode = 200;
                 result.Value = true;
             }

@@ -25,5 +25,12 @@ namespace PruebasTatuajes.PruebasInfraestructura
         {
             return ListaCatalogos;
         }
+
+        public DetalleDeTatuaje ConsultarDetalleTatuaje(int idTatuaje)
+        {
+            throw new NotImplementedException();
+        }
+
+       
     }
 }

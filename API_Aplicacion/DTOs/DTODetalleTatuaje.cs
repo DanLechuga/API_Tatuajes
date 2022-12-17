@@ -11,6 +11,7 @@ namespace API_Aplicacion.DTOs
         public int IdTatuaje { get; set; }
         public string NombreTatuaje { get; set; }
         public string PrecioTatuaje { get; set; }
+        public string NombreTatuajeCustom { get; set; }
 
 
     }

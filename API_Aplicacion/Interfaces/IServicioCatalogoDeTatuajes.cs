@@ -11,5 +11,6 @@ namespace API_Aplicacion.Interfaces
     {
         IEnumerable<DTOCatalogoTatuajes> ConsultarCatalogoDeTatuajes();
         DTODetalleTatuaje ConsultarDetalleTatuaje(int idTatuaje);
+        DTODetalleTatuaje ConsultarDetalleTatuajePorIdCita(Guid idCita);
     }
 }

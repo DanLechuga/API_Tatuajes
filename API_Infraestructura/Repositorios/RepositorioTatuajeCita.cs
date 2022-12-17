@@ -13,6 +13,7 @@ namespace API_Infraestructura.Repositorios
         public Guid TatuajeCita_Id { get; set; }
         public int TatuajeCita_IdCatalogo { get; set; }
         public Guid TatuajeCita_IdCita { get; set; }
+        public string TatuajeCita_NombreTatuajeCustom { get; set; }
 
     }
     public class RepositorioTatuajeCita : IRepositorioTatuajeCita
@@ -31,6 +32,7 @@ namespace API_Infraestructura.Repositorios
                 parameters.Add("@idTatuajeCita", agregado.Id, System.Data.DbType.Guid);
                 parameters.Add("@idCatalogo", agregado.TatuajeCita_IdCatalogo, System.Data.DbType.Int32);
                 parameters.Add("@idCita", agregado.TatuajeCita_IdCita, System.Data.DbType.Guid);
+                parameters.Add("@nombreTatuajeCustom",agregado.TatuajeCita_NombreTatuajeCustom,System.Data.DbType.String);
                 CommandDefinition command = new("CrearTatuajeCita", parameters,commandTimeout:0,commandType: System.Data.CommandType.StoredProcedure);
                 if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
                 UnidadDeTrabajo.SqlConnection.Execute(command);
@@ -55,13 +57,13 @@ namespace API_Infraestructura.Repositorios
 
         public TatuajeCita ConsultarPorIdCita(Guid idCita)
         {
-            TatuajeCita tatuajeCita = null;
+            TatuajeCita tatuajeCita;
             DynamicParameters parameters = new();
             parameters.Add("@idCita", idCita, System.Data.DbType.Guid);
             CommandDefinition command = new("ConsultarTatuajeCitaPorId", parameters, commandType: System.Data.CommandType.StoredProcedure);
             DTOTatuajeCita dTOTatuajeCita = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOTatuajeCita>(command);
             if (dTOTatuajeCita is null) throw new Exception("No se encontro informacion para el id ingresado");
-            tatuajeCita = TatuajeCita.Crear(dTOTatuajeCita.TatuajeCita_Id, dTOTatuajeCita.TatuajeCita_IdCita, dTOTatuajeCita.TatuajeCita_IdCatalogo);
+            tatuajeCita = TatuajeCita.Crear(dTOTatuajeCita.TatuajeCita_Id, dTOTatuajeCita.TatuajeCita_IdCita, dTOTatuajeCita.TatuajeCita_IdCatalogo,dTOTatuajeCita.TatuajeCita_NombreTatuajeCustom);
             return tatuajeCita;
         }
     }

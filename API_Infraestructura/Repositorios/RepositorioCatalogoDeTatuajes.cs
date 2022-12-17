@@ -48,5 +48,7 @@ namespace API_Infraestructura.Repositorios
             detalle = DetalleDeTatuaje.Crear(dTOCatalogoDeTatuajes.id_Tatuaje, dTOCatalogoDeTatuajes.nombreTatuaje, dTOCatalogoDeTatuajes.precioTatuaje);
             return detalle;
         }
+
+        
     }
 }

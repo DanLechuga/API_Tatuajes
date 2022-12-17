@@ -70,5 +70,28 @@ namespace API_Tatuajes.Controllers.catalogo
             }
             return result;
         }
+        ///<Summary></Summary>
+        [HttpGet]
+        [Route("/ConsultarDetalleTatuajePorIdCita")]
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(DTODetalleTatuaje))]
+        public ObjectResult ConsultarDetalleTatuajePorIdCita(Guid idCita)
+        {
+            ObjectResult result = new(true);
+            
+            try
+            {
+                DTODetalleTatuaje dTODetalle = ServicioCatalogoDeTatuajes.ConsultarDetalleTatuajePorIdCita(idCita);
+                result.Value = dTODetalle;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            }
+            return result;
+        }
     }
 }

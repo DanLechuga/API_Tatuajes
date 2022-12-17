@@ -11,5 +11,6 @@ namespace API_Infraestructura.Interfaces
     {
         IEnumerable<CatalogoDeTatuajes> ConsultarCatalogoDeTatuajes();
         DetalleDeTatuaje ConsultarDetalleTatuaje(int idTatuaje);
+        
     }
 }
