@@ -35,5 +35,9 @@ namespace API_DominioTatuajes.Agregados
         {
             return new CitaCliente(idCitaCliente,idCita,idCliente,fechaRegistro,esConAnticipo,cantidadAnticipo,idTatuador,nombreTatuador);
         }
+        public void CambioDeFecha(DateTime fechaActualizada)
+        {
+            this.FechaCitaRegistrada = fechaActualizada;
+        }
     }
 }

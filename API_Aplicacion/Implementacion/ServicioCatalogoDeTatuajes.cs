@@ -47,9 +47,13 @@ namespace API_Aplicacion.Implementacion
         {
             if (idCita == Guid.Empty) throw new ArgumentNullException("No se puede consultar valores vacios");
             TatuajeCita tatuajeCita = RepositorioTatuajeCita.ConsultarPorIdCita(idCita);
+            var detalle = ConsultarDetalleTatuaje(tatuajeCita.TatuajeCita_IdCatalogo);
             if (tatuajeCita.TatuajeCita_IdCatalogo == 25 && string.IsNullOrEmpty(tatuajeCita.TatuajeCita_NombreTatuajeCustom)) throw new Exception("No se registro nombre para el tatuaje dado por el cliente");
             return new DTODetalleTatuaje()
             {
+                IdTatuaje = tatuajeCita.TatuajeCita_IdCatalogo,
+                NombreTatuaje = detalle.NombreTatuaje,
+                PrecioTatuaje = detalle.PrecioTatuaje,
                 NombreTatuajeCustom = tatuajeCita.TatuajeCita_NombreTatuajeCustom
             };
         }

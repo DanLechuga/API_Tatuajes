@@ -12,5 +12,6 @@ namespace API_Infraestructura.Interfaces
     {
         IEnumerable<CitaCliente> ConsultaCitaCliente(Usuario usuario);
         CitaCliente ConsultarCitaClientePorId(Guid idCita);
+        
     }
 }

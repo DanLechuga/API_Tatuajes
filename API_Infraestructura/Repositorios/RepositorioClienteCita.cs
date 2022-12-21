@@ -4,9 +4,7 @@ using API_Infraestructura.Interfaces;
 using Dapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace API_Infraestructura.Repositorios
 {
@@ -35,14 +33,14 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@idCitaCliente",agregado.Id,System.Data.DbType.Guid);
-                parameters.Add("@fechacita", agregado.FechaCitaRegistrada, System.Data.DbType.DateTime);
-                parameters.Add("@idCliente", agregado.IdCliente, System.Data.DbType.Guid);
-                parameters.Add("@anticipo", agregado.EsConAnticipo, System.Data.DbType.Boolean);
-                parameters.Add("@montoanticipo", agregado.CantidadDeposito, System.Data.DbType.Double);
-                parameters.Add("@idTatuador", agregado.IdTatuador, System.Data.DbType.Guid);
-                parameters.Add("@idCita",agregado.IdCita,System.Data.DbType.Guid);
-                CommandDefinition command = new("CrearClienteCita",parameters,commandTimeout:0,commandType: System.Data.CommandType.StoredProcedure);
+                parameters.Add("@idCitaCliente",agregado.Id,DbType.Guid);
+                parameters.Add("@fechacita", agregado.FechaCitaRegistrada, DbType.DateTime);
+                parameters.Add("@idCliente", agregado.IdCliente, DbType.Guid);
+                parameters.Add("@anticipo", agregado.EsConAnticipo, DbType.Boolean);
+                parameters.Add("@montoanticipo", agregado.CantidadDeposito, DbType.Double);
+                parameters.Add("@idTatuador", agregado.IdTatuador, DbType.Guid);
+                parameters.Add("@idCita",agregado.IdCita,DbType.Guid);
+                CommandDefinition command = new("CrearClienteCita",parameters,commandTimeout:0,commandType: CommandType.StoredProcedure);
                 if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
                 UnidadDeTrabajo.SqlConnection.Execute(command);
                 UnidadDeTrabajo.Dispose();
@@ -59,8 +57,8 @@ namespace API_Infraestructura.Repositorios
         {
             List<CitaCliente> ListaCitasCliente = new();
             DynamicParameters parameters = new();
-            parameters.Add("@idUsuario",usuario.Id,System.Data.DbType.Guid);
-            CommandDefinition command = new("ConsultarCitaPorUsuario",parameters,commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
+            parameters.Add("@idUsuario",usuario.Id,DbType.Guid);
+            CommandDefinition command = new("ConsultarCitaPorUsuario",parameters,commandTimeout: 0, commandType: CommandType.StoredProcedure);
             IEnumerable<DTOCitaCliente> ListaDTOS = UnidadDeTrabajo.SqlConnection.Query<DTOCitaCliente>(command);
             foreach (var item in ListaDTOS)
             {
@@ -77,19 +75,36 @@ namespace API_Infraestructura.Repositorios
 
         public void Update(CitaCliente agregado)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@fechaActualizada", agregado.FechaCitaRegistrada, DbType.DateTime);
+                parameters.Add("@idCita", agregado.IdCita, DbType.Guid);
+                CommandDefinition command = new("ActualizarCitaPorId", parameters, commandType: CommandType.StoredProcedure);
+                if (UnidadDeTrabajo.SqlConnection.State == ConnectionState.Closed) UnidadDeTrabajo.SqlConnection.Open();
+                /*int result =*/
+                UnidadDeTrabajo.SqlConnection.Execute(command);
+                //if (result == 1) throw new Exception("Error al actualizar el campo");
+                UnidadDeTrabajo.SqlConnection.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public CitaCliente ConsultarCitaClientePorId(Guid idCita)
         {
             CitaCliente citaCliente = null;
             DynamicParameters parameters = new();
-            parameters.Add("@idCita", idCita,System.Data.DbType.Guid);
-            CommandDefinition command = new("ConsultarCitaPorId", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            parameters.Add("@idCita", idCita, DbType.Guid);
+            CommandDefinition command = new("ConsultarCitaPorId", parameters, commandType: CommandType.StoredProcedure);
             DTOCitaCliente dTOCitaCliente = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOCitaCliente>(command);
             if (dTOCitaCliente is null) throw new ArgumentNullException("No se encontro cita para el id ingresado");
             citaCliente = CitaCliente.Crear(dTOCitaCliente.ClienteCita_id, dTOCitaCliente.ClienteCita_id, dTOCitaCliente.ClienteCita_ClienteId, dTOCitaCliente.ClienteCita_Fecha, dTOCitaCliente.ClienteCita_Anticipo, dTOCitaCliente.ClienteCita_MontoAnticipa, dTOCitaCliente.ClienteCita_TatuadorId,dTOCitaCliente.Tatuador_Nombre);
             return citaCliente;
         }
+       
     }
 }

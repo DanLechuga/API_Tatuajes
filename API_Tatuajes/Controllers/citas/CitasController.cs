@@ -105,12 +105,12 @@ namespace API_Tatuajes.Controllers.citas
             }
             return result;
         }
-        ///<Summary>Edita una cita</Summary>
+        ///<Summary>Consulta los ids para editar las citas</Summary>
         [HttpGet]
-        [Route("/EditarCita")]
+        [Route("/EditarCitaVista")]
         [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Guid>))]
-        public ObjectResult EditarCita(Guid idCliente)
+        public ObjectResult EditarCitaVista(Guid idCliente)
         {
             if (idCliente == Guid.Empty) throw new ArgumentNullException("No se puede utilizar un id con valor en 0");
             ObjectResult result = new(true);
@@ -130,6 +130,29 @@ namespace API_Tatuajes.Controllers.citas
 
             return result;
         }
-       
+        ///<Summary>Editar Cita</Summary>
+        [HttpPatch]
+        [Route("/EditarCita")]
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200)]
+        public ObjectResult EditarCita(ModeloActualizarCita modelo)
+        {
+            
+            ObjectResult result = new(true);
+            try
+            {
+                ServicioDeCitas.ActualizarCita(new DTOCitas() { IdCita = modelo.idCita, FechaCreacion = modelo.fechaActualizada });
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            }
+
+            return result;
+        }
+
     }
 }

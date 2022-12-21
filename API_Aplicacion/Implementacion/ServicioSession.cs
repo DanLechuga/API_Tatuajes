@@ -13,10 +13,12 @@ namespace API_Aplicacion.Implementacion
     public class ServicioSession : IServicioSession
     {
         public IRepositorioSession RepositorioSession { get; }
-      
-        public ServicioSession(IRepositorioSession repositorioSession)
+        public IRepositorioUsuario RepositorioUsuario { get;  }
+
+        public ServicioSession(IRepositorioSession repositorioSession,IRepositorioUsuario repositorioUsuario)
         {
             this.RepositorioSession = repositorioSession;
+            this.RepositorioUsuario = repositorioUsuario;
             
         }
         public void CrearSession(DTOSession dTOSession)
@@ -33,7 +35,8 @@ namespace API_Aplicacion.Implementacion
         {
             if (cliente == null) throw new Exception("No se pueden usar elementos nulos");
             if (cliente.IdCliente == Guid.Empty) throw new Exception("No se puede usar valores con 0");
-            Session SessionConsultada = RepositorioSession.GetSessionPorUsuario(cliente.IdCliente);
+            Usuario usuario = RepositorioUsuario.GetUsuarioCliente(cliente.IdCliente);
+            Session SessionConsultada = RepositorioSession.GetSessionPorUsuario(usuario.Id);
             if (SessionConsultada == null) throw new Exception("No se encontro usuario para el id ingresado");
             return new DTOSession()
             {
@@ -54,6 +57,30 @@ namespace API_Aplicacion.Implementacion
             Session session = RepositorioSession.GetSessionPorUsuario(dTOUsuario.IdUsaurio);
             RepositorioSession.CerrarSession(session);
             
+        }
+
+        public void CerrarSessionTatuador(DTOTatuador dTOTatuador)
+        {
+            if (dTOTatuador is null) throw new Exception("No se puede realizar accion falta objeto para trabajar");
+            if (dTOTatuador.idTatuador == Guid.Empty) throw new Exception("Falta ingresar el id del tatuador");
+            Session session = RepositorioSession.GetSessionPorUsuario(dTOTatuador.idTatuador);
+            RepositorioSession.CerrarSession(session);
+        }
+
+        public DTOSession ConsultaSessionTatuador(DTOTatuador dTOTatuador)
+        {
+            if (dTOTatuador is null) throw new Exception("No se puede consultar valores vacios");
+            if (dTOTatuador.idTatuador == Guid.Empty) throw new Exception("No se puede usar id vacios");
+            Session SessionConsultada = RepositorioSession.GetSessionPorUsuario(dTOTatuador.idTatuador);
+            if (SessionConsultada == null) throw new Exception("No se encontro usuario para el id ingresado");
+            return new DTOSession()
+            {
+                IdSession = SessionConsultada.Id,
+                IdSessionUsuario = SessionConsultada.SessionIdUsuario,
+                IdSessionCliente = SessionConsultada.SessionIdCliente,
+                IdSessionTatuador = SessionConsultada.SessionIdTatuador,
+                SessionActiva = SessionConsultada.SessionActiva
+            };
         }
     }
 }

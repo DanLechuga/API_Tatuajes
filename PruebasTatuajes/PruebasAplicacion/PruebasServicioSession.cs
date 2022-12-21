@@ -15,13 +15,13 @@ namespace PruebasTatuajes.PruebasAplicacion
    public class PruebasServicioSession
     {
         public IRepositorioSession RepositorioSession { get; }
-        
+        public IRepositorioUsuario RepositorioUsuario { get; }
         public IServicioSession ServicioSession { get;  }
         public PruebasServicioSession()
         {
             this.RepositorioSession = new MockRepositorioSession();
-        
-            this.ServicioSession = new ServicioSession(RepositorioSession);
+            this.RepositorioUsuario = new MockRepositorioUsuario();
+            this.ServicioSession = new ServicioSession(RepositorioSession,RepositorioUsuario);
         }
         [Fact]
         public void ServicioSession_CrearSession_SessionConDTONulo()

@@ -55,5 +55,10 @@ namespace PruebasTatuajes.PruebasInfraestructura
         {
             return ListaCitasCliente.FirstOrDefault(x => x.Id == idCita);
         }
+
+        public void ActualizarCita(CitaCliente cita)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

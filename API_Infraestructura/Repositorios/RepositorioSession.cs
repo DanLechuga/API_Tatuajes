@@ -63,8 +63,8 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@idCliente",idUsuario,System.Data.DbType.Guid);
-                CommandDefinition command = new("ConsultaSessionPorCliente",parameters,commandTimeout:0,commandType:System.Data.CommandType.StoredProcedure);
+                parameters.Add("@idUsuario", idUsuario,System.Data.DbType.Guid);
+                CommandDefinition command = new("ConsultaSessionPorUsuario", parameters,commandTimeout:0,commandType:System.Data.CommandType.StoredProcedure);
                 DTOSession Dtosession = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOSession>(command);
                 if (Dtosession == null) throw new ArgumentNullException("No se encontro el usuario para el id ingresado ");
                 SessionConsultada = Session.Crear(Dtosession.SessionId,Dtosession.SessionIdUsuario,Dtosession.SessionIdCliente,Dtosession.SessionIdTatuador,Dtosession.SessionActiva);

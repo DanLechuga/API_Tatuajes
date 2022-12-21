@@ -11,5 +11,6 @@ namespace API_Aplicacion.Interfaces
         void CrearCita(DTOCitas dTOCitas);
         IEnumerable<Guid> ConsultasIds(DTOUsuario dTOUsuario);
         DTOCitas ConsultarCita(DTOCitas dTOCitas);
+        void ActualizarCita(DTOCitas dTOCitas);
     }
 }

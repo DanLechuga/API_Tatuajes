@@ -105,6 +105,14 @@ namespace API_Aplicacion.Implementacion
             return citas;
             
         }
+
+        public void ActualizarCita(DTOCitas dTOCitas)
+        {
+            CitaCliente cita = RepositorioClienteCita.ConsultarCitaClientePorId(dTOCitas.IdCita);
+            cita.CambioDeFecha(dTOCitas.FechaCreacion);
+            RepositorioClienteCita.Update(cita);
+            
+        }
     }
 
   

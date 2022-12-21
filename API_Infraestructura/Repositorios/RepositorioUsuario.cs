@@ -43,10 +43,10 @@ namespace API_Infraestructura.Repositorios
                 
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                
+                throw;
             }
         }
 

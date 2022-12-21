@@ -26,6 +26,7 @@ namespace API_Tatuajes.Extensions
             c.SwaggerEndpoint(SwaggerConst.PathNotificaciones, SwaggerConst.NotificacionesServiceTitle);
             c.SwaggerEndpoint(SwaggerConst.PathSessiones, SwaggerConst.SessionsServiceTitle);
             c.SwaggerEndpoint(SwaggerConst.PathTest, SwaggerConst.TestServiceTitle);
+            c.SwaggerEndpoint(SwaggerConst.PathTatuador, SwaggerConst.TatuadorServiceTitle);
 
 //#if DEBUG
 //            pahtCssSwagger = pahtCssSwagger.Replace(virtualDirectory, string.Empty);

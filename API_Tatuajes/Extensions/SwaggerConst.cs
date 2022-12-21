@@ -114,5 +114,22 @@ namespace API_Tatuajes.Extensions
         /// 
         /// </summary>
         public const string PathTest = "../swagger/test/swagger.json";
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string PathTatuador = "../swagger/tatuador/swagger.json";
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string SwaggerDocTatuador = "tatuador";
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string TatuadorServiceTitle = "Tatuador";
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string TatuadorServiceName = "tatuador";
+        
     }
 }

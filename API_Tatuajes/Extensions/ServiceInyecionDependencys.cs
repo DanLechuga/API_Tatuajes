@@ -42,6 +42,7 @@ namespace API_Tatuajes.Extensions
                 c.SwaggerDoc(SwaggerConst.SwaggerDocNotificaciones, new OpenApiInfo { Title = SwaggerConst.NotificacionesServiceTitle, Version = SwaggerConst.ServiceVersion });
                 c.SwaggerDoc(SwaggerConst.SwaggerDocSession, new OpenApiInfo { Title = SwaggerConst.SessionsServiceTitle, Version = SwaggerConst.ServiceVersion });
                 c.SwaggerDoc(SwaggerConst.SwaggerDocTest, new OpenApiInfo { Title = SwaggerConst.TestServiceTitle, Version = SwaggerConst.ServiceVersion });
+                c.SwaggerDoc(SwaggerConst.SwaggerDocTatuador, new OpenApiInfo { Title = SwaggerConst.TatuadorServiceTitle, Version = SwaggerConst.ServiceVersion });
                 c.CustomSchemaIds(x => x.Name.Replace("Dto", string.Empty));
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}{SwaggerConst.SwaggerExtensionXml}";
@@ -72,6 +73,7 @@ namespace API_Tatuajes.Extensions
             services.AddTransient<IServicioSession, ServicioSession>();
             services.AddTransient<IServicioCatalogoDeTatuajes, ServicioCatalogoDeTatuajes>();
             services.AddTransient<IServicioValidacionUsuarios, ServicioValidacionUsuarios>();
+            services.AddTransient<IServicioValidacionTatuador, ServicioValidacionTatuador>();
             return services;
         }
     }
