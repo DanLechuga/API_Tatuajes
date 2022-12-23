@@ -3,13 +3,18 @@ using API_Infraestructura.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Data;
 using System.Threading.Tasks;
 using API_Comun;
 using Dapper;
 
 namespace API_Infraestructura.Repositorios
 {
+    class DTOTatuadorCita{
+        public Guid TatuadorCita_Id  { get; set; }
+        public Guid TatuadorCita_IdTatuador  { get; set; }
+        public Guid TatuadorCita_IdCita { get; set; }
+    }
    public  class RepositorioTatuadorCita : IRepositorioTatuadorCita
     {
         public IUnidadDeTrabajo UnidadDeTrabajo { get;  }
@@ -47,6 +52,20 @@ namespace API_Infraestructura.Repositorios
         public void Update(TatuadorCita agregado)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<TatuadorCita> ConsultarCitasPorTatuador(Tatuador tatuador)
+        {
+            List<TatuadorCita> ListaCitasCliente = new();
+            DynamicParameters parameters = new();
+            parameters.Add("@idTatuador", tatuador.Id, DbType.Guid);
+            CommandDefinition command = new("ConsultarCitaPorTatuador", parameters, commandTimeout: 0, commandType: CommandType.StoredProcedure);
+            IEnumerable<DTOTatuadorCita> ListaDTOS = UnidadDeTrabajo.SqlConnection.Query<DTOTatuadorCita>(command);
+            foreach (var item in ListaDTOS)
+            {
+                ListaCitasCliente.Add(TatuadorCita.Crear(item.TatuadorCita_Id,item.TatuadorCita_IdTatuador,item.TatuadorCita_IdCita));
+            }
+            return ListaCitasCliente;
         }
     }
 }

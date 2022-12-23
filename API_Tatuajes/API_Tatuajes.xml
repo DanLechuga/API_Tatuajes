@@ -123,6 +123,13 @@
             <param name="idTatuador"></param>
             <returns></returns>
         </member>
+        <member name="M:API_Tatuajes.Controllers.tatuador.TatuadorController.ConsultaDeCitasTatuador(System.Guid)">
+            <summary>
+            
+            </summary>
+            <param name="idTatuador"></param>
+            <returns></returns>
+        </member>
         <member name="T:API_Tatuajes.Controllers.test.WeatherForecastController">
             <Summary></Summary>
         </member>

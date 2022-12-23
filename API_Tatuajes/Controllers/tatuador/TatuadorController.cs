@@ -89,5 +89,34 @@ namespace API_Tatuajes.Controllers.tatuador
             return result;
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idTatuador"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/ConsultaDeCitasTatuador")]
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<DTOCitasTatuador>))]
+        public ObjectResult ConsultaDeCitasTatuador(Guid idTatuador)
+        {
+            if (Guid.Empty == idTatuador) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
+            ObjectResult result = new(true);
+            result.StatusCode = 403;
+            try
+            {
+                DTOTatuador dTOTatuador = new() { idTatuador = idTatuador };
+                IEnumerable<DTOCitasTatuador> tatuadorConsultado = ServicioValidacionTatuador.ConsultarCitasPorTatuador(dTOTatuador);
+                result.Value = tatuadorConsultado;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            }
+            return result;
+
+        }
     }
 }

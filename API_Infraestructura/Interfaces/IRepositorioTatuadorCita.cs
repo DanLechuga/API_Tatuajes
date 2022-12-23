@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace API_Infraestructura.Interfaces
 {
-  public  interface IRepositorioTatuadorCita : IRepositorio<TatuadorCita>
+    public interface IRepositorioTatuadorCita : IRepositorio<TatuadorCita>
     {
+        IEnumerable<TatuadorCita> ConsultarCitasPorTatuador(Tatuador tatuador);
     }
 }

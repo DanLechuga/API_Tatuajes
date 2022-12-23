@@ -29,5 +29,10 @@ namespace PruebasTatuajes.PruebasInfraestructura
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<TatuadorCita> ConsultarCitasPorTatuador(Tatuador tatuador)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
