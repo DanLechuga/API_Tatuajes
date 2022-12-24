@@ -59,7 +59,7 @@ namespace API_Aplicacion.Implementacion
             CitaCliente citaCliente = CitaCliente.Crear(Guid.NewGuid(),cita.Id,dTOCitas.IdUsuario,cita.FechaCreacion,dTOCitas.EsConAnticipo,dTOCitas.CantidadDeposito,tatuador.Id,tatuador.Tatuador_Nombre);
             TatuadorCita tatuadorCita = TatuadorCita.Crear(Guid.NewGuid(), tatuador.Id, cita.Id);
             TatuajeCita tatuajeCita = TatuajeCita.Crear(Guid.NewGuid(),cita.Id,dTOCitas.IdCatalogo,dTOCitas.NombreTatuajeCustom);
-
+            if (tatuajeCita.TatuajeCita_IdCatalogo == 25 && string.IsNullOrEmpty(tatuajeCita.TatuajeCita_NombreTatuajeCustom)) throw new Exception("No se puede registrar tatuaje custom sin nombre");
             RepositorioCita.Agregar(cita);
             RepositorioClienteCita.Agregar(citaCliente);
             RepositorioTatuadorCita.Agregar(tatuadorCita);
