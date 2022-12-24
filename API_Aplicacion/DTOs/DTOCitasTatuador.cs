@@ -9,6 +9,7 @@ namespace API_Aplicacion.DTOs
         public Guid IdCliente { get; set; }
         public DateTime FechaCreacion { get; set; }
         public bool EsConAnticipo { get; set; }
-        public double CantidadDeposito { get; set; }        
+        public double CantidadDeposito { get; set; }
+        public int IdCatalogo { get; set; }
     }
 }

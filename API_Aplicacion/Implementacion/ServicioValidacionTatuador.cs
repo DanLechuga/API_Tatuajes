@@ -15,14 +15,16 @@ namespace API_Aplicacion.Implementacion
         public IRepositorioTatuador RepositorioTatuador { get; }
         public IRepositorioTatuadorCita RepositorioTatuadorCita { get;  }
         public IRepositorioClienteCita RepositorioClienteCita { get;  }
-        public IRepositorioCliente RepositorioCliente { get; set; }
+        public IRepositorioCliente RepositorioCliente { get;  }
+        public IRepositorioTatuajeCita RepositorioTatuajeCita { get;  }
 
-        public ServicioValidacionTatuador(IRepositorioTatuador repositorioTatuador,IRepositorioTatuadorCita repositorioTatuadorCita, IRepositorioClienteCita repositorioClienteCita, IRepositorioCliente repositorioCliente)
+        public ServicioValidacionTatuador(IRepositorioTatuador repositorioTatuador,IRepositorioTatuadorCita repositorioTatuadorCita, IRepositorioClienteCita repositorioClienteCita, IRepositorioCliente repositorioCliente, IRepositorioTatuajeCita repositorioTatuajeCita)
         {
             this.RepositorioTatuador = repositorioTatuador;
             this.RepositorioTatuadorCita = repositorioTatuadorCita;
             this.RepositorioClienteCita = repositorioClienteCita;
             this.RepositorioCliente = repositorioCliente;
+            this.RepositorioTatuajeCita = repositorioTatuajeCita;
             
         }
         public DTOTatuador ConsultarInfoTatuador(DTOTatuador dTOTatuador)
@@ -49,6 +51,41 @@ namespace API_Aplicacion.Implementacion
                 listaDtos.Add(new DTOCitasTatuador() { IdCita = item.IdCita,EsConAnticipo = citaCliente.EsConAnticipo,CantidadDeposito = citaCliente.CantidadDeposito,FechaCreacion = citaCliente.FechaCitaRegistrada,IdCliente = citaCliente.IdCliente,NombreCliente = cliente.Cliente_nombre});
             }
             return listaDtos;
+        }
+
+        public IEnumerable<Guid> ConsultarListaIdsCitas(DTOTatuador dTOTatuador)
+        {
+            List<Guid> listaIds = new();
+            var tatuador = RepositorioTatuador.ConsultarTodosLosTatuadores().FirstOrDefault(x => x.Id == dTOTatuador.idTatuador);
+            if (tatuador is null) throw new Exception("No se puede consultar el tatuador por el id ingresado");
+            IEnumerable<TatuadorCita> tatuadorCitas = RepositorioTatuadorCita.ConsultarCitasPorTatuador(tatuador);
+            foreach (var item in tatuadorCitas)
+            {
+                listaIds.Add(item.IdCita);
+            }
+            return listaIds;
+        }
+
+        public DTOCitasTatuador ConsultarDetalleCita(DTOTatuador dTOTatuador, Guid idCita)
+        {
+            DTOCitasTatuador dTO = new();
+            var tatuador = RepositorioTatuador.ConsultarTodosLosTatuadores().FirstOrDefault(x => x.Id == dTOTatuador.idTatuador);
+            if (tatuador is null) throw new Exception("No se puede consultar el tatuador por el id ingresado");
+            var cita = RepositorioClienteCita.ConsultarCitaClientePorId(idCita);
+            if (cita is null) throw new Exception("No se encontro cita para el id ingresado");
+
+            var cliente = RepositorioCliente.GetClientePorId(cita.IdCliente);
+            if (cliente is null) throw new Exception("No se encontro clinete para el id ingresado");
+            var tatuaje = RepositorioTatuajeCita.ConsultarPorIdCita(idCita);
+            if (tatuaje is null) throw new Exception("No se encontro informacion para el tatuaje ingresado");
+            return new DTOCitasTatuador() { EsConAnticipo = cita.EsConAnticipo,
+                CantidadDeposito = cita.CantidadDeposito,
+                FechaCreacion = cita.FechaCitaRegistrada,
+                IdCita = cita.IdCita,
+                IdCliente = cita.IdCliente,
+                NombreCliente = cliente.Cliente_nombre,
+                IdCatalogo = tatuaje.TatuajeCita_IdCatalogo
+            };            
         }
     }
 }

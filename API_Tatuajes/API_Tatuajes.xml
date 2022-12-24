@@ -130,6 +130,21 @@
             <param name="idTatuador"></param>
             <returns></returns>
         </member>
+        <member name="M:API_Tatuajes.Controllers.tatuador.TatuadorController.DetalleCitaVista(System.Guid)">
+            <summary>
+            
+            </summary>
+            <param name="idTatuador"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.tatuador.TatuadorController.DetalleCita(System.Guid,System.Guid)">
+            <summary>
+            
+            </summary>
+            <param name="idTatuador"></param>
+            <param name="idCita"></param>
+            <returns></returns>
+        </member>
         <member name="T:API_Tatuajes.Controllers.test.WeatherForecastController">
             <Summary></Summary>
         </member>

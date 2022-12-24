@@ -116,7 +116,69 @@ namespace API_Tatuajes.Controllers.tatuador
                 ServicioError.RegistrarError(new DTOException() { Exception = ex });
             }
             return result;
+        }
+
+      /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idTatuador"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/DetalleCitaVista")]
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Guid>))]
+        public ObjectResult DetalleCitaVista(Guid idTatuador)
+        {
+            if (Guid.Empty == idTatuador) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
+            ObjectResult result = new(true);
+            result.StatusCode = 403;
+            try
+            {
+                DTOTatuador dTOTatuador = new() { idTatuador = idTatuador };
+                IEnumerable<Guid> tatuadorConsultado = ServicioValidacionTatuador.ConsultarListaIdsCitas(dTOTatuador);
+                result.Value = tatuadorConsultado;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            }
+            return result;
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idTatuador"></param>
+        /// <param name="idCita"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/DetalleCita")]
+        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(200, Type = typeof(DTOCitasTatuador))]
+        public ObjectResult DetalleCita(Guid idTatuador, Guid idCita)
+        {
+            if (Guid.Empty == idTatuador && Guid.Empty == idCita) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
+            ObjectResult result = new(true);
+            result.StatusCode = 403;
+            try
+            {
+                DTOTatuador dTOTatuador = new() { idTatuador = idTatuador };
+                DTOCitasTatuador tatuadorConsultado = ServicioValidacionTatuador.ConsultarDetalleCita(dTOTatuador,idCita);
+                result.Value = tatuadorConsultado;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
+                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            }
+            return result;
+
+        }
+
+
+
     }
 }
