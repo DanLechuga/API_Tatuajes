@@ -35,7 +35,7 @@ namespace PruebasTatuajes.PruebasUI
             RepositorioTatuadorCita = new MockRepositorioTatuadorCita();
             RepositorioTatuajeCita = new MockRepositorioTatuajeCita();
             ServicioError = new ServicioError(RepositorioError);
-            ServicioDeCitas = new ServicioCitas(RepositorioCita,RepositorioClienteCita,RepositorioUsuario, RepositorioTatuador,RepositorioTatuadorCita,RepositorioTatuajeCita);
+            ServicioDeCitas = new ServicioCitas(RepositorioCita,RepositorioClienteCita,RepositorioUsuario, RepositorioTatuador,RepositorioTatuadorCita,RepositorioTatuajeCita,ServicioError);
             CitasController = new(ServicioDeCitas,ServicioError);
         }
         [Fact]
