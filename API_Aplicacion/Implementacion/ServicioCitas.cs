@@ -134,7 +134,7 @@ namespace API_Aplicacion.Implementacion
                     IdUsuario = citaCliente.IdCliente,
                     IdCatalogo = tatuajeCita.TatuajeCita_IdCatalogo,
                     NombreTatuador = tatuador.FirstOrDefault(x => x.Id.Equals(citaCliente.IdTatuador)).Tatuador_Nombre,
-
+                    NombreTatuajeCustom =tatuajeCita.TatuajeCita_NombreTatuajeCustom
                 };
 
             }
