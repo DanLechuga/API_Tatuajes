@@ -33,7 +33,7 @@ namespace API_Aplicacion.Implementacion
             Usuario usuarioDeBase = RepositorioUsuario.GetUsuarioPorCorreo(usuario.Username);
             if (usuarioDeBase == null) throw new Exception($"Usuario no encontrado para el correo ingresado {usuario.Username}");
             if (usuarioDeBase.UsuarioPassword.ContraseniaValida != usuario.Password) throw new Exception($"Contraseña ingresa no coincide con el usuario ingresado {usuario.Username}");
-            DTOUsuario UsuarioConsultado = new(usuarioDeBase.UsuarioCorreo.Cadenavalida, usuarioDeBase.UsuarioPassword.ContraseniaValida) { EsCliente = usuarioDeBase.UsuarioEsCliente, Estatuador = usuarioDeBase.UsuarioEsTatuador, EsUsuarioValido = true};
+            DTOUsuario UsuarioConsultado = new(usuarioDeBase.UsuarioCorreo.Cadenavalida, usuarioDeBase.UsuarioPassword.ContraseniaValida) { EsCliente = usuarioDeBase.UsuarioEsCliente, Estatuador = usuarioDeBase.UsuarioEsTatuador, EsUsuarioValido = true,EsCreadorContenido = usuarioDeBase.UsuarioEsCreadorContenido,IdUsaurio = usuarioDeBase.Id};
             
             return UsuarioConsultado;
         }

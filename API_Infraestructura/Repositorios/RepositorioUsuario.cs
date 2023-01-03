@@ -18,7 +18,8 @@ namespace API_Infraestructura.Repositorios
         public string UsuarioPassword { get; set; }
         public bool UsuarioEsCliente { get; set; }
         public bool UsuarioEsTatuador { get; set; }
-        
+        public bool UsuarioEsCreadorContenido { get; set; }
+
     }
     public class RepositorioUsuario : IRepositorioUsuario
     {
@@ -100,6 +101,7 @@ namespace API_Infraestructura.Repositorios
                 if (dTOUsuario == null) return null;
                 if (dTOUsuario.UsuarioEsCliente) usuarioConsultado = Usuario.CrearUsuarioCliente(dTOUsuario.UsuarioId, CorreoElectronico.Crear(dTOUsuario.UsuarioCorreo), Password.Crear(dTOUsuario.UsuarioPassword));
                 if (dTOUsuario.UsuarioEsTatuador) usuarioConsultado = Usuario.CrearUsuarioTatuador(dTOUsuario.UsuarioId, CorreoElectronico.Crear(dTOUsuario.UsuarioCorreo), Password.Crear(dTOUsuario.UsuarioPassword));
+                if (dTOUsuario.UsuarioEsCreadorContenido) usuarioConsultado = Usuario.CrearUsuarioCreadorContenido(dTOUsuario.UsuarioId, CorreoElectronico.Crear(dTOUsuario.UsuarioCorreo), Password.Crear(dTOUsuario.UsuarioPassword));
                 return usuarioConsultado;  
             }
             catch (Exception)

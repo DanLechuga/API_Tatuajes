@@ -15,26 +15,32 @@ namespace API_DominioTatuajes.Agregados
         public Password UsuarioPassword { get; set; }
         public bool UsuarioEsCliente { get; set; }
         public bool UsuarioEsTatuador { get; set; }
-        private Usuario(Guid usuarioId, CorreoElectronico usuarioCorreo, Password usuarioPassword, bool usuarioEsCliente, bool usuarioEsTatuador)
+        public bool UsuarioEsCreadorContenido { get; set; }
+        private Usuario(Guid usuarioId, CorreoElectronico usuarioCorreo, Password usuarioPassword, bool usuarioEsCliente, bool usuarioEsTatuador,bool usuarioEsCreadorContenido)
         {
             this.Id = usuarioId;
             this.UsuarioCorreo = usuarioCorreo ?? throw new ArgumentNullException("No se puede utilizar valores nulos");
             this.UsuarioPassword = usuarioPassword ?? throw new ArgumentNullException("No se puede utilizar valores nulos");
             this.UsuarioEsCliente = usuarioEsCliente;
             this.UsuarioEsTatuador = usuarioEsTatuador;
+            this.UsuarioEsCreadorContenido = usuarioEsCreadorContenido;
         }
-        private static Usuario Crear(Guid usuarioId, CorreoElectronico usuarioCorreo, Password usuarioPassword, bool usuarioEsCliente, bool usuarioEsTatuador)
+        private static Usuario Crear(Guid usuarioId, CorreoElectronico usuarioCorreo, Password usuarioPassword, bool usuarioEsCliente, bool usuarioEsTatuador,bool usuarioEsCreadorContenido)
         {
-            return new Usuario(usuarioId,usuarioCorreo,usuarioPassword,usuarioEsCliente,usuarioEsTatuador);
+            return new Usuario(usuarioId,usuarioCorreo,usuarioPassword,usuarioEsCliente,usuarioEsTatuador,usuarioEsCreadorContenido);
         }
 
         public static Usuario CrearUsuarioCliente(Guid usuarioId, CorreoElectronico usuarioCorreo, Password usuarioPassword)
         {
-          return  Crear(usuarioId, usuarioCorreo, usuarioPassword, true, false);
+          return  Crear(usuarioId, usuarioCorreo, usuarioPassword, true, false,false);
         }
         public static Usuario CrearUsuarioTatuador(Guid usuarioId, CorreoElectronico usuarioCorreo, Password usuarioPassword)
         {
-            return Crear(usuarioId,usuarioCorreo,usuarioPassword,false,true);
+            return Crear(usuarioId,usuarioCorreo,usuarioPassword,false,true,false);
+        }
+        public static Usuario CrearUsuarioCreadorContenido(Guid usuarioId, CorreoElectronico usuarioCorreo, Password usuarioPassword)
+        {
+            return Crear(usuarioId, usuarioCorreo, usuarioPassword, false, false, true);
         }
         
             

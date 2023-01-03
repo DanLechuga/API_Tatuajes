@@ -56,7 +56,7 @@ namespace API_Tatuajes
             app.UseExceptionHandler("/error");
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.AddSwaggerEndpointsPath(Configuration); });
+            app.UseSwaggerUI(c => { c.AddSwaggerEndpointsPath(); });
 
             
 

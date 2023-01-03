@@ -12,10 +12,9 @@ namespace API_Tatuajes.Extensions
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="c"></param>
-        /// <param name="configuration"></param>
+        /// <param name="c"></param>        
         /// <returns></returns>
-        public static SwaggerUIOptions AddSwaggerEndpointsPath(this SwaggerUIOptions c, IConfiguration configuration)
+        public static SwaggerUIOptions AddSwaggerEndpointsPath(this SwaggerUIOptions c)
         {
             //string pahtCssSwagger = configuration.GetSection("custom-swagger-ui").Value;
             //string virtualDirectory = configuration.GetSection("VirtualDirectory").Value;
@@ -27,6 +26,7 @@ namespace API_Tatuajes.Extensions
             c.SwaggerEndpoint(SwaggerConst.PathSessiones, SwaggerConst.SessionsServiceTitle);
             c.SwaggerEndpoint(SwaggerConst.PathTest, SwaggerConst.TestServiceTitle);
             c.SwaggerEndpoint(SwaggerConst.PathTatuador, SwaggerConst.TatuadorServiceTitle);
+            c.SwaggerEndpoint(SwaggerConst.PathCreador,SwaggerConst.CreadorServiceTitle);
 
 //#if DEBUG
 //            pahtCssSwagger = pahtCssSwagger.Replace(virtualDirectory, string.Empty);

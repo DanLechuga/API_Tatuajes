@@ -52,6 +52,37 @@
         <member name="M:API_Tatuajes.Controllers.citas.CitasController.EditarCita(API_Tatuajes.Modelos.ModeloActualizarCita)">
             <Summary>Editar Cita</Summary>
         </member>
+        <member name="T:API_Tatuajes.Controllers.creadores.CreadoresController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.creadores.CreadoresController.ServicioError">
+            <Summary>Propiedad del servicio de errores solo lectura</Summary>
+        </member>
+        <member name="P:API_Tatuajes.Controllers.creadores.CreadoresController.ServicioValidacionCreadores">
+            <Summary>Propiedad del servicio de validacion de creadores solo lectura</Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.creadores.CreadoresController.#ctor(API_Aplicacion.Interfaces.IServicioValidacionCreadores,API_Aplicacion.Interfaces.IServicioError)">
+            <summary>
+            
+            </summary>
+            <param name="servicioError"></param>
+            <param name="servicioValidacionCreadores"></param>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.creadores.CreadoresController.ConsultarInfoTatuador(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.creadores.CreadoresController.ConsultarTatuador(System.Guid)">
+            <summary>
+            
+            </summary>
+            <param name="idCreador"></param>
+            <returns></returns>
+        </member>
         <member name="T:API_Tatuajes.Controllers.notificaciones.NotificacionesController">
             <Summary>Control de notificaiones</Summary>
         </member>
@@ -206,12 +237,11 @@
             
             </summary>
         </member>
-        <member name="M:API_Tatuajes.Extensions.ConfigureSwaggerUIOptions.AddSwaggerEndpointsPath(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:API_Tatuajes.Extensions.ConfigureSwaggerUIOptions.AddSwaggerEndpointsPath(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions)">
             <summary>
             
             </summary>
-            <param name="c"></param>
-            <param name="configuration"></param>
+            <param name="c"></param>        
             <returns></returns>
         </member>
         <member name="T:API_Tatuajes.Extensions.ControllerModelConvention">
@@ -396,6 +426,26 @@
             </summary>
         </member>
         <member name="F:API_Tatuajes.Extensions.SwaggerConst.TatuadorServiceName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.PathCreador">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.SwaggerDocCreador">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.CreadorServiceTitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:API_Tatuajes.Extensions.SwaggerConst.CreadorServiceName">
             <summary>
             
             </summary>

@@ -37,13 +37,14 @@ namespace API_Tatuajes.Controllers.usuarios
         [ProducesResponseType(200, Type = typeof(DTOUsuario))]
         public ObjectResult ValidarUsuario(ModeloUsuario modeloUsuario)
         {
-            if (modeloUsuario == null) throw new ArgumentNullException("No se puede usar valores nulos");
-            if (string.IsNullOrEmpty(modeloUsuario.Username)) throw new ArgumentNullException("No se puede usar valores vacios");
-            if(string.IsNullOrEmpty(modeloUsuario.Password)) throw new ArgumentNullException("No se puede usar valores vacios");
+            
             ObjectResult result = new(true);
             result.StatusCode = 403;
             try
             {
+                if (modeloUsuario == null) throw new ArgumentNullException("No se puede usar valores nulos");
+                if (string.IsNullOrEmpty(modeloUsuario.Username)) throw new ArgumentNullException("No se puede usar valores vacios");
+                if (string.IsNullOrEmpty(modeloUsuario.Password)) throw new ArgumentNullException("No se puede usar valores vacios");
                 DTOUsuario dTOUsuario = new(modeloUsuario.Username,modeloUsuario.Password);
               DTOUsuario dtoUsuarioConsultado = ServicioValidacionUsuarios.ValidacionUsuario(dTOUsuario);
                 result.StatusCode = 200;

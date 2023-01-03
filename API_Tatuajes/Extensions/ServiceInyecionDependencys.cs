@@ -43,7 +43,8 @@ namespace API_Tatuajes.Extensions
                 c.SwaggerDoc(SwaggerConst.SwaggerDocSession, new OpenApiInfo { Title = SwaggerConst.SessionsServiceTitle, Version = SwaggerConst.ServiceVersion });
                 c.SwaggerDoc(SwaggerConst.SwaggerDocTest, new OpenApiInfo { Title = SwaggerConst.TestServiceTitle, Version = SwaggerConst.ServiceVersion });
                 c.SwaggerDoc(SwaggerConst.SwaggerDocTatuador, new OpenApiInfo { Title = SwaggerConst.TatuadorServiceTitle, Version = SwaggerConst.ServiceVersion });
-                c.CustomSchemaIds(x => x.Name.Replace("Dto", string.Empty));
+                c.SwaggerDoc(SwaggerConst.SwaggerDocCreador,new OpenApiInfo { Title = SwaggerConst.CreadorServiceTitle,Version = SwaggerConst.ServiceVersion});
+                c.CustomSchemaIds(x => x.Name.Replace("DTO", string.Empty));
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}{SwaggerConst.SwaggerExtensionXml}";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -67,6 +68,7 @@ namespace API_Tatuajes.Extensions
             services.AddTransient<IRepositorioTatuador, RepositorioTatuador>();
             services.AddTransient<IRepositorioTatuadorCita, RepositorioTatuadorCita>();
             services.AddTransient<IRepositorioTatuajeCita, RepositorioTatuajeCita>();
+            services.AddTransient<IRepositorioCreador, RepositorioCreador>();
             services.AddTransient<IServicioNotificaciones, ServicioNotificaciones>();
             services.AddTransient<IServicioDeCitas, ServicioCitas>();
             services.AddTransient<IServicioError, ServicioError>();
@@ -74,6 +76,8 @@ namespace API_Tatuajes.Extensions
             services.AddTransient<IServicioCatalogoDeTatuajes, ServicioCatalogoDeTatuajes>();
             services.AddTransient<IServicioValidacionUsuarios, ServicioValidacionUsuarios>();
             services.AddTransient<IServicioValidacionTatuador, ServicioValidacionTatuador>();
+            services.AddTransient<IServicioValidacionCreadores, ServicioValidacionCreadores>();
+            
             return services;
         }
     }
