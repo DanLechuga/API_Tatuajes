@@ -109,7 +109,7 @@ namespace API_Tatuajes.Controllers.sessiones
         [Route("/CerrarSession")]
         [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(200)]
-        public ObjectResult CerrarSession(ModeloCerrarSession modeloCerrarSession)
+        public ObjectResult CerrarSession(ModeloCerrarSessionCliente modeloCerrarSession)
         {
             if (modeloCerrarSession == null) throw new ArgumentNullException("No se puede cerrar session debido a falta de argumentos para crear la solicitud");
             if (modeloCerrarSession.idCliente == Guid.Empty) throw new ArgumentNullException("No se puede crear solicitud debido a falta de argumentos para crear la solicitud");

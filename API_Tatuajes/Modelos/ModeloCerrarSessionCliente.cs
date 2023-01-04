@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace API_Tatuajes.Modelos
 {
     ///<Summary></Summary>
-    public class ModeloCerrarSession
+    public class ModeloCerrarSessionCliente
     {
         ///<Summary></Summary>
         public Guid idCliente { get; set; }
