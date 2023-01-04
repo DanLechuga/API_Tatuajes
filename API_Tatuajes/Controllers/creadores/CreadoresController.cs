@@ -13,7 +13,7 @@ namespace API_Tatuajes.Controllers.creadores
    /// <summary>
    /// 
    /// </summary>
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CreadoresController : ControllerBase
     {

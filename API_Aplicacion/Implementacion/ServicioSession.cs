@@ -26,7 +26,20 @@ namespace API_Aplicacion.Implementacion
             if (dTOSession == null) throw new Exception("No se puede usar valores nulos");
             if (dTOSession.IdSession == Guid.Empty) throw new Exception("No se puede usar un id en 0");
             if (dTOSession.IdSessionUsuario == Guid.Empty) throw new Exception("No se puede usar id en 0");
-            Session sessionAgregar = Session.Crear(dTOSession.IdSession,dTOSession.IdSessionUsuario,dTOSession.IdSessionCliente,dTOSession.IdSessionTatuador,dTOSession.SessionActiva);
+            Session sessionAgregar = null;
+            if (dTOSession.IdSessionCliente!= Guid.Empty)
+            {
+                sessionAgregar = Session.CrearSessionCliente(dTOSession.IdSession, dTOSession.IdSessionUsuario, dTOSession.IdSessionCliente,dTOSession.SessionActiva);
+            }
+            if(dTOSession.IdSessionTatuador!= Guid.Empty)
+            {
+                sessionAgregar = Session.CrearSessionTatuador(dTOSession.IdSession, dTOSession.IdSessionUsuario, dTOSession.IdSessionTatuador, dTOSession.SessionActiva);
+            }
+            if(dTOSession.IdSessionCreador != Guid.Empty)
+            {
+                sessionAgregar = Session.CrearSessionCreadorContenido(dTOSession.IdSession,dTOSession.IdSessionUsuario,dTOSession.IdSessionCreador,dTOSession.SessionActiva);
+            }
+            if (sessionAgregar is null) throw new Exception($"No se puede agregar una session vacia para el id del usuario: {dTOSession.IdSessionUsuario}"); 
             RepositorioSession.Agregar(sessionAgregar);
             
         }
@@ -79,6 +92,31 @@ namespace API_Aplicacion.Implementacion
                 IdSessionUsuario = SessionConsultada.SessionIdUsuario,
                 IdSessionCliente = SessionConsultada.SessionIdCliente,
                 IdSessionTatuador = SessionConsultada.SessionIdTatuador,
+                SessionActiva = SessionConsultada.SessionActiva
+            };
+        }
+
+        public void CerrarSessionCreaddor(DTOCreador dTOCreador)
+        {
+            if (dTOCreador is null) throw new Exception("No se puede realizar accion falta objeto para trabajar");
+            if (dTOCreador.IdCreador == Guid.Empty) throw new Exception("Falta ingresar el id del credor");
+            Session session = RepositorioSession.GetSessionPorUsuario(dTOCreador.IdCreador);
+            RepositorioSession.CerrarSession(session);
+        }
+
+        public DTOSession ConsultaSessionCreador(DTOCreador dTOCreador)
+        {
+            if (dTOCreador is null) throw new Exception("No se puede consultar valores vacios");
+            if (dTOCreador.IdCreador == Guid.Empty) throw new Exception("No se puede usar id vacios");
+            Session SessionConsultada = RepositorioSession.GetSessionPorUsuario(dTOCreador.IdCreador);
+            if (SessionConsultada == null) throw new Exception($"No se encontro usuario para el id ingresado: {dTOCreador.IdCreador}");
+            return new DTOSession()
+            {
+                IdSession = SessionConsultada.Id,
+                IdSessionUsuario = SessionConsultada.SessionIdUsuario,
+                IdSessionCliente = SessionConsultada.SessionIdCliente,
+                IdSessionTatuador = SessionConsultada.SessionIdTatuador,
+                IdSessionCreador = SessionConsultada.SessionIdCreador,
                 SessionActiva = SessionConsultada.SessionActiva
             };
         }

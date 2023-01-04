@@ -17,8 +17,9 @@ namespace PruebasTatuajes.PruebasDominio
             Guid SessionIdUsuario = Guid.Empty;
             Guid SessionIdCliente = Guid.Empty;
             Guid SessionIdTatuador = Guid.Empty;
+            Guid SessionIdCreador = Guid.Empty;
             bool SessionActiva = true;
-            Assert.Throws<ArgumentNullException>(() => { Session FakeSession = Session.Crear(SessionId,SessionIdUsuario,SessionIdCliente,SessionIdTatuador,SessionActiva); });
+            Assert.Throws<ArgumentNullException>(() => { Session FakeSession = Session.CrearSessionCliente(SessionId,SessionIdUsuario,SessionIdCliente,SessionActiva); });
             
         }
         [Fact]
@@ -29,7 +30,7 @@ namespace PruebasTatuajes.PruebasDominio
             Guid SessionIdCliente = Guid.Empty;
             Guid SessionIdTatuador = Guid.Empty;
             bool SessionActiva = true;
-            Assert.Throws<ArgumentNullException>(() => { Session FakeSession = Session.Crear(SessionId, SessionIdUsuario, SessionIdCliente, SessionIdTatuador, SessionActiva); });
+            Assert.Throws<ArgumentNullException>(() => { Session FakeSession = Session.CrearSessionTatuador(SessionId, SessionIdUsuario,SessionIdTatuador, SessionActiva); });
 
         }
         [Fact]
@@ -40,7 +41,7 @@ namespace PruebasTatuajes.PruebasDominio
             Guid SessionIdCliente = Guid.Empty;
             Guid SessionIdTatuador = Guid.Empty;
             bool SessionActiva = true;
-            Session FakeSession = Session.Crear(SessionId, SessionIdUsuario, SessionIdCliente, SessionIdTatuador, SessionActiva);
+            Session FakeSession = Session.CrearSessionCreadorContenido(SessionId, SessionIdUsuario, SessionIdCliente, SessionActiva);
             Assert.NotNull(FakeSession);
         }
     }

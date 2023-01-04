@@ -12,6 +12,7 @@ namespace API_Aplicacion.DTOs
         public Guid IdSessionUsuario { get; set; }
         public Guid IdSessionCliente { get; set; }
         public Guid IdSessionTatuador { get; set; }
+        public Guid IdSessionCreador { get; set; }
         public bool SessionActiva { get; set; }
     }
 }

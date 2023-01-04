@@ -15,6 +15,7 @@ namespace API_Infraestructura.Repositorios
         public Guid SessionIdUsuario { get; set; }
         public Guid SessionIdCliente { get; set; }
         public Guid SessionIdTatuador { get; set; }
+        public Guid SessionIdCreador { get; set; }
         public bool SessionActiva { get; set; }
         
 
@@ -66,8 +67,19 @@ namespace API_Infraestructura.Repositorios
                 parameters.Add("@idUsuario", idUsuario,System.Data.DbType.Guid);
                 CommandDefinition command = new("ConsultaSessionPorUsuario", parameters,commandTimeout:0,commandType:System.Data.CommandType.StoredProcedure);
                 DTOSession Dtosession = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOSession>(command);
-                if (Dtosession == null) throw new ArgumentNullException("No se encontro el usuario para el id ingresado ");
-                SessionConsultada = Session.Crear(Dtosession.SessionId,Dtosession.SessionIdUsuario,Dtosession.SessionIdCliente,Dtosession.SessionIdTatuador,Dtosession.SessionActiva);
+                if (Dtosession == null) throw new Exception($"No se encontro el usuario para el id ingresado {idUsuario}");
+                if(Dtosession.SessionIdCliente != Guid.Empty)
+                {
+                    SessionConsultada = Session.CrearSessionCliente(Dtosession.SessionId, Dtosession.SessionIdUsuario, Dtosession.SessionIdCliente, Dtosession.SessionActiva);
+                }
+                if(Dtosession.SessionIdTatuador != Guid.Empty)
+                {
+                    SessionConsultada = Session.CrearSessionTatuador(Dtosession.SessionId,Dtosession.SessionIdUsuario,Dtosession.SessionIdTatuador,Dtosession.SessionActiva);
+                }
+                if(Dtosession.SessionIdCreador != Guid.Empty)
+                {
+                    SessionConsultada = Session.CrearSessionCreadorContenido(Dtosession.SessionId,Dtosession.SessionIdUsuario,Dtosession.SessionIdCreador,Dtosession.SessionActiva);
+                }
 
             }
             catch (Exception)

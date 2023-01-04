@@ -14,5 +14,7 @@ namespace API_Aplicacion.Interfaces
         void CerrarSession(DTOUsuario dTOUsuario);
         void CerrarSessionTatuador(DTOTatuador dTOTatuador);
         DTOSession ConsultaSessionTatuador(DTOTatuador dTOTatuador);
+        void CerrarSessionCreaddor(DTOCreador dTOCreador);
+        DTOSession ConsultaSessionCreador(DTOCreador dTOCreador);
     }
 }

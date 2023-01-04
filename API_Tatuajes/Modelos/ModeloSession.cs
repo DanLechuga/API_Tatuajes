@@ -17,6 +17,8 @@ namespace API_Tatuajes.Modelos
         ///<Summary></Summary>
         public Guid idSessionTatuador { get; set; }
         ///<Summary></Summary>
+        public Guid idSessionCreador { get; set; }
+        ///<Summary></Summary>
         public bool sessionActiva { get; set; }
     }
 }

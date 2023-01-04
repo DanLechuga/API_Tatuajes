@@ -33,14 +33,16 @@ namespace API_Tatuajes.Controllers.sessiones
         [ProducesResponseType(200)]
         public ObjectResult CrearSession(ModeloSession modeloSession)
         {
-            if (modeloSession ==    null) throw new ArgumentNullException("No se puede usar valores nulos");
-            if (modeloSession.idSession == Guid.Empty) throw new ArgumentNullException("No se puede usar valores en 0");
-            if (modeloSession.idSessionUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar valores en 0");
             ObjectResult result = new(true);
             result.StatusCode = 403;
             try
             {
-                DTOSession DtoSession = new() { IdSession = modeloSession.idSession,IdSessionUsuario = modeloSession.idSessionUsuario, IdSessionCliente = modeloSession.idSessionCliente, IdSessionTatuador = modeloSession.idSessionTatuador, SessionActiva = modeloSession.sessionActiva};
+                DTOSession DtoSession = new() { IdSession = modeloSession.idSession,
+                    IdSessionUsuario = modeloSession.idSessionUsuario,
+                    IdSessionCliente = modeloSession.idSessionCliente,
+                    IdSessionTatuador = modeloSession.idSessionTatuador,
+                    IdSessionCreador = modeloSession.idSessionCreador,
+                    SessionActiva = modeloSession.sessionActiva};
                 ServicioSession.CrearSession(DtoSession);
                 result.StatusCode = 200;
                 result.Value = true;

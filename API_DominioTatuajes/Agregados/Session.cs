@@ -12,10 +12,12 @@ namespace API_DominioTatuajes.Agregados
         public Guid SessionIdUsuario { get; set; }
         public Guid SessionIdCliente { get; set; }
         public Guid SessionIdTatuador { get; set; }
+        public Guid SessionIdCreador { get; set; }
         public bool SessionActiva { get; set; }
 
+
         
-        private Session(Guid sessionId,Guid sessionIdUsuario,Guid sessionIdCliente,Guid sessionIdTatuador, bool sessionActiva)
+        private Session(Guid sessionId,Guid sessionIdUsuario,Guid sessionIdCliente,Guid sessionIdTatuador,Guid sessionIdCreador, bool sessionActiva)
         {
             if (sessionId == Guid.Empty) throw new ArgumentNullException("No se puede crear una session con id vacio");
             this.Id = sessionId;
@@ -24,11 +26,20 @@ namespace API_DominioTatuajes.Agregados
             this.SessionIdCliente = sessionIdCliente;
             this.SessionIdTatuador = sessionIdTatuador;
             this.SessionActiva = sessionActiva;
+            this.SessionIdCreador = sessionIdCreador;
         }
 
-        public static Session Crear(Guid sessionId, Guid sessionIdUsuario, Guid sessionIdCliente, Guid sessionIdTatuador, bool sessionActiva)
+        public static Session CrearSessionCliente(Guid sessionId, Guid sessionIdUsuario, Guid sessionIdCliente,bool sessionActiva)
         {
-            return new Session(sessionId,sessionIdUsuario,sessionIdCliente,sessionIdTatuador,sessionActiva);
+            return new Session(sessionId,sessionIdUsuario,sessionIdCliente,Guid.Empty,Guid.Empty,sessionActiva);
+        }
+        public static Session CrearSessionTatuador(Guid sessionId, Guid sessionIdUsuario, Guid sessionIdTatuador, bool sessionActiva)
+        {
+            return new Session(sessionId, sessionIdUsuario, Guid.Empty, sessionIdTatuador, Guid.Empty, sessionActiva);
+        }
+        public static Session CrearSessionCreadorContenido(Guid sessionId, Guid sessionIdUsuario, Guid sessionIdCreador, bool sessionActiva)
+        {
+            return new Session(sessionId,sessionIdUsuario,Guid.Empty,Guid.Empty,sessionIdCreador,sessionActiva);
         }
     }
 }

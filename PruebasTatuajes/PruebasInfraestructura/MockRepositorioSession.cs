@@ -14,11 +14,11 @@ namespace PruebasTatuajes.PruebasInfraestructura
         public MockRepositorioSession()
         {
             ListaDeSessions = new();
-            ListaDeSessions.Add(Session.Crear(Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Empty,true));
-            ListaDeSessions.Add(Session.Crear(Guid.Parse("00000000-0000-0000-0000-000000000002"), Guid.Parse("00000000-0000-0000-0000-000000000002"),Guid.Empty, Guid.Parse("00000000-0000-0000-0000-000000000002"),true));
-            ListaDeSessions.Add(Session.Crear(Guid.Parse("00000000-0000-0000-0000-000000000003"), Guid.Parse("00000000-0000-0000-0000-000000000003"), Guid.Parse("00000000-0000-0000-0000-000000000003"),Guid.Empty,false));
-            ListaDeSessions.Add(Session.Crear(Guid.Parse("00000000-0000-0000-0000-000000000004"), Guid.Parse("00000000-0000-0000-0000-000000000004"),Guid.Empty, Guid.Parse("00000000-0000-0000-0000-000000000004"),true));
-            ListaDeSessions.Add(Session.Crear(Guid.Parse("00000000-0000-0000-0000-000000000005"), Guid.Parse("00000000-0000-0000-0000-000000000005"), Guid.Parse("00000000-0000-0000-0000-000000000005"), Guid.Empty,false));
+            ListaDeSessions.Add(Session.CrearSessionCliente(Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Parse("00000000-0000-0000-0000-000000000001"),Guid.Empty,true));
+            ListaDeSessions.Add(Session.CrearSessionCreadorContenido(Guid.Parse("00000000-0000-0000-0000-000000000002"), Guid.Parse("00000000-0000-0000-0000-000000000002"), Guid.Parse("00000000-0000-0000-0000-000000000002"),true));
+            ListaDeSessions.Add(Session.CrearSessionTatuador(Guid.Parse("00000000-0000-0000-0000-000000000003"), Guid.Parse("00000000-0000-0000-0000-000000000003"), Guid.Parse("00000000-0000-0000-0000-000000000003"),false));
+            ListaDeSessions.Add(Session.CrearSessionCliente(Guid.Parse("00000000-0000-0000-0000-000000000004"), Guid.Parse("00000000-0000-0000-0000-000000000004"), Guid.Parse("00000000-0000-0000-0000-000000000004"),true));
+            ListaDeSessions.Add(Session.CrearSessionCliente(Guid.Parse("00000000-0000-0000-0000-000000000005"), Guid.Parse("00000000-0000-0000-0000-000000000005"), Guid.Parse("00000000-0000-0000-0000-000000000005"),false));
         }
         public void Agregar(Session agregado)
         {
