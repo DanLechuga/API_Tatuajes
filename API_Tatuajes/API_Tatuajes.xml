@@ -76,7 +76,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:API_Tatuajes.Controllers.creadores.CreadoresController.ConsultarTatuador(System.Guid)">
+        <member name="M:API_Tatuajes.Controllers.creadores.CreadoresController.ConsultarCreador(System.Guid)">
             <summary>
             
             </summary>
@@ -119,10 +119,16 @@
         <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.ConsultaSessionTatuador(System.Guid)">
             <Summary></Summary>
         </member>
-        <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.CerrarSession(API_Tatuajes.Modelos.ModeloCerrarSession)">
+        <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.ConsultaSessionCreador(System.Guid)">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.CerrarSession(API_Tatuajes.Modelos.ModeloCerrarSessionCliente)">
             <Summary></Summary>
         </member>
         <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.CerrarSessionTatuador(API_Tatuajes.Modelos.ModeloCerrarSessionTatuador)">
+            <Summary></Summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.CerrarSessionCreador(API_Tatuajes.Modelos.ModeloCerrarSessionCreador)">
             <Summary></Summary>
         </member>
         <member name="T:API_Tatuajes.Controllers.tatuador.TatuadorController">
@@ -465,17 +471,37 @@
             
             </summary>
         </member>
-        <member name="T:API_Tatuajes.Modelos.ModeloCerrarSession">
+        <member name="T:API_Tatuajes.Modelos.ModeloCerrarSessionCliente">
             <Summary></Summary>
         </member>
-        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSession.idCliente">
+        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSessionCliente.idCliente">
             <Summary></Summary>
         </member>
-        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSession.nombreUsuario">
+        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSessionCliente.nombreUsuario">
             <Summary></Summary>
         </member>
-        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSession.numeroTelefonico">
+        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSessionCliente.numeroTelefonico">
             <Summary></Summary>
+        </member>
+        <member name="T:API_Tatuajes.Modelos.ModeloCerrarSessionCreador">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSessionCreador.idCreador">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSessionCreador.nombreCreador">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloCerrarSessionCreador.telefonoCreador">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:API_Tatuajes.Modelos.ModeloCerrarSessionTatuador">
             <summary>
@@ -541,6 +567,9 @@
             <Summary></Summary>
         </member>
         <member name="P:API_Tatuajes.Modelos.ModeloSession.idSessionTatuador">
+            <Summary></Summary>
+        </member>
+        <member name="P:API_Tatuajes.Modelos.ModeloSession.idSessionCreador">
             <Summary></Summary>
         </member>
         <member name="P:API_Tatuajes.Modelos.ModeloSession.sessionActiva">

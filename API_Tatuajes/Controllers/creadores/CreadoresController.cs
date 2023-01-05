@@ -68,9 +68,9 @@ namespace API_Tatuajes.Controllers.creadores
         [Route("/ConsultarCreador")]
         [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(200, Type = typeof(DTOCreador))]
-        public ObjectResult ConsultarTatuador(Guid idCreador)
+        public ObjectResult ConsultarCreador(Guid idCreador)
         {
-            if (Guid.Empty == idCreador) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
+            
             ObjectResult result = new(true);
             result.StatusCode = 403;
             try

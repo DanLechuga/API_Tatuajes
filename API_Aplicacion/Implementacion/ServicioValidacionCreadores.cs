@@ -19,7 +19,7 @@ namespace API_Aplicacion.Implementacion
         }
         public DTOCreador ConsultarInfoCreador(DTOCreador dTOCreador)
         {
-            if (dTOCreador is null) throw new Exception("No se puede usar valores nulos");
+            if (dTOCreador is null) throw new Exception("No se puede usar valores nulos");            
             Creador creador = null;
             if (!string.IsNullOrEmpty(dTOCreador.CorreoCreador))
                 creador = RepositorioCreador.ConsultarPorCorreo(dTOCreador.CorreoCreador);

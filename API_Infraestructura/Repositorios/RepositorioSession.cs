@@ -3,6 +3,7 @@ using API_DominioTatuajes.Agregados;
 using API_Infraestructura.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,11 +34,12 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@idSession", agregado.Id, System.Data.DbType.Guid);
-                parameters.Add("@idSessionUsuario", agregado.SessionIdUsuario, System.Data.DbType.Guid);
-                parameters.Add("@idSessionCliente", agregado.SessionIdCliente, System.Data.DbType.Guid);
-                parameters.Add("@idSessionTatuador", agregado.SessionIdTatuador, System.Data.DbType.Guid);
-                parameters.Add("@SessionActiva", agregado.SessionActiva, System.Data.DbType.Boolean);
+                parameters.Add("@idSession", agregado.Id, DbType.Guid);
+                parameters.Add("@idSessionUsuario", agregado.SessionIdUsuario, DbType.Guid);
+                parameters.Add("@idSessionCliente", agregado.SessionIdCliente, DbType.Guid);
+                parameters.Add("@idSessionTatuador", agregado.SessionIdTatuador, DbType.Guid);
+                parameters.Add("@idSessionCreador",agregado.SessionIdCreador,DbType.Guid);
+                parameters.Add("@SessionActiva", agregado.SessionActiva, DbType.Boolean);
                 CommandDefinition command = new("CrearSession", parameters, commandType: System.Data.CommandType.StoredProcedure, commandTimeout: 0);
                 UnidadDeTrabajo.SqlConnection.Execute(command);
             }
