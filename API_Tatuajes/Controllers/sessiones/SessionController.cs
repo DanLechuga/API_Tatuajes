@@ -2,6 +2,7 @@
 using API_Aplicacion.Interfaces;
 using API_Tatuajes.Exceptions;
 using API_Tatuajes.Modelos;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,11 +21,16 @@ namespace API_Tatuajes.Controllers.sessiones
         public IServicioSession ServicioSession { get; }
         ///<Summary></Summary>
         public IServicioError ServicioError { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public IMapper mapper { get; set; }
         ///<Summary></Summary>
-        public SessionController(IServicioSession servicioSession, IServicioError servicioError)
+        public SessionController(IServicioSession servicioSession, IServicioError servicioError,IMapper _mapper)
         {
             this.ServicioSession = servicioSession;
             this.ServicioError = servicioError;
+            this.mapper = _mapper;
         }
         ///<Summary></Summary>
         [HttpPost]
@@ -37,13 +43,8 @@ namespace API_Tatuajes.Controllers.sessiones
             result.StatusCode = 403;
             try
             {
-                DTOSession DtoSession = new() { IdSession = modeloSession.idSession,
-                    IdSessionUsuario = modeloSession.idSessionUsuario,
-                    IdSessionCliente = modeloSession.idSessionCliente,
-                    IdSessionTatuador = modeloSession.idSessionTatuador,
-                    IdSessionCreador = modeloSession.idSessionCreador,
-                    SessionActiva = modeloSession.sessionActiva};
-                ServicioSession.CrearSession(DtoSession);
+                DTOSession dtoSession = mapper.Map<DTOSession>(modeloSession);                
+                ServicioSession.CrearSession(dtoSession);
                 result.StatusCode = 200;
                 result.Value = true;
                 
@@ -134,13 +135,12 @@ namespace API_Tatuajes.Controllers.sessiones
         [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(200)]
         public ObjectResult CerrarSession(ModeloCerrarSessionCliente modeloCerrarSession)
-        {
-            if (modeloCerrarSession == null) throw new ArgumentNullException("No se puede cerrar session debido a falta de argumentos para crear la solicitud");
-            if (modeloCerrarSession.idCliente == Guid.Empty) throw new ArgumentNullException("No se puede crear solicitud debido a falta de argumentos para crear la solicitud");
+        {            
             ObjectResult result = new(true);
             try
             {
-                ServicioSession.CerrarSession(new DTOUsuario("", "") { IdUsaurio = modeloCerrarSession.idCliente });
+                DTOUsuario dTOUsuario = mapper.Map<DTOUsuario>(modeloCerrarSession);
+                ServicioSession.CerrarSession(dTOUsuario);
                 result.Value = true;
                 result.StatusCode = 200;
             }
@@ -159,13 +159,12 @@ namespace API_Tatuajes.Controllers.sessiones
         [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(200)]
         public ObjectResult CerrarSessionTatuador(ModeloCerrarSessionTatuador modeloCerrarSession)
-        {
-            if (modeloCerrarSession == null) throw new ArgumentNullException("No se puede cerrar session debido a falta de argumentos para crear la solicitud");
-            if (modeloCerrarSession.idTatuador == Guid.Empty) throw new ArgumentNullException("No se puede crear solicitud debido a falta de argumentos para crear la solicitud");
+        {            
             ObjectResult result = new(true);
             try
             {
-                ServicioSession.CerrarSessionTatuador(new DTOTatuador { idTatuador = modeloCerrarSession.idTatuador});
+                DTOTatuador dtoTatuador = mapper.Map<DTOTatuador>(modeloCerrarSession);
+                ServicioSession.CerrarSessionTatuador(dtoTatuador);
                 result.Value = true;
                 result.StatusCode = 200;
             }
@@ -189,7 +188,8 @@ namespace API_Tatuajes.Controllers.sessiones
             ObjectResult result = new(true);
             try
             {
-                ServicioSession.CerrarSessionCreaddor(new DTOCreador { IdCreador = modeloCerrar.idCreador});
+                DTOCreador dTOCreador = mapper.Map<DTOCreador>(modeloCerrar);
+                ServicioSession.CerrarSessionCreaddor(dTOCreador);
                 result.Value = true;
                 result.StatusCode = 200;
             }

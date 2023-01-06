@@ -2,6 +2,7 @@
 using API_Aplicacion.Interfaces;
 using API_Tatuajes.Exceptions;
 using API_Tatuajes.Modelos;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,11 +21,16 @@ namespace API_Tatuajes.Controllers.usuarios
         public IServicioValidacionUsuarios ServicioValidacionUsuarios { get; }
         ///<Summary></Summary>
         public IServicioError ServicioError { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public IMapper mapper { get; set; }
         ///<Summary></Summary>
-        public UsuarioController(IServicioValidacionUsuarios servicioValidacionUsuarios,IServicioError servicioError)
+        public UsuarioController(IServicioValidacionUsuarios servicioValidacionUsuarios,IServicioError servicioError,IMapper _mapper)
         {
             this.ServicioValidacionUsuarios = servicioValidacionUsuarios;
             this.ServicioError = servicioError;
+            this.mapper = _mapper;
         }
         /// <summary>
         /// Peticion Post para validar el usuario y password que se ingresan
@@ -42,11 +48,8 @@ namespace API_Tatuajes.Controllers.usuarios
             result.StatusCode = 403;
             try
             {
-                if (modeloUsuario == null) throw new ArgumentNullException("No se puede usar valores nulos");
-                if (string.IsNullOrEmpty(modeloUsuario.Username)) throw new ArgumentNullException("No se puede usar valores vacios");
-                if (string.IsNullOrEmpty(modeloUsuario.Password)) throw new ArgumentNullException("No se puede usar valores vacios");
-                DTOUsuario dTOUsuario = new(modeloUsuario.Username,modeloUsuario.Password);
-              DTOUsuario dtoUsuarioConsultado = ServicioValidacionUsuarios.ValidacionUsuario(dTOUsuario);
+                DTOUsuario dtoUsuario = mapper.Map<DTOUsuario>(modeloUsuario);                
+              DTOUsuario dtoUsuarioConsultado = ServicioValidacionUsuarios.ValidacionUsuario(dtoUsuario);
                 result.StatusCode = 200;
                 result.Value = dtoUsuarioConsultado; 
             }
@@ -73,7 +76,7 @@ namespace API_Tatuajes.Controllers.usuarios
             result.StatusCode = 403;
             try
             {
-                DTOUsuario dTOUsuario = new(correoUsuario, "");
+                DTOUsuario dTOUsuario = new() { Username = correoUsuario};
                 DTOCliente clienteConsultado = ServicioValidacionUsuarios.ConsultaInformacionCliente(dTOUsuario);
                 result.Value = clienteConsultado;
                 result.StatusCode = 200;
@@ -121,12 +124,12 @@ namespace API_Tatuajes.Controllers.usuarios
         [ProducesResponseType(200)]
         public ObjectResult CrearUsuarioCliente(ModeloRegistrarCliente modeloRegistrarCliente)
         {
-            if (modeloRegistrarCliente == null) throw new ArgumentNullException("No se puede utilizar valores nulos");
+           
             ObjectResult result = new(true);
             try
             {
-                DTORegistroDeCliente dTORegistroDeCliente = new() {NombreCliente = modeloRegistrarCliente.nombreDeCliente,CorreoElectronico = modeloRegistrarCliente.correoElectronico, Password = modeloRegistrarCliente.password, NumeroTelefonico = modeloRegistrarCliente.numeroTelefonico };
-                ServicioValidacionUsuarios.CrearUsuarioCliente(dTORegistroDeCliente);
+                DTORegistroDeCliente dtoRegistro = mapper.Map<DTORegistroDeCliente>(modeloRegistrarCliente);                
+                ServicioValidacionUsuarios.CrearUsuarioCliente(dtoRegistro);
                 result.StatusCode = 200;
                 result.Value = true;
                 

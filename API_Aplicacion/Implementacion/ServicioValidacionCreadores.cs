@@ -3,6 +3,7 @@ using API_Aplicacion.Interfaces;
 using API_DominioTatuajes.Agregados;
 using API_Infraestructura.Interfaces;
 using System;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,12 @@ namespace API_Aplicacion.Implementacion
 {
     public class ServicioValidacionCreadores : IServicioValidacionCreadores
     {
-        public IRepositorioCreador RepositorioCreador { get; set; }
-        public ServicioValidacionCreadores(IRepositorioCreador repositorioCreador)
+        public IRepositorioCreador RepositorioCreador { get; }
+        public IMapper Mapper { get; set; }
+        public ServicioValidacionCreadores(IRepositorioCreador repositorioCreador,IMapper mapper)
         {
             this.RepositorioCreador = repositorioCreador;
+            this.Mapper = mapper;
         }
         public DTOCreador ConsultarInfoCreador(DTOCreador dTOCreador)
         {
@@ -27,7 +30,8 @@ namespace API_Aplicacion.Implementacion
             if (Guid.Empty != dTOCreador.IdCreador)
                 creador = RepositorioCreador.ConsultarPorId(dTOCreador.IdCreador);
             if(creador is null) throw new Exception($"No se pudo consultar informacion para el correo ingresado: {dTOCreador.CorreoCreador}");
-            return new DTOCreador { CorreoCreador = creador.CreadorCorreo,IdCreador = creador.Id,NombreCreador = creador.CreadorNombre,TelefonoCreador = creador.CreadorTelefono};
+            DTOCreador dtoCreador = Mapper.Map<DTOCreador>(creador);
+            return dtoCreador;
         }
     }
 }

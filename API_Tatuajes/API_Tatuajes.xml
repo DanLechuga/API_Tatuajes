@@ -4,6 +4,16 @@
         <name>API_Tatuajes</name>
     </assembly>
     <members>
+        <member name="T:API_Tatuajes.AutoMap.ModelToDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:API_Tatuajes.AutoMap.ModelToDto.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:API_Tatuajes.Controllers.catalogo.CatalogoDeTatuajesController">
             <Summary></Summary>
         </member>
@@ -34,7 +44,12 @@
         <member name="P:API_Tatuajes.Controllers.citas.CitasController.ServicioError">
             <Summary>Propiedad del servicio de errores solo lectura</Summary>
         </member>
-        <member name="M:API_Tatuajes.Controllers.citas.CitasController.#ctor(API_Aplicacion.Interfaces.IServicioDeCitas,API_Aplicacion.Interfaces.IServicioError)">
+        <member name="P:API_Tatuajes.Controllers.citas.CitasController.mapper">
+            <summary>
+            Propiedad del mapper
+            </summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.citas.CitasController.#ctor(API_Aplicacion.Interfaces.IServicioDeCitas,API_Aplicacion.Interfaces.IServicioError,AutoMapper.IMapper)">
             <Summary>Contructor de la clase</Summary>
         </member>
         <member name="M:API_Tatuajes.Controllers.citas.CitasController.ConsultaDeCitas(System.Guid)">
@@ -107,7 +122,12 @@
         <member name="P:API_Tatuajes.Controllers.sessiones.SessionController.ServicioError">
             <Summary></Summary>
         </member>
-        <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.#ctor(API_Aplicacion.Interfaces.IServicioSession,API_Aplicacion.Interfaces.IServicioError)">
+        <member name="P:API_Tatuajes.Controllers.sessiones.SessionController.mapper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.#ctor(API_Aplicacion.Interfaces.IServicioSession,API_Aplicacion.Interfaces.IServicioError,AutoMapper.IMapper)">
             <Summary></Summary>
         </member>
         <member name="M:API_Tatuajes.Controllers.sessiones.SessionController.CrearSession(API_Tatuajes.Modelos.ModeloSession)">
@@ -200,7 +220,12 @@
         <member name="P:API_Tatuajes.Controllers.usuarios.UsuarioController.ServicioError">
             <Summary></Summary>
         </member>
-        <member name="M:API_Tatuajes.Controllers.usuarios.UsuarioController.#ctor(API_Aplicacion.Interfaces.IServicioValidacionUsuarios,API_Aplicacion.Interfaces.IServicioError)">
+        <member name="P:API_Tatuajes.Controllers.usuarios.UsuarioController.mapper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:API_Tatuajes.Controllers.usuarios.UsuarioController.#ctor(API_Aplicacion.Interfaces.IServicioValidacionUsuarios,API_Aplicacion.Interfaces.IServicioError,AutoMapper.IMapper)">
             <Summary></Summary>
         </member>
         <member name="M:API_Tatuajes.Controllers.usuarios.UsuarioController.ValidarUsuario(API_Tatuajes.Modelos.ModeloUsuario)">

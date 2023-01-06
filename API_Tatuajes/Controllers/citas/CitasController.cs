@@ -2,6 +2,7 @@
 using API_Aplicacion.Interfaces;
 using API_Tatuajes.Exceptions;
 using API_Tatuajes.Modelos;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,11 +21,16 @@ namespace API_Tatuajes.Controllers.citas
         public IServicioDeCitas ServicioDeCitas { get; set; }
         ///<Summary>Propiedad del servicio de errores solo lectura</Summary>
         public IServicioError ServicioError { get; set; }
+        /// <summary>
+        /// Propiedad del mapper
+        /// </summary>
+        public IMapper mapper { get; set; }
         ///<Summary>Contructor de la clase</Summary>
-        public CitasController(IServicioDeCitas servicioCitas, IServicioError servicioError)
+        public CitasController(IServicioDeCitas servicioCitas, IServicioError servicioError, IMapper _mapper)
         {
             this.ServicioDeCitas = servicioCitas;
             this.ServicioError = servicioError;
+            this.mapper = _mapper;
         }
         ///<Summary>Consulta una lista de citas por el id del usuario</Summary>
         [HttpGet]
@@ -37,7 +43,7 @@ namespace API_Tatuajes.Controllers.citas
             ObjectResult result = new(true);
             try
             {
-                DTOUsuario dtoUsuario = new("", "") { IdUsaurio = idUsuario };
+                DTOUsuario dtoUsuario = new() { IdUsaurio = idUsuario };
                 IEnumerable<DTOCitas> ListaCitasPorUsuario = ServicioDeCitas.ConsultarCitas(dtoUsuario);
                 result.Value = ListaCitasPorUsuario;
                 result.StatusCode = 200;
@@ -86,13 +92,8 @@ namespace API_Tatuajes.Controllers.citas
             ObjectResult result = new(true);
             try
             {
-                ServicioDeCitas.CrearCita(new DTOCitas() { IdCita = Guid.NewGuid(),
-                                                           IdUsuario = modeloCrearCita.idUsuario,
-                                                           EsConAnticipo = modeloCrearCita.esAnticipo,
-                                                           CantidadDeposito = modeloCrearCita.montoAnticipo,
-                                                           FechaCreacion = modeloCrearCita.fechaCita,
-                                                           IdCatalogo = modeloCrearCita.listaDeTatuajes,
-                                                           NombreTatuajeCustom  = string.IsNullOrEmpty(modeloCrearCita.nombreTatuajeCustom) ? "" : modeloCrearCita.nombreTatuajeCustom});
+                DTOCitas dtoCita = mapper.Map<DTOCitas>(modeloCrearCita);
+                ServicioDeCitas.CrearCita(dtoCita);
                 result.StatusCode = 200;
                 result.Value = true;
             }
@@ -116,7 +117,7 @@ namespace API_Tatuajes.Controllers.citas
             ObjectResult result = new(true);
             try
             {
-                DTOUsuario dtoUsuario = new("", "") { IdUsaurio = idCliente };
+                DTOUsuario dtoUsuario = new(){ IdUsaurio = idCliente };
                 IEnumerable<Guid> ListaCitasPorUsuario = ServicioDeCitas.ConsultasIds(dtoUsuario);
                 result.Value = ListaCitasPorUsuario;
                 result.StatusCode = 200;
@@ -141,7 +142,8 @@ namespace API_Tatuajes.Controllers.citas
             ObjectResult result = new(true);
             try
             {
-                ServicioDeCitas.ActualizarCita(new DTOCitas() { IdCita = modelo.idCita, FechaCreacion = modelo.fechaActualizada });
+                DTOCitas dtoCita = mapper.Map<DTOCitas>(modelo);
+                ServicioDeCitas.ActualizarCita(dtoCita);
                 result.StatusCode = 200;
             }
             catch (Exception ex)

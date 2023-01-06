@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 using API_Aplicacion.DTOs;
 using API_Aplicacion.Interfaces;
 using API_DominioTatuajes.Agregados;
@@ -14,11 +14,13 @@ namespace API_Aplicacion.Implementacion
     {
         public IRepositorioSession RepositorioSession { get; }
         public IRepositorioUsuario RepositorioUsuario { get;  }
+        public IMapper Mapper { get; set; }
 
-        public ServicioSession(IRepositorioSession repositorioSession,IRepositorioUsuario repositorioUsuario)
+        public ServicioSession(IRepositorioSession repositorioSession,IRepositorioUsuario repositorioUsuario,IMapper mapper)
         {
             this.RepositorioSession = repositorioSession;
             this.RepositorioUsuario = repositorioUsuario;
+            this.Mapper = mapper;
             
         }
         public void CrearSession(DTOSession dTOSession)
@@ -51,14 +53,8 @@ namespace API_Aplicacion.Implementacion
             Usuario usuario = RepositorioUsuario.GetUsuarioCliente(cliente.IdCliente);
             Session SessionConsultada = RepositorioSession.GetSessionPorUsuario(usuario.Id);
             if (SessionConsultada == null) throw new Exception("No se encontro usuario para el id ingresado");
-            return new DTOSession()
-            {
-                IdSession = SessionConsultada.Id,
-                IdSessionUsuario = SessionConsultada.SessionIdUsuario,
-                IdSessionCliente = SessionConsultada.SessionIdCliente,
-                IdSessionTatuador = SessionConsultada.SessionIdTatuador,
-                SessionActiva = SessionConsultada.SessionActiva
-            };
+            DTOSession dtoSession = Mapper.Map<DTOSession>(SessionConsultada);
+            return dtoSession;
             
         }
 
@@ -86,14 +82,8 @@ namespace API_Aplicacion.Implementacion
             if (dTOTatuador.idTatuador == Guid.Empty) throw new Exception("No se puede usar id vacios");
             Session SessionConsultada = RepositorioSession.GetSessionPorUsuario(dTOTatuador.idTatuador);
             if (SessionConsultada == null) throw new Exception("No se encontro usuario para el id ingresado");
-            return new DTOSession()
-            {
-                IdSession = SessionConsultada.Id,
-                IdSessionUsuario = SessionConsultada.SessionIdUsuario,
-                IdSessionCliente = SessionConsultada.SessionIdCliente,
-                IdSessionTatuador = SessionConsultada.SessionIdTatuador,
-                SessionActiva = SessionConsultada.SessionActiva
-            };
+            DTOSession dtoSession = Mapper.Map<DTOSession>(SessionConsultada);
+            return dtoSession;
         }
 
         public void CerrarSessionCreaddor(DTOCreador dTOCreador)
@@ -110,15 +100,8 @@ namespace API_Aplicacion.Implementacion
             if (dTOCreador.IdCreador == Guid.Empty) throw new Exception("No se puede usar id vacios");
             Session SessionConsultada = RepositorioSession.GetSessionPorUsuario(dTOCreador.IdCreador);
             if (SessionConsultada == null) throw new Exception($"No se encontro usuario para el id ingresado: {dTOCreador.IdCreador}");
-            return new DTOSession()
-            {
-                IdSession = SessionConsultada.Id,
-                IdSessionUsuario = SessionConsultada.SessionIdUsuario,
-                IdSessionCliente = SessionConsultada.SessionIdCliente,
-                IdSessionTatuador = SessionConsultada.SessionIdTatuador,
-                IdSessionCreador = SessionConsultada.SessionIdCreador,
-                SessionActiva = SessionConsultada.SessionActiva
-            };
+            DTOSession dtoSession = Mapper.Map<DTOSession>(SessionConsultada);
+            return dtoSession;
         }
     }
 }

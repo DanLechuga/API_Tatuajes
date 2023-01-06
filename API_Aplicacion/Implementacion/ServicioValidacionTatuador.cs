@@ -1,5 +1,5 @@
 ﻿
-
+using AutoMapper;
 using API_Aplicacion.DTOs;
 using API_Aplicacion.Interfaces;
 using API_DominioTatuajes.Agregados;
@@ -17,14 +17,16 @@ namespace API_Aplicacion.Implementacion
         public IRepositorioClienteCita RepositorioClienteCita { get;  }
         public IRepositorioCliente RepositorioCliente { get;  }
         public IRepositorioTatuajeCita RepositorioTatuajeCita { get;  }
+        public IMapper Mapper { get; set; }
 
-        public ServicioValidacionTatuador(IRepositorioTatuador repositorioTatuador,IRepositorioTatuadorCita repositorioTatuadorCita, IRepositorioClienteCita repositorioClienteCita, IRepositorioCliente repositorioCliente, IRepositorioTatuajeCita repositorioTatuajeCita)
+        public ServicioValidacionTatuador(IRepositorioTatuador repositorioTatuador,IRepositorioTatuadorCita repositorioTatuadorCita, IRepositorioClienteCita repositorioClienteCita, IRepositorioCliente repositorioCliente, IRepositorioTatuajeCita repositorioTatuajeCita,IMapper mapper)
         {
             this.RepositorioTatuador = repositorioTatuador;
             this.RepositorioTatuadorCita = repositorioTatuadorCita;
             this.RepositorioClienteCita = repositorioClienteCita;
             this.RepositorioCliente = repositorioCliente;
             this.RepositorioTatuajeCita = repositorioTatuajeCita;
+            this.Mapper = mapper;
             
         }
         public DTOTatuador ConsultarInfoTatuador(DTOTatuador dTOTatuador)
@@ -33,22 +35,28 @@ namespace API_Aplicacion.Implementacion
             var listaTatuadores = RepositorioTatuador.ConsultarTodosLosTatuadores();
             Tatuador tatuador1 = listaTatuadores.FirstOrDefault(x => x.Tatuador_Correo.Cadenavalida.Equals(dTOTatuador.correoTauador));
             if (tatuador1 is null) tatuador1 = listaTatuadores.FirstOrDefault(x => x.Id.Equals(dTOTatuador.idTatuador));
-            if (tatuador1 is null) throw new System.Exception("No se encontro informacion para los parametros dados");
-            return new DTOTatuador { idTatuador = tatuador1.Id,correoTauador = tatuador1.Tatuador_Correo.Cadenavalida,nombreTatuador = tatuador1.Tatuador_Nombre,numeroTalefonico = tatuador1.Tatuador_NumTel};
+            if (tatuador1 is null) throw new Exception("No se encontro informacion para los parametros dados");
+            DTOTatuador dtoTatuador = Mapper.Map<DTOTatuador>(tatuador1);
+            return dtoTatuador;
         }
 
         public IEnumerable<DTOCitasTatuador> ConsultarCitasPorTatuador(DTOTatuador dTOTatuador)
         {
             var tatuador = RepositorioTatuador.ConsultarTodosLosTatuadores().FirstOrDefault(x => x.Id.Equals(dTOTatuador.idTatuador));            
-            IEnumerable<TatuadorCita> listaCitas = RepositorioTatuadorCita.ConsultarCitasPorTatuador(tatuador);
-            
+            IEnumerable<TatuadorCita> listaCitas = RepositorioTatuadorCita.ConsultarCitasPorTatuador(tatuador);                        
             List<DTOCitasTatuador> listaDtos = new();
             foreach (var item in listaCitas)
             {
                 CitaCliente citaCliente = RepositorioClienteCita.ConsultarCitaClientePorId(item.IdCita);
                 Cliente cliente = RepositorioCliente.GetClientePorId(citaCliente.IdCliente);
                 
-                listaDtos.Add(new DTOCitasTatuador() { IdCita = item.IdCita,EsConAnticipo = citaCliente.EsConAnticipo,CantidadDeposito = citaCliente.CantidadDeposito,FechaCreacion = citaCliente.FechaCitaRegistrada,IdCliente = citaCliente.IdCliente,NombreCliente = cliente.Cliente_nombre});
+                listaDtos.Add(new DTOCitasTatuador() { IdCita = item.IdCita,
+                    EsConAnticipo = citaCliente.EsConAnticipo,
+                    CantidadDeposito = citaCliente.CantidadDeposito,
+                    FechaCreacion = citaCliente.FechaCitaRegistrada,
+                    IdCliente = citaCliente.IdCliente,
+                    NombreCliente = cliente.Cliente_nombre
+                });
             }
             return listaDtos;
         }
@@ -68,7 +76,7 @@ namespace API_Aplicacion.Implementacion
 
         public DTOCitasTatuador ConsultarDetalleCita(DTOTatuador dTOTatuador, Guid idCita)
         {
-            DTOCitasTatuador dTO = new();
+            DTOCitasTatuador dTO = null;
             var tatuador = RepositorioTatuador.ConsultarTodosLosTatuadores().FirstOrDefault(x => x.Id == dTOTatuador.idTatuador);
             if (tatuador is null) throw new Exception("No se puede consultar el tatuador por el id ingresado");
             var cita = RepositorioClienteCita.ConsultarCitaClientePorId(idCita);
@@ -78,14 +86,10 @@ namespace API_Aplicacion.Implementacion
             if (cliente is null) throw new Exception("No se encontro clinete para el id ingresado");
             var tatuaje = RepositorioTatuajeCita.ConsultarPorIdCita(idCita);
             if (tatuaje is null) throw new Exception("No se encontro informacion para el tatuaje ingresado");
-            return new DTOCitasTatuador() { EsConAnticipo = cita.EsConAnticipo,
-                CantidadDeposito = cita.CantidadDeposito,
-                FechaCreacion = cita.FechaCitaRegistrada,
-                IdCita = cita.IdCita,
-                IdCliente = cita.IdCliente,
-                NombreCliente = cliente.Cliente_nombre,
-                IdCatalogo = tatuaje.TatuajeCita_IdCatalogo
-            };            
+            dTO = Mapper.Map<DTOCitasTatuador>(cita);
+            Mapper.Map(cliente,dTO);
+            Mapper.Map(tatuaje,dTO);
+            return dTO;
         }
     }
 }

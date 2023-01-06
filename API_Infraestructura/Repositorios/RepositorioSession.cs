@@ -66,7 +66,7 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@idUsuario", idUsuario,System.Data.DbType.Guid);
+                parameters.Add("@idUsuario", idUsuario,DbType.Guid);
                 CommandDefinition command = new("ConsultaSessionPorUsuario", parameters,commandTimeout:0,commandType:System.Data.CommandType.StoredProcedure);
                 DTOSession Dtosession = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOSession>(command);
                 if (Dtosession == null) throw new Exception($"No se encontro el usuario para el id ingresado {idUsuario}");
@@ -107,8 +107,8 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@idSession", session.Id,System.Data.DbType.Guid);
-                parameters.Add("@idUsuario", session.SessionIdUsuario,System.Data.DbType.Guid);
+                parameters.Add("@idSession", session.Id,DbType.Guid);
+                parameters.Add("@idUsuario", session.SessionIdUsuario,DbType.Guid);
                 CommandDefinition command = new("CerrarSessionUsuario",parameters,commandTimeout: 0, commandType:System.Data.CommandType.StoredProcedure);
                 UnidadDeTrabajo.SqlConnection.Execute(command);
             }

@@ -31,12 +31,11 @@ namespace API_Tatuajes.Controllers.notificaciones
         [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(200)]
         public ObjectResult EnviarNotificacionRecuperacion(Guid idUsuario)
-        {
-            if (idUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar un id vacio");
+        {            
             ObjectResult result = new(true);
             try
             {
-                ServicioNotificaciones.CrearNotificacionRecuperacionPassword(new DTOUsuario("", "") { IdUsaurio = idUsuario});
+                ServicioNotificaciones.CrearNotificacionRecuperacionPassword(new DTOUsuario{ IdUsaurio = idUsuario});
                 result.Value = true;
                 result.StatusCode = 200;
             }

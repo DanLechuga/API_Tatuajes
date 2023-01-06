@@ -15,10 +15,6 @@ namespace API_Aplicacion.DTOs
         public bool Estatuador { get; set; }
         public bool EsCliente { get; set; }
         public bool EsCreadorContenido { get; set; }
-        public DTOUsuario(string username, string password)
-        {
-            this.Username = username;
-            this.Password = password;
-        }
+      
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using API_Aplicacion.Implementacion;
 using API_Aplicacion.Interfaces;
+using API_Aplicacion.AutoMap;
+using API_Tatuajes.AutoMap;
 using API_Comun;
 using API_Infraestructura.Interfaces;
 using API_Infraestructura.Repositorios;
@@ -9,6 +11,8 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
 using System;
+using AutoMapper;
+
 
 namespace API_Tatuajes.Extensions
 {
@@ -26,6 +30,7 @@ namespace API_Tatuajes.Extensions
         public static IServiceCollection AddInyeccionDependencias(this IServiceCollection service,IConfiguration configuration)
         {
             service.DependencyInjection(configuration);
+            service.AddAutoMap();
             return service;
         }
         /// <summary>
@@ -78,6 +83,19 @@ namespace API_Tatuajes.Extensions
             services.AddTransient<IServicioValidacionTatuador, ServicioValidacionTatuador>();
             services.AddTransient<IServicioValidacionCreadores, ServicioValidacionCreadores>();
             
+            return services;
+        }
+        private static IServiceCollection AddAutoMap(this IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(MC =>
+            {
+                MC.AddProfile<ModelToDto>();
+                MC.AddProfile<DomainToDto>();
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             return services;
         }
     }

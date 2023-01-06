@@ -29,7 +29,7 @@ namespace PruebasTatuajes.PruebasUI
             this.ServicioSession = new ServicioSession(RepositorioSession,RepositorioUsuario);
             this.RepositorioError = new MockRepositorioError();
             this.ServicioError = new ServicioError(RepositorioError);
-            this.SessionController = new(ServicioSession,ServicioError);
+           // this.SessionController = new(ServicioSession,ServicioError);
         }
         [Fact]
         public void SessionController_CrearSession_CrearSessionConModeloNulo()
