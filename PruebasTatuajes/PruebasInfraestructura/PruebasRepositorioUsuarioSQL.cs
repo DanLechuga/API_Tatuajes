@@ -22,21 +22,22 @@ namespace PruebasTatuajes.PruebasInfraestructura
         {
             
             RepositorioUsuario repositorioUsuario = new(UnidadDeTrabajo);
-            Assert.Throws<ArgumentNullException>(() => { Usuario usuarioprueba = repositorioUsuario.GetUsuarioPorCorreo("tester@mail.com"); });
+            Usuario usuarioprueba = repositorioUsuario.GetUsuarioPorCorreo("tester10@mail.com");
+            Assert.Null(usuarioprueba);
 
         }
         [Fact]
         public void RepositorioUsuario_GetUsuarioPorCorreo_ConsultaUnUsuarioExistente()
         {            
             RepositorioUsuario repositorioUsuario = new(UnidadDeTrabajo);
-             Usuario usuarioprueba = repositorioUsuario.GetUsuarioPorCorreo("jvm1365@yopmail.com");
+             Usuario usuarioprueba = repositorioUsuario.GetUsuarioPorCorreo("danlechuga@live.com");
             Assert.NotNull(usuarioprueba);
         }
         [Fact]
         public void RepositorioUsuario_GetUsuarioPorCorreo_ConsultaUnUsuarioConCorreoVacio()
         {
             RepositorioUsuario repositorioUsuario = new(UnidadDeTrabajo);
-            Assert.Throws<ArgumentNullException>(() => { Usuario usuarioprueba = repositorioUsuario.GetUsuarioPorCorreo(""); });    
+            Assert.Throws<Exception>(() => { Usuario usuarioprueba = repositorioUsuario.GetUsuarioPorCorreo(""); });    
         }
     }
 }

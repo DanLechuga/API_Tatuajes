@@ -47,6 +47,19 @@ namespace API_Aplicacion.AutoMap
                 .ForMember(dest => dest.NombreCliente, a => a.MapFrom(src => src.Cliente_nombre));
             CreateMap<DTOCitasTatuador, TatuajeCita>().ReverseMap()
                 .ForMember(dest => dest.IdCatalogo,a=>a.MapFrom(src => src.TatuajeCita_IdCatalogo));
+            CreateMap<DTOUsuario, Usuario>().ReverseMap()
+                .ForMember(dest => dest.IdUsaurio, a => a.MapFrom(src => src.Id))
+                .ForMember(dest => dest.EsCliente, a => a.MapFrom(src => src.UsuarioEsCliente))
+                .ForMember(dest => dest.EsUsuarioValido, a => a.MapFrom(src => true))
+                .ForMember(dest => dest.EsCreadorContenido, a => a.MapFrom(src => src.UsuarioEsCreadorContenido))
+                .ForMember(dest => dest.EsTatuador, a => a.MapFrom(src => src.UsuarioEsTatuador));
+            CreateMap<DTOCliente, Cliente>().ReverseMap()
+                .ForMember(dest => dest.IdCliente,a=>a.MapFrom(src => src.Id))
+                .ForMember(dest => dest.CorreoCliente,a=>a.MapFrom(src => src.Cliente_correo.Cadenavalida))
+                .ForMember(dest => dest.NombreCliente,a=>a.MapFrom(src => src.Cliente_nombre))
+                .ForMember(dest => dest.NumeroTelefonico,a=>a.MapFrom(src => src.Cliente_numeroTel))
+                .ForMember(dest => dest.PasswordCliente,a=>a.MapFrom(src => src.Password.ContraseniaValida));
+                
 
 
 

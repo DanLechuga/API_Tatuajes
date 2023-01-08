@@ -43,6 +43,9 @@ namespace API_Tatuajes.Controllers.sessiones
             result.StatusCode = 403;
             try
             {
+                if (modeloSession is null) throw new Exception("No se pueden usar valores vacios");
+                if (modeloSession.idSession == Guid.Empty) throw new Exception("No se puede usar valor vacio para crear una session");
+                if (modeloSession.idSessionUsuario == Guid.Empty) throw new Exception("No se puede usar valor vacio para crear una session sin id de usuario");
                 DTOSession dtoSession = mapper.Map<DTOSession>(modeloSession);                
                 ServicioSession.CrearSession(dtoSession);
                 result.StatusCode = 200;
@@ -78,6 +81,7 @@ namespace API_Tatuajes.Controllers.sessiones
                 
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
                 ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                
             }
             return result;
         }

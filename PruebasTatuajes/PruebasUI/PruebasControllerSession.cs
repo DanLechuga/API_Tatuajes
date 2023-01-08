@@ -6,15 +6,15 @@ using API_Tatuajes.Modelos;
 using Microsoft.AspNetCore.Mvc;
 using PruebasTatuajes.PruebasInfraestructura;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
+using AutoMapper;
+using API_Aplicacion.AutoMap;
+using API_Tatuajes.AutoMap;
 
 namespace PruebasTatuajes.PruebasUI
 {
-   public class PruebasControllerSession
+    public class PruebasControllerSession
     {
         public IRepositorioSession RepositorioSession { get;  }
         public IRepositorioUsuario RepositorioUsuario { get;  }
@@ -22,33 +22,43 @@ namespace PruebasTatuajes.PruebasUI
         public IRepositorioError RepositorioError { get;  }
         public IServicioError ServicioError { get;  }
         public SessionController SessionController { get;  }
+        public IMapper Mapper { get;  }
         public PruebasControllerSession()
         {
+            if(Mapper is null)
+            {
+                var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new ModelToDto());mc.AddProfile(new DomainToDto()); });
+                IMapper mapper = mapperConfig.CreateMapper();
+                this.Mapper = mapper;
+            }
             this.RepositorioSession = new MockRepositorioSession();
         this.RepositorioUsuario = new MockRepositorioUsuario();
-            this.ServicioSession = new ServicioSession(RepositorioSession,RepositorioUsuario);
+            this.ServicioSession = new ServicioSession(RepositorioSession,RepositorioUsuario,Mapper);
             this.RepositorioError = new MockRepositorioError();
             this.ServicioError = new ServicioError(RepositorioError);
-           // this.SessionController = new(ServicioSession,ServicioError);
+            this.SessionController = new(ServicioSession,ServicioError,Mapper);
         }
         [Fact]
         public void SessionController_CrearSession_CrearSessionConModeloNulo()
         {
             ModeloSession modelo = null;
-            Assert.Throws<ArgumentNullException>(() => { SessionController.CrearSession(modelo); });
-            
+            var response = SessionController.CrearSession(modelo);
+            Assert.Equal(409,response.StatusCode);
+
         }
         [Fact]
         public void SessionController_CrearSession_CrearSessionConIdSessionVacio()
         {
             ModeloSession modelo = new() { idSession = Guid.Empty};
-            Assert.Throws<ArgumentNullException>(() => { SessionController.CrearSession(modelo); });
+            var response = SessionController.CrearSession(modelo);
+            Assert.Equal(409, response.StatusCode);
         }
         [Fact]
         public void SessionController_CrearSession_CrearSessionConIdUsuarioVacio()
         {
             ModeloSession modelo = new() { idSession = Guid.NewGuid(), idSessionUsuario = Guid.Empty };
-            Assert.Throws<ArgumentNullException>(() => { SessionController.CrearSession(modelo); });
+            var response = SessionController.CrearSession(modelo);
+            Assert.Equal(409, response.StatusCode);
         }
         [Fact]
         public void SessionController_CrearSession_CrearSessionCorrecto()
@@ -72,7 +82,7 @@ namespace PruebasTatuajes.PruebasUI
             
            ObjectResult result = SessionController.ConsultaSession(FakeIdAleatorio);
             Assert.NotNull(result);
-            Assert.Equal(500, result.StatusCode);
+            Assert.Equal(409, result.StatusCode);
         }
         [Fact]
         public void SessionController_ConsultaSession_ConsultarSessionConIdExistente()

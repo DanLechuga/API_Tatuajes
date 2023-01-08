@@ -4,10 +4,7 @@ using API_DominioTatuajes.Agregados;
 using API_DominioTatuajes.ObjetosDeValor;
 using API_Infraestructura.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 
 namespace API_Aplicacion.Implementacion
 {
@@ -15,10 +12,13 @@ namespace API_Aplicacion.Implementacion
     {
         public IRepositorioUsuario RepositorioUsuario { get; }
         public IRepositorioCliente RepositorioCliente { get; }
-        public ServicioValidacionUsuarios(IRepositorioUsuario repositorioUsuario, IRepositorioCliente repositorioCliente)
+        public IMapper Mapper { get; }
+
+        public ServicioValidacionUsuarios(IRepositorioUsuario repositorioUsuario, IRepositorioCliente repositorioCliente,IMapper mapper)
         {
             this.RepositorioUsuario = repositorioUsuario;
             this.RepositorioCliente = repositorioCliente;
+            this.Mapper = mapper;
         }
         /// <summary>
         /// Revisa si es un usuario ingresado en la base de datos
@@ -33,8 +33,7 @@ namespace API_Aplicacion.Implementacion
             Usuario usuarioDeBase = RepositorioUsuario.GetUsuarioPorCorreo(usuario.Username);
             if (usuarioDeBase == null) throw new Exception($"Usuario no encontrado para el correo ingresado {usuario.Username}");
             if (usuarioDeBase.UsuarioPassword.ContraseniaValida != usuario.Password) throw new Exception($"Contraseña ingresa no coincide con el usuario ingresado {usuario.Username}");
-            DTOUsuario UsuarioConsultado = new() { EsCliente = usuarioDeBase.UsuarioEsCliente, Estatuador = usuarioDeBase.UsuarioEsTatuador, EsUsuarioValido = true,EsCreadorContenido = usuarioDeBase.UsuarioEsCreadorContenido,IdUsaurio = usuarioDeBase.Id};
-            
+            DTOUsuario UsuarioConsultado = Mapper.Map<DTOUsuario>(usuarioDeBase);                        
             return UsuarioConsultado;
         }
         /// <summary>
@@ -48,13 +47,8 @@ namespace API_Aplicacion.Implementacion
             if (string.IsNullOrEmpty(usuario.Username)) throw new Exception("No se pueden usar valores vacios");
             Cliente clienteConsultado = this.RepositorioCliente.GetClintePorCorreo(usuario.Username);
             if (clienteConsultado == null) throw new Exception($"No se encontro usuario para el correo ingresado {usuario.Username}");
-            return  new DTOCliente() {
-                IdCliente = clienteConsultado.Id,
-                CorreoCliente = clienteConsultado.Cliente_correo.Cadenavalida,
-                PasswordCliente = clienteConsultado.Password.ContraseniaValida,
-                NombreCliente = clienteConsultado.Cliente_nombre,
-                NumeroTelefonico = clienteConsultado.Cliente_numeroTel
-            };
+            DTOCliente ClienteConsultado = Mapper.Map<DTOCliente>(clienteConsultado);
+            return ClienteConsultado;
             
         }
         /// <summary>
@@ -68,14 +62,9 @@ namespace API_Aplicacion.Implementacion
             if (cliente.IdCliente == Guid.Empty) throw new Exception("No se pueden usar valores en 0");
             Cliente clienteConsultado = RepositorioCliente.GetClientePorId(cliente.IdCliente);
             if (clienteConsultado == null) throw new Exception($"No se encontro cliente para el id ingresado {cliente.IdCliente}");
-            return new DTOCliente() { 
-            IdCliente = clienteConsultado.Id,
-            CorreoCliente = clienteConsultado.Cliente_correo.Cadenavalida,
-            NombreCliente = clienteConsultado.Cliente_nombre,
-            NumeroTelefonico = clienteConsultado.Cliente_numeroTel,
-            PasswordCliente = clienteConsultado.Password.ContraseniaValida
-            };
-            
+            DTOCliente ClienteConsultado = Mapper.Map<DTOCliente>(clienteConsultado);
+            return ClienteConsultado;
+
         }
 
         public void CrearUsuarioCliente(DTORegistroDeCliente dTORegistroDeCliente)

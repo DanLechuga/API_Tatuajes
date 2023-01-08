@@ -51,6 +51,7 @@ namespace API_Aplicacion.Implementacion
             if (cliente == null) throw new Exception("No se pueden usar elementos nulos");
             if (cliente.IdCliente == Guid.Empty) throw new Exception("No se puede usar valores con 0");
             Usuario usuario = RepositorioUsuario.GetUsuarioCliente(cliente.IdCliente);
+            if (usuario is null) throw new Exception($"No se encontro usuario registrado con este id: {cliente.IdCliente}");
             Session SessionConsultada = RepositorioSession.GetSessionPorUsuario(usuario.Id);
             if (SessionConsultada == null) throw new Exception("No se encontro usuario para el id ingresado");
             DTOSession dtoSession = Mapper.Map<DTOSession>(SessionConsultada);

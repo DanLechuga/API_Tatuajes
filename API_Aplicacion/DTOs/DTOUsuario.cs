@@ -12,7 +12,7 @@ namespace API_Aplicacion.DTOs
         public string Username { get; set; }
         public string Password { get; set; }
         public bool EsUsuarioValido { get; set; }
-        public bool Estatuador { get; set; }
+        public bool EsTatuador { get; set; }
         public bool EsCliente { get; set; }
         public bool EsCreadorContenido { get; set; }
       

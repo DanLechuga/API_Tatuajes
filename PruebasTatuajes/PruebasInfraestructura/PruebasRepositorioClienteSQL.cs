@@ -28,14 +28,14 @@ namespace PruebasTatuajes.PruebasInfraestructura
         [Fact]
         public void RepositorioCliente_GetClintePorCorreo_ConsultaClienteConCorreoInexistente()
         {
-            Assert.Throws<ArgumentNullException>(() => { Cliente FakeCliente = RepositorioCliente.GetClintePorCorreo("tester@mail.com"); });
+            Assert.Throws<ArgumentNullException>(() => { Cliente FakeCliente = RepositorioCliente.GetClintePorCorreo("tester10@mail.com"); });
         }
         [Fact]
         public void RepositorioCliente_GetClintePorCorreo_ConsultaClienteConCorreoExistente()
         {
             Cliente FakeCliente = RepositorioCliente.GetClintePorCorreo("danlechuga@live.com");
             Assert.NotNull(FakeCliente);
-            Assert.Equal("DanLechuga",FakeCliente.Cliente_nombre);
+            Assert.Equal("tester", FakeCliente.Cliente_nombre);
         }
     }
 }

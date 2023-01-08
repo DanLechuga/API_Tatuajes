@@ -4,6 +4,9 @@ using API_Aplicacion.Interfaces;
 using API_Infraestructura.Interfaces;
 using PruebasTatuajes.PruebasInfraestructura;
 using System;
+using API_Tatuajes.AutoMap;
+using API_Aplicacion.AutoMap;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,24 +20,36 @@ namespace PruebasTatuajes.PruebasAplicacion
         public IRepositorioSession RepositorioSession { get; }
         public IRepositorioUsuario RepositorioUsuario { get; }
         public IServicioSession ServicioSession { get;  }
+        public IMapper Mapper { get;  }
         public PruebasServicioSession()
         {
+            if (Mapper == null)
+            {
+                var mappingConfig = new MapperConfiguration(mc =>
+                {
+                    mc.AddProfile(new DomainToDto());
+                    mc.AddProfile(new ModelToDto());
+                    
+                });
+                IMapper mapper = mappingConfig.CreateMapper();
+                Mapper = mapper;
+            }
             this.RepositorioSession = new MockRepositorioSession();
             this.RepositorioUsuario = new MockRepositorioUsuario();
-            this.ServicioSession = new ServicioSession(RepositorioSession,RepositorioUsuario);
+            this.ServicioSession = new ServicioSession(RepositorioSession,RepositorioUsuario,Mapper);
         }
         [Fact]
         public void ServicioSession_CrearSession_SessionConDTONulo()
         {
             DTOSession dtoSession = null;
 
-            Assert.Throws<ArgumentNullException>(() => { ServicioSession.CrearSession(dtoSession); }); 
+            Assert.Throws<Exception>(() => { ServicioSession.CrearSession(dtoSession); }); 
         }
         [Fact]
         public void ServicioSession_CrearSession_SessionConIdSessionVacio()
         {
             DTOSession dTOSession = new() { IdSession = Guid.Empty};
-            Assert.Throws<ArgumentNullException>(() => { ServicioSession.CrearSession(dTOSession); });
+            Assert.Throws<Exception>(() => { ServicioSession.CrearSession(dTOSession); });
             
 
         }
@@ -42,7 +57,7 @@ namespace PruebasTatuajes.PruebasAplicacion
         public void ServicioSession_CrearSession_SessionConIdSessionUsuarioVacio()
         {
             DTOSession dTOSession = new() { IdSession = Guid.NewGuid(),IdSessionUsuario = Guid.Empty };
-            Assert.Throws<ArgumentNullException>(() => { ServicioSession.CrearSession(dTOSession); });
+            Assert.Throws<Exception>(() => { ServicioSession.CrearSession(dTOSession); });
         }
         [Fact]
         public void ServicioSession_CrearSession_SessionCreada()
@@ -55,14 +70,14 @@ namespace PruebasTatuajes.PruebasAplicacion
         public void ServicioSession_ConsultaSessionCliente_SessionConDTONulo()
         {
             DTOCliente dTOCliente = null;
-            Assert.Throws<ArgumentNullException>(() => { ServicioSession.ConsultaSessionCliente(dTOCliente); }); 
+            Assert.Throws<Exception>(() => { ServicioSession.ConsultaSessionCliente(dTOCliente); }); 
             
         } 
         [Fact]
         public void ServicioSession_ConsultaSessionCliente_SessionidClienteVacio()
         {
             DTOCliente dTOCliente = new() { IdCliente = Guid.Empty};
-            Assert.Throws<ArgumentNullException>(() => { ServicioSession.ConsultaSessionCliente(dTOCliente); });
+            Assert.Throws<Exception>(() => { ServicioSession.ConsultaSessionCliente(dTOCliente); });
         }
         [Fact]
         public void ServicioSession_ConsultaSessionCliente_ConsultaDTOSession()
