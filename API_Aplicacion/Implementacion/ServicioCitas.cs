@@ -42,24 +42,10 @@ namespace API_Aplicacion.Implementacion
                 Usuario usuarioConsultado;
                 
                 if (usuario == null) throw new Exception("No se pude usar valores nulos para consultar citas");
-                usuarioConsultado = RepositorioUsuario.GetUsuarioCliente(usuario.IdUsaurio);
-                //IEnumerable<Cita> ListaCitas = RepositorioCita.ConsultaCita(usuarioConsultado);
+                usuarioConsultado = RepositorioUsuario.GetUsuarioCliente(usuario.IdUsaurio);               
                 IEnumerable<CitaCliente> ListaCitaClientes = RepositorioClienteCita.ConsultaCitaCliente(usuarioConsultado);
                 listaDtos = Mapper.Map<IEnumerable<DTOCitas>>(ListaCitaClientes);
-                //foreach (CitaCliente itemCC in ListaCitaClientes)
-                //{
-                //    ListaDto.Add(new DTOCitas() { IdUsuario = itemCC.IdCliente,
-                //        IdCita = itemCC.IdCita,
-                //        EsConAnticipo = itemCC.EsConAnticipo,
-                //        FechaCreacion = itemCC.FechaCitaRegistrada,
-                //        IdTatuador = itemCC.IdTatuador,
-                //        CantidadDeposito = itemCC.CantidadDeposito,
-                //        NombreTatuador = itemCC.NombreTatuador
-                //    });
 
-                //}
-
-                
             }
             catch (Exception ex)
             {
@@ -125,22 +111,19 @@ namespace API_Aplicacion.Implementacion
         public DTOCitas ConsultarCita(DTOCitas dTOCitas)
         {
             DTOCitas citas = null;
-            try
-            {
+            
                 if (dTOCitas is null) throw new Exception("No se puede ultilizar valores vacios");
 
                 CitaCliente citaCliente = RepositorioClienteCita.ConsultarCitaClientePorId(dTOCitas.IdCita);
+                if (citaCliente is null) throw new Exception($"No se pudo obtener informacion para el id solicitado: {dTOCitas.IdCita}");
                 TatuajeCita tatuajeCita = RepositorioTatuajeCita.ConsultarPorIdCita(dTOCitas.IdCita);
+                if(tatuajeCita is null) throw new Exception($"No se pudo obtener informacion para el id solicitado: {dTOCitas.IdCita}");
                 var tatuador = RepositorioTatuador.ConsultarTodosLosTatuadores();
                 citas = Mapper.Map<DTOCitas>(citaCliente);
                 Mapper.Map(tatuajeCita, citas);
                 citas.NombreTatuador = tatuador.FirstOrDefault(x => x.Id.Equals(citaCliente.IdTatuador)).Tatuador_Nombre;                               
 
-            }
-            catch (Exception ex)
-            {
-                ServicioError.RegistrarError(new DTOException { Exception = ex }) ;
-            }
+          
              return citas;
             
         }

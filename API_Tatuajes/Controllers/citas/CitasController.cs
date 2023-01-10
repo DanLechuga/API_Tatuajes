@@ -39,10 +39,11 @@ namespace API_Tatuajes.Controllers.citas
         [ProducesResponseType(200, Type = typeof(IEnumerable<DTOCitas>))]
         public ObjectResult ConsultaDeCitas(Guid idUsuario)
         {
-            if (idUsuario == Guid.Empty) throw new ArgumentNullException("No se puede utilizar un id con valor en 0");
+            
             ObjectResult result = new(true);
             try
             {
+                if (idUsuario == Guid.Empty) throw new ArgumentNullException("No se puede utilizar un id con valor en 0");
                 DTOUsuario dtoUsuario = new() { IdUsaurio = idUsuario };
                 IEnumerable<DTOCitas> ListaCitasPorUsuario = ServicioDeCitas.ConsultarCitas(dtoUsuario);
                 result.Value = ListaCitasPorUsuario;
@@ -64,11 +65,11 @@ namespace API_Tatuajes.Controllers.citas
         [ProducesResponseType(200, Type = typeof(DTOCitas))]
         public ObjectResult ConsultaCitaPorId(Guid idCita)
         {
-            if (idCita == Guid.Empty) throw new ArgumentNullException("No se puede utilizar con un id en 0");
+            
             ObjectResult result = new(true);             
             try
             {
-                
+                if (idCita == Guid.Empty) throw new ArgumentNullException("No se puede utilizar con un id en 0");
                 result.StatusCode = 200;
                 result.Value = ServicioDeCitas.ConsultarCita(new DTOCitas() { IdCita = idCita });
 

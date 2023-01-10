@@ -13,7 +13,10 @@ namespace PruebasTatuajes.PruebasInfraestructura
         List<TatuadorCita> ListaTatuadesCitas { get; set; }
         public MockRepositorioTatuadorCita()
         {
-            ListaTatuadesCitas = new();
+            ListaTatuadesCitas = new() { TatuadorCita.Crear(Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.Parse("00000000-0000-0000-0000-000000000001")),
+                TatuadorCita.Crear(Guid.Parse("00000000-0000-0000-0000-000000000002"), Guid.Parse("00000000-0000-0000-0000-000000000002"), Guid.Parse("00000000-0000-0000-0000-000000000002")),
+                TatuadorCita.Crear(Guid.Parse("00000000-0000-0000-0000-000000000003"), Guid.Parse("00000000-0000-0000-0000-000000000003"), Guid.Parse("00000000-0000-0000-0000-000000000003"))
+            };
         }
         public void Agregar(TatuadorCita agregado)
         {
@@ -22,7 +25,10 @@ namespace PruebasTatuajes.PruebasInfraestructura
 
         public void EliminarPorId(Guid id)
         {
-            throw new NotImplementedException();
+            if(ListaTatuadesCitas.FirstOrDefault(x => x.Id == id) != null)
+            {
+                ListaTatuadesCitas.Remove(ListaTatuadesCitas.FirstOrDefault(x => x.Id == id));
+            }
         }
 
         public void Update(TatuadorCita agregado)
@@ -32,7 +38,7 @@ namespace PruebasTatuajes.PruebasInfraestructura
 
         public IEnumerable<TatuadorCita> ConsultarCitasPorTatuador(Tatuador tatuador)
         {
-            throw new NotImplementedException();
+            return ListaTatuadesCitas;
         }
     }
 }

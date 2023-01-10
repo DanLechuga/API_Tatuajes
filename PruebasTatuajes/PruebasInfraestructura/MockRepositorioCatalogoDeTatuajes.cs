@@ -28,7 +28,8 @@ namespace PruebasTatuajes.PruebasInfraestructura
 
         public DetalleDeTatuaje ConsultarDetalleTatuaje(int idTatuaje)
         {
-            throw new NotImplementedException();
+            CatalogoDeTatuajes catalogo = ListaCatalogos.FirstOrDefault(x => x.ID == idTatuaje);
+            return DetalleDeTatuaje.Crear(catalogo.ID, catalogo.NombreTatuaje, catalogo.PrecioTatuaje);
         }
 
        

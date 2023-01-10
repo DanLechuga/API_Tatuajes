@@ -49,11 +49,34 @@ namespace PruebasTatuajes.PruebasUI
             CitasController = new(ServicioDeCitas,ServicioError,Mapper);
         }
         [Fact]
-        public void ConsultaDeCitas_Citas_ErrorDeCosnultaPorIdInexistente()
-        {
-            Guid idUsuario = Guid.Empty;
+        public void ConsultaDeCitas_Citas_ErrorDeCosnultaPorIdVacio()
+        {            
+            Guid idCita = Guid.Empty;
+            var response = CitasController.ConsultaCitaPorId(idCita);
+            Assert.Equal(409,response.StatusCode);
 
             
+        }
+        [Fact]
+        public void ConsultaDeCitas_Citas_ConsultaDeCitasPorIdUsuarioVacio()
+        {
+            Guid idUsuariuo = Guid.Empty;
+            var response = CitasController.ConsultaDeCitas(idUsuariuo);
+            Assert.Equal(409,response.StatusCode);
+        }
+        [Fact]
+        public void ConsultaDeCitas_Citas_ConsultaDeCitasCorrecto()
+        {
+            Guid idCita = Guid.Parse("00000000-0000-0000-0000-000000000001");
+            var response = CitasController.ConsultaCitaPorId(idCita);
+            Assert.Equal(200,response.StatusCode);
+        }
+        [Fact]
+        public void ConsultaDeCitas_Citas_ConsultaDeCitasIdInexistente()
+        {
+            Guid idCita = Guid.Parse("00000000-0000-0000-0000-000000000010");
+            var response = CitasController.ConsultaCitaPorId(idCita);
+            Assert.Equal(409, response.StatusCode);
         }
     }
 }
