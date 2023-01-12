@@ -26,7 +26,12 @@ namespace API_Aplicacion.AutoMap
             CreateMap<DTOCitas, TatuajeCita>().ReverseMap()
                 .ForMember(dest => dest.IdCatalogo, a => a.MapFrom(src => src.TatuajeCita_IdCatalogo))
                 .ForMember(dest => dest.NombreTatuajeCustom, a => a.MapFrom(src => src.TatuajeCita_NombreTatuajeCustom));
-            CreateMap<DTOSession, Session>().ReverseMap();
+            CreateMap<DTOSession, Session>().ReverseMap()
+                .ForMember(dest => dest.IdSession,a=>a.MapFrom(src => src.Id))
+                .ForMember(dest => dest.IdSessionCliente,a=>a.MapFrom(src => src.SessionIdCliente))
+                .ForMember(dest => dest.IdSessionUsuario,a=>a.MapFrom(src => src.SessionIdUsuario))
+                .ForMember(dest => dest.IdSessionCreador,a=>a.MapFrom(src => src.SessionIdCreador))
+                .ForMember(dest => dest.IdSessionTatuador,a=>a.MapFrom(src => src.SessionIdTatuador));
             CreateMap<DTOCreador, Creador>().ReverseMap()
                 .ForMember(dest => dest.IdCreador,a=>a.MapFrom(src => src.Id))
                 .ForMember(dest => dest.CorreoCreador,a=>a.MapFrom(src => src.CreadorCorreo))
