@@ -52,7 +52,9 @@ namespace API_Aplicacion.AutoMap
                 .ForMember(dest => dest.EsCliente, a => a.MapFrom(src => src.UsuarioEsCliente))
                 .ForMember(dest => dest.EsUsuarioValido, a => a.MapFrom(src => true))
                 .ForMember(dest => dest.EsCreadorContenido, a => a.MapFrom(src => src.UsuarioEsCreadorContenido))
-                .ForMember(dest => dest.EsTatuador, a => a.MapFrom(src => src.UsuarioEsTatuador));
+                .ForMember(dest => dest.EsTatuador, a => a.MapFrom(src => src.UsuarioEsTatuador))
+                .ForPath(dest => dest.Username,a=>a.MapFrom(src => src.UsuarioCorreo.Cadenavalida))
+                .ForPath(dest => dest.Password,a=>a.MapFrom(src => src.UsuarioPassword.ContraseniaValida));
             CreateMap<DTOCliente, Cliente>().ReverseMap()
                 .ForMember(dest => dest.IdCliente,a=>a.MapFrom(src => src.Id))
                 .ForMember(dest => dest.CorreoCliente,a=>a.MapFrom(src => src.Cliente_correo.Cadenavalida))
