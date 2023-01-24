@@ -8,6 +8,6 @@ namespace API_Infraestructura.Interfaces
 {
    public interface IRepositorioError
     {
-        void RegistrarError(string ExceptionMessage,string InnerException, string StackTrace);
+        string RegistrarError(string ExceptionMessage,string InnerException, string StackTrace);
     }
 }

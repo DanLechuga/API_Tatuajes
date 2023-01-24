@@ -28,8 +28,8 @@ namespace API_Tatuajes.Controllers.notificaciones
         ///<Summary>Enviar notificaion para recuperar contraseña</Summary>
         [HttpGet]
         [Route("/EnviarNotificacionRecuperacion")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ObjectResult EnviarNotificacionRecuperacion(Guid idUsuario)
         {            
             ObjectResult result = new(true);
@@ -40,10 +40,8 @@ namespace API_Tatuajes.Controllers.notificaciones
                 result.StatusCode = 200;
             }
             catch (Exception ex)
-            {
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
-                
-                ServicioError.RegistrarError(new DTOException() { Exception = ex});
+            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
         }

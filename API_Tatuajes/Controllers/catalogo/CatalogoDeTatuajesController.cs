@@ -29,8 +29,8 @@ namespace API_Tatuajes.Controllers.catalogo
         ///<Summary></Summary>
         [HttpGet]
         [Route("/ConsultarCatalogoTatuajes")]
-        [ProducesResponseType(409,Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200,Type =typeof(IEnumerable<DTOCatalogoTatuajes>))]
+        [ProducesResponseType(StatusCodes.Status409Conflict,Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK,Type =typeof(IEnumerable<DTOCatalogoTatuajes>))]
         public ObjectResult ConsultarCatalogoTatuajes()
         {
             ObjectResult result = new(true);
@@ -42,17 +42,17 @@ namespace API_Tatuajes.Controllers.catalogo
             }
             catch (Exception ex)
             {
-                
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
         }
         ///<Summary></Summary>
         [HttpGet]
         [Route("/ConsultarDetalleTatuaje")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200, Type = typeof(DTODetalleTatuaje))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTODetalleTatuaje))]
         public ObjectResult ConsultarDetalleTatuaje(int idTatuaje)
         {
             ObjectResult result = new(true);
@@ -63,18 +63,16 @@ namespace API_Tatuajes.Controllers.catalogo
                 result.StatusCode = 200;
             }
             catch (Exception ex)
-            {
-
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
         }
         ///<Summary></Summary>
         [HttpGet]
         [Route("/ConsultarDetalleTatuajePorIdCita")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200, Type = typeof(DTODetalleTatuaje))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTODetalleTatuaje))]
         public ObjectResult ConsultarDetalleTatuajePorIdCita(Guid idCita)
         {
             ObjectResult result = new(true);
@@ -86,10 +84,8 @@ namespace API_Tatuajes.Controllers.catalogo
                 result.StatusCode = 200;
             }
             catch (Exception ex)
-            {
-
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
         }

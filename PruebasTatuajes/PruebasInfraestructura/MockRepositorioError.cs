@@ -15,9 +15,10 @@ namespace PruebasTatuajes.PruebasInfraestructura
 
         }
         public List<Exception> ListaExceptions { get; set; }
-        public void RegistrarError(string ExceptionMessage, string InnerException, string StackTrace)
+        public string RegistrarError(string ExceptionMessage, string InnerException, string StackTrace)
         {
             ListaExceptions.Add(new Exception(ExceptionMessage, new Exception(InnerException)));
+            return Guid.NewGuid().ToString();
         }
     }
 }

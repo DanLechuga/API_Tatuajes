@@ -35,8 +35,8 @@ namespace API_Tatuajes.Controllers.citas
         ///<Summary>Consulta una lista de citas por el id del usuario</Summary>
         [HttpGet]
         [Route("/ConsultaDeCitas")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<DTOCitas>))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DTOCitas>))]
         public ObjectResult ConsultaDeCitas(Guid idUsuario)
         {
             
@@ -51,9 +51,9 @@ namespace API_Tatuajes.Controllers.citas
             }
             catch (Exception ex)
             {
-                
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
-                ServicioError.RegistrarError(new DTOException() { Exception = ex }) ;
+
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             
             return result;
@@ -61,8 +61,8 @@ namespace API_Tatuajes.Controllers.citas
         ///<Summary>Consulta una cita por el id ingresado</Summary>
         [HttpGet]
         [Route("/ConsultaCitaPorId")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200, Type = typeof(DTOCitas))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOCitas))]
         public ObjectResult ConsultaCitaPorId(Guid idCita)
         {
             
@@ -75,18 +75,16 @@ namespace API_Tatuajes.Controllers.citas
 
             }
             catch (Exception ex)
-            {
-                
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
-                ServicioError.RegistrarError(new DTOException() { Exception = ex});
+            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
         }
         ///<Summary>Crea una cita</Summary>
         [HttpPost]
         [Route("/CrearCita")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ObjectResult CrearCita(ModeloCrearCita modeloCrearCita)
         {
             if (modeloCrearCita == null) throw new ArgumentNullException("No se puede realizar la peticion por falta de argumentos vacios o nulos");
@@ -99,19 +97,16 @@ namespace API_Tatuajes.Controllers.citas
                 result.Value = true;
             }
             catch (Exception ex)
-            {
-                
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
-                
+            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
         }
         ///<Summary>Consulta los ids para editar las citas</Summary>
         [HttpGet]
         [Route("/EditarCitaVista")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Guid>))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Guid>))]
         public ObjectResult EditarCitaVista(Guid idCliente)
         {
             if (idCliente == Guid.Empty) throw new ArgumentNullException("No se puede utilizar un id con valor en 0");
@@ -124,10 +119,8 @@ namespace API_Tatuajes.Controllers.citas
                 result.StatusCode = 200;
             }
             catch (Exception ex)
-            {
-                
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message});
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
 
             return result;
@@ -135,8 +128,8 @@ namespace API_Tatuajes.Controllers.citas
         ///<Summary>Editar Cita</Summary>
         [HttpPatch]
         [Route("/EditarCita")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ObjectResult EditarCita(ModeloActualizarCita modelo)
         {
             
@@ -148,10 +141,8 @@ namespace API_Tatuajes.Controllers.citas
                 result.StatusCode = 200;
             }
             catch (Exception ex)
-            {
-
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
 
             return result;

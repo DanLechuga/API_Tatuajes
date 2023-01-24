@@ -17,12 +17,13 @@ namespace API_Infraestructura.Repositorios
             this.UnidadDeTrabajo = unidadDeTrabajo;
         }
 
-        public void RegistrarError(string ExceptionMessage, string InnerException, string StackTrace)
+        public string RegistrarError(string ExceptionMessage, string InnerException, string StackTrace)
         {
+            Guid idException = Guid.NewGuid();
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@ExceptionId", Guid.NewGuid(), System.Data.DbType.Guid);
+                parameters.Add("@ExceptionId", idException, System.Data.DbType.Guid);
                 parameters.Add("@ExceptionMessage", ExceptionMessage, System.Data.DbType.String);
                 parameters.Add("@ExceptionInnerMessage", InnerException, System.Data.DbType.String);
                 parameters.Add("@ExceptionStackTrace", StackTrace, System.Data.DbType.String);
@@ -37,6 +38,7 @@ namespace API_Infraestructura.Repositorios
 
                 throw;
             }
+            return idException.ToString();
         }
     }
 }

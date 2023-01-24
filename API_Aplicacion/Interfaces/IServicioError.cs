@@ -9,6 +9,6 @@ namespace API_Aplicacion.Interfaces
 {
    public interface IServicioError
     {
-        void RegistrarError(DTOException dTOException);
+        string RegistrarError(DTOException dTOException);
     }
 }

@@ -38,8 +38,8 @@ namespace API_Tatuajes.Controllers.tatuador
         /// <returns></returns>
         [HttpGet]
         [Route("/ConsultarInfoTatuador")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200, Type = typeof(DTOTatuador))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOTatuador))]
        public ObjectResult ConsultarInfoTatuador(string correoTatuador)
         {
             if (string.IsNullOrEmpty(correoTatuador)) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -54,8 +54,8 @@ namespace API_Tatuajes.Controllers.tatuador
             }
             catch (Exception ex)
             {
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
 
@@ -67,8 +67,8 @@ namespace API_Tatuajes.Controllers.tatuador
         /// <returns></returns>
         [HttpGet]
         [Route("/ConsultarTatuador")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200, Type = typeof(DTOTatuador))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOTatuador))]
         public ObjectResult ConsultarTatuador(Guid idTatuador)
         {
             if (Guid.Empty == idTatuador) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -83,8 +83,8 @@ namespace API_Tatuajes.Controllers.tatuador
             }
             catch (Exception ex)
             {
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
 
@@ -96,8 +96,8 @@ namespace API_Tatuajes.Controllers.tatuador
         /// <returns></returns>
         [HttpGet]
         [Route("/ConsultaDeCitasTatuador")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<DTOCitasTatuador>))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DTOCitasTatuador>))]
         public ObjectResult ConsultaDeCitasTatuador(Guid idTatuador)
         {
             if (Guid.Empty == idTatuador) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -112,8 +112,8 @@ namespace API_Tatuajes.Controllers.tatuador
             }
             catch (Exception ex)
             {
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
         }
@@ -125,8 +125,8 @@ namespace API_Tatuajes.Controllers.tatuador
         /// <returns></returns>
         [HttpGet]
         [Route("/DetalleCitaVista")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Guid>))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Guid>))]
         public ObjectResult DetalleCitaVista(Guid idTatuador)
         {
             if (Guid.Empty == idTatuador) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -141,8 +141,8 @@ namespace API_Tatuajes.Controllers.tatuador
             }
             catch (Exception ex)
             {
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
 
@@ -155,8 +155,8 @@ namespace API_Tatuajes.Controllers.tatuador
         /// <returns></returns>
         [HttpGet]
         [Route("/DetalleCita")]
-        [ProducesResponseType(409, Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(200, Type = typeof(DTOCitasTatuador))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOCitasTatuador))]
         public ObjectResult DetalleCita(Guid idTatuador, Guid idCita)
         {
             if (Guid.Empty == idTatuador && Guid.Empty == idCita) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -171,8 +171,8 @@ namespace API_Tatuajes.Controllers.tatuador
             }
             catch (Exception ex)
             {
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message });
-                ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
             }
             return result;
 

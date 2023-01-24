@@ -14,7 +14,11 @@ namespace API_Tatuajes.Exceptions
         public string Id { get; set; }
         /// <summary> Property about class </summary>
         public string Message { get; set; }
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        public string IdDataBase { get; set; }
+
 
 
     }
