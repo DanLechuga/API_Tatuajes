@@ -65,7 +65,7 @@ namespace API_Infraestructura.Repositorios
                 parameters.Add("@id",id,System.Data.DbType.Guid);
                 CommandDefinition command = new("ConsultarUsuarioPorId", parameters,commandType: System.Data.CommandType.StoredProcedure, commandTimeout:0);
                 DTOUsuario dTOUsuario = this.UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOUsuario>(command);
-                if (dTOUsuario == null) throw new ArgumentNullException("No se encontro usuario para el id ingresado");
+                if (dTOUsuario == null) return null;
                 if (dTOUsuario.UsuarioEsCliente) usuarioConsultado = Usuario.CrearUsuarioCliente(dTOUsuario.UsuarioId, CorreoElectronico.Crear(dTOUsuario.UsuarioCorreo), Password.Crear(dTOUsuario.UsuarioPassword));
                 if (dTOUsuario.UsuarioEsTatuador) usuarioConsultado = Usuario.CrearUsuarioTatuador(dTOUsuario.UsuarioId,CorreoElectronico.Crear(dTOUsuario.UsuarioCorreo),Password.Crear(dTOUsuario.UsuarioPassword));
 

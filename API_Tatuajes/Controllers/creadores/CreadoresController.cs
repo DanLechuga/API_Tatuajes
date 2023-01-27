@@ -39,6 +39,7 @@ namespace API_Tatuajes.Controllers.creadores
         [Route("/ConsultarInfoCreador")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOCreador))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type =typeof(CriticalException))]
         public ObjectResult ConsultarInfoTatuador(string correoCreador)
         {
             if (string.IsNullOrEmpty(correoCreador)) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -51,9 +52,14 @@ namespace API_Tatuajes.Controllers.creadores
                 result.Value = CreadorConsultado;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
-            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            catch (DTOBusinessException ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }catch(Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
 
@@ -67,6 +73,7 @@ namespace API_Tatuajes.Controllers.creadores
         [Route("/ConsultarCreador")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOCreador))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(CriticalException))]
         public ObjectResult ConsultarCreador(Guid idCreador)
         {
             
@@ -79,9 +86,15 @@ namespace API_Tatuajes.Controllers.creadores
                 result.Value = CreadorConsultado;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
-            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            catch (DTOBusinessException ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
 

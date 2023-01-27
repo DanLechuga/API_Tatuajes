@@ -36,5 +36,10 @@ namespace PruebasTatuajes
         {
             throw new NotImplementedException();
         }
+
+        public Cita ConsultaCitaPorId(Guid idCita)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

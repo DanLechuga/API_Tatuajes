@@ -34,6 +34,7 @@ namespace API_Aplicacion.Implementacion
         {
             
             DetalleDeTatuaje detalleDeTatuaje = RepositorioCatalogoDeTatuajes.ConsultarDetalleTatuaje(idTatuaje);
+            if (detalleDeTatuaje is null) throw new DTOBusinessException("No se encontro detalle para el id ingresado");
             DTODetalleTatuaje dtoDetalle = mapper.Map<DTODetalleTatuaje>(detalleDeTatuaje);
 
             return dtoDetalle;
@@ -41,12 +42,13 @@ namespace API_Aplicacion.Implementacion
 
         public DTODetalleTatuaje ConsultarDetalleTatuajePorIdCita(Guid idCita)
         {
-            if (idCita == Guid.Empty) throw new ArgumentNullException("No se puede consultar valores vacios");
+            if (idCita == Guid.Empty) throw new DTOBusinessException("No se puede consultar valores vacios");
             TatuajeCita tatuajeCita = RepositorioTatuajeCita.ConsultarPorIdCita(idCita);
+            if (tatuajeCita is null) throw new DTOBusinessException($"No se encontro cita para el id ingresado: {idCita}");
             DTODetalleTatuaje dtoDetalle = mapper.Map<DTODetalleTatuaje>(tatuajeCita);
             var detalle = ConsultarDetalleTatuaje(tatuajeCita.TatuajeCita_IdCatalogo);
             mapper.Map(detalle, dtoDetalle);            
-            if (tatuajeCita.TatuajeCita_IdCatalogo == 25 && string.IsNullOrEmpty(tatuajeCita.TatuajeCita_NombreTatuajeCustom)) throw new Exception("No se registro nombre para el tatuaje dado por el cliente");
+            if (tatuajeCita.TatuajeCita_IdCatalogo == 25 && string.IsNullOrEmpty(tatuajeCita.TatuajeCita_NombreTatuajeCustom)) throw new DTOBusinessException($"No se registro nombre para el tatuaje dado por el cliente:");
             return dtoDetalle;
         }
     }

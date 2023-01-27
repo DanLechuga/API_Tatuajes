@@ -22,14 +22,14 @@ namespace API_Aplicacion.Implementacion
         }
         public DTOCreador ConsultarInfoCreador(DTOCreador dTOCreador)
         {
-            if (dTOCreador is null) throw new Exception("No se puede usar valores nulos");            
+            if (dTOCreador is null) throw new DTOBusinessException("No se puede usar valores nulos");            
             Creador creador = null;
             if (!string.IsNullOrEmpty(dTOCreador.CorreoCreador))
                 creador = RepositorioCreador.ConsultarPorCorreo(dTOCreador.CorreoCreador);
 
             if (Guid.Empty != dTOCreador.IdCreador)
                 creador = RepositorioCreador.ConsultarPorId(dTOCreador.IdCreador);
-            if(creador is null) throw new Exception($"No se pudo consultar informacion para el correo ingresado: {dTOCreador.CorreoCreador}");
+            if(creador is null) throw new DTOBusinessException($"No se pudo consultar informacion para el correo ingresado: {dTOCreador.CorreoCreador}");
             DTOCreador dtoCreador = Mapper.Map<DTOCreador>(creador);
             return dtoCreador;
         }

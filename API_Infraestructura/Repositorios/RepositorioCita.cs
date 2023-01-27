@@ -4,9 +4,7 @@ using API_Infraestructura.Interfaces;
 using Dapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace API_Infraestructura.Repositorios
 {
@@ -31,11 +29,11 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@idCita",agregado.Id,System.Data.DbType.Guid);
-                parameters.Add("@fechaCreacion",agregado.FechaCreacion,System.Data.DbType.DateTime);
-                parameters.Add("@fechaModificacion", agregado.FechaModificacion,System.Data.DbType.DateTime);
-                parameters.Add("@fechaTermino",agregado.FechaEliminacion,System.Data.DbType.DateTime);
-                CommandDefinition command = new("CrearCita", parameters, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
+                parameters.Add("@idCita",agregado.Id,DbType.Guid);
+                parameters.Add("@fechaCreacion",agregado.FechaCreacion,DbType.DateTime);
+                parameters.Add("@fechaModificacion", agregado.FechaModificacion,DbType.DateTime);
+                parameters.Add("@fechaTermino",agregado.FechaEliminacion,DbType.DateTime);
+                CommandDefinition command = new("CrearCita", parameters, commandTimeout: 0, commandType: CommandType.StoredProcedure);
                 if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
                 UnidadDeTrabajo.SqlConnection.Execute(command);
                 UnidadDeTrabajo.Dispose();
@@ -53,8 +51,8 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@idUsuario",usuario.Id,System.Data.DbType.Guid);
-                CommandDefinition command = new("ConsultaDeCitas", parameters,commandTimeout: 0, commandType:System.Data.CommandType.StoredProcedure  );
+                parameters.Add("@idUsuario",usuario.Id,DbType.Guid);
+                CommandDefinition command = new("ConsultaDeCitas", parameters,commandTimeout: 0, commandType:CommandType.StoredProcedure  );
                 IEnumerable<DTOCita> ListaDTOS = UnidadDeTrabajo.SqlConnection.Query<DTOCita>(command);
                 foreach (DTOCita item in ListaDTOS)
                 {
@@ -78,7 +76,44 @@ namespace API_Infraestructura.Repositorios
 
         public void Update(Cita agregado)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@fechaActualizada", agregado.FechaModificacion, DbType.DateTime);
+                parameters.Add("@idCita", agregado.Id, DbType.Guid);
+                CommandDefinition command = new("ActualizarCitaPorId", parameters, commandType: CommandType.StoredProcedure);
+                if (UnidadDeTrabajo.SqlConnection.State == ConnectionState.Closed) UnidadDeTrabajo.SqlConnection.Open();
+                /*int result =*/
+                UnidadDeTrabajo.SqlConnection.Execute(command);
+                //if (result == 1) throw new Exception("Error al actualizar el campo");
+                UnidadDeTrabajo.SqlConnection.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public Cita ConsultaCitaPorId(Guid idCita)
+        {
+            Cita cita;
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idCita", idCita, DbType.Guid);
+                CommandDefinition command = new("ConsultarCitaPorId", parameters, commandType: CommandType.StoredProcedure);
+                DTOCita dTOCita = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOCita>(command);
+                if (dTOCita is null) return null;
+                cita = Cita.Crear(dTOCita.Cita_id, dTOCita.Cita_fechacreacion, dTOCita.Cita_fechamodificacion, dTOCita.Cita_fechatermino);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return cita;
         }
     }
 }

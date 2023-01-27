@@ -252,6 +252,26 @@
         <member name="M:API_Tatuajes.Controllers.usuarios.UsuarioController.CrearUsuarioCliente(API_Tatuajes.Modelos.ModeloRegistrarCliente)">
             <Summary></Summary>
         </member>
+        <member name="T:API_Tatuajes.Exceptions.CriticalException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:API_Tatuajes.Exceptions.CriticalException.Origin">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:API_Tatuajes.Exceptions.CriticalException.TrakingCode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:API_Tatuajes.Exceptions.CriticalException.Messages">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:API_Tatuajes.Exceptions.InternalExpcetionMessage">
             <summary>
             Model about Exception Message 

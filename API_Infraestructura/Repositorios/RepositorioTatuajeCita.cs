@@ -62,7 +62,7 @@ namespace API_Infraestructura.Repositorios
             parameters.Add("@idCita", idCita, System.Data.DbType.Guid);
             CommandDefinition command = new("ConsultarTatuajeCitaPorId", parameters, commandType: System.Data.CommandType.StoredProcedure);
             DTOTatuajeCita dTOTatuajeCita = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOTatuajeCita>(command);
-            if (dTOTatuajeCita is null) throw new Exception("No se encontro informacion para el id ingresado");
+            if (dTOTatuajeCita is null) return null;
             tatuajeCita = TatuajeCita.Crear(dTOTatuajeCita.TatuajeCita_Id, dTOTatuajeCita.TatuajeCita_IdCita, dTOTatuajeCita.TatuajeCita_IdCatalogo,dTOTatuajeCita.TatuajeCita_NombreTatuajeCustom);
             return tatuajeCita;
         }

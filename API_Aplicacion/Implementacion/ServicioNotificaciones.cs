@@ -21,10 +21,10 @@ namespace API_Aplicacion.Implementacion
         }
         public void CrearNotificacionRecuperacionPassword(DTOUsuario dTOUsuario)
         {
-            if (dTOUsuario == null) throw new Exception("No se puede usar valores nulos");
-            if (dTOUsuario.IdUsaurio == Guid.Empty) throw new Exception("No se puede usar valor vacio");
+            if (dTOUsuario == null) throw new DTOBusinessException("No se puede usar valores nulos");
+            if (dTOUsuario.IdUsaurio == Guid.Empty) throw new DTOBusinessException("No se puede usar valor vacio");
             Usuario usuario = RepositorioUsuario.GetUsuarioCliente(dTOUsuario.IdUsaurio);
-            if (usuario == null) throw new Exception("No se encontro usuario para el id ingresado");
+            if (usuario == null) throw new DTOBusinessException("No se encontro usuario para el id ingresado");
             RepositorioNotificaciones.EnviarCorreoNotificacion(usuario);
             
         }

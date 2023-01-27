@@ -41,6 +41,7 @@ namespace API_Tatuajes.Controllers.usuarios
         [Route("/ValidarUsuario")]
         [ProducesResponseType(StatusCodes.Status409Conflict,Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOUsuario))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type=typeof(CriticalException))]
         public ObjectResult ValidarUsuario(ModeloUsuario modeloUsuario)
         {
             
@@ -53,10 +54,15 @@ namespace API_Tatuajes.Controllers.usuarios
                 result.StatusCode = 200;
                 result.Value = dtoUsuarioConsultado; 
             }
-            catch (Exception ex)
+            catch(DTOBusinessException  ex)
             {                
                 string response = ServicioError.RegistrarError(new DTOException() { Exception = ex});
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source,Message = ex.Message,IdDataBase = response});
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
         }
@@ -69,6 +75,7 @@ namespace API_Tatuajes.Controllers.usuarios
         [Route("/ConsultaInfoCliente")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOCliente))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(CriticalException))]
         public ObjectResult ConsultaInfoCliente(string correoUsuario)
         {
             if (string.IsNullOrEmpty(correoUsuario)) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -81,10 +88,15 @@ namespace API_Tatuajes.Controllers.usuarios
                 result.Value = clienteConsultado;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
+            catch(DTOBusinessException  ex)
             {
                 string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
 
@@ -98,6 +110,7 @@ namespace API_Tatuajes.Controllers.usuarios
         [Route("/ConsultaCliente")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOCliente))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(CriticalException))]
         public ObjectResult ConsultaCliente(Guid idUsuario)
         {
             if (idUsuario == Guid.Empty) throw new ArgumentNullException("No se puede usar valor en 0");
@@ -109,10 +122,15 @@ namespace API_Tatuajes.Controllers.usuarios
                 result.Value = clienteConsultado;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
+            catch(DTOBusinessException  ex)
             {
                 string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
         }
@@ -121,6 +139,7 @@ namespace API_Tatuajes.Controllers.usuarios
         [Route("/CrearUsuarioCliente")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type =typeof(CriticalException))]
         public ObjectResult CrearUsuarioCliente(ModeloRegistrarCliente modeloRegistrarCliente)
         {
            
@@ -133,11 +152,16 @@ namespace API_Tatuajes.Controllers.usuarios
                 result.Value = true;
                 
             }
-            catch (Exception ex)
+            catch(DTOBusinessException  ex)
             {
 
                 string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
         }

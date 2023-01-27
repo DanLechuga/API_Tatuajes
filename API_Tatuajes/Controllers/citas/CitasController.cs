@@ -37,6 +37,7 @@ namespace API_Tatuajes.Controllers.citas
         [Route("/ConsultaDeCitas")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DTOCitas>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type =typeof(CriticalException))]
         public ObjectResult ConsultaDeCitas(Guid idUsuario)
         {
             
@@ -49,11 +50,15 @@ namespace API_Tatuajes.Controllers.citas
                 result.Value = ListaCitasPorUsuario;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
+            catch (DTOBusinessException ex)
             {
 
                 string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }catch(Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { Origin = ex.Source, Messages = new[] { ex.Message }, TrakingCode = response });
             }
             
             return result;
@@ -63,6 +68,7 @@ namespace API_Tatuajes.Controllers.citas
         [Route("/ConsultaCitaPorId")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOCitas))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type =typeof(CriticalException))]
         public ObjectResult ConsultaCitaPorId(Guid idCita)
         {
             
@@ -74,9 +80,14 @@ namespace API_Tatuajes.Controllers.citas
                 result.Value = ServicioDeCitas.ConsultarCita(new DTOCitas() { IdCita = idCita });
 
             }
-            catch (Exception ex)
+            catch (DTOBusinessException ex)
             {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { Origin = ex.Source, Messages = new[] { ex.Message }, TrakingCode = response });
             }
             return result;
         }
@@ -85,6 +96,7 @@ namespace API_Tatuajes.Controllers.citas
         [Route("/CrearCita")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(CriticalException))]
         public ObjectResult CrearCita(ModeloCrearCita modeloCrearCita)
         {
             if (modeloCrearCita == null) throw new ArgumentNullException("No se puede realizar la peticion por falta de argumentos vacios o nulos");
@@ -118,9 +130,15 @@ namespace API_Tatuajes.Controllers.citas
                 result.Value = ListaCitasPorUsuario;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
-            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            catch (DTOBusinessException ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { Origin = ex.Source, Messages = new[] { ex.Message }, TrakingCode = response });
             }
 
             return result;
@@ -140,9 +158,15 @@ namespace API_Tatuajes.Controllers.citas
                 ServicioDeCitas.ActualizarCita(dtoCita);
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
-            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+            catch (DTOBusinessException ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { Origin = ex.Source, Messages = new[] { ex.Message }, TrakingCode = response });
             }
 
             return result;

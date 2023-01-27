@@ -20,6 +20,10 @@ namespace API_DominioTatuajes.Agregados
         {
             return new Cita(idCita, fechaCreacion, fechaModificacion, fechaEliminacion);
         }
+        public void CambioFecha(DateTime fechaCambiar)
+        {
+            this.FechaModificacion = fechaCambiar;
+        }
 
     }
 }

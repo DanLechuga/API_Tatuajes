@@ -78,9 +78,9 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@fechaActualizada", agregado.FechaCitaRegistrada, DbType.DateTime);
+                parameters.Add("@fechaActualizada", agregado.FechaCitaRegistrada.ToLocalTime(), DbType.DateTime);
                 parameters.Add("@idCita", agregado.IdCita, DbType.Guid);
-                CommandDefinition command = new("ActualizarCitaPorId", parameters, commandType: CommandType.StoredProcedure);
+                CommandDefinition command = new("ActualizarClienteCitaPorId", parameters, commandType: CommandType.StoredProcedure);
                 if (UnidadDeTrabajo.SqlConnection.State == ConnectionState.Closed) UnidadDeTrabajo.SqlConnection.Open();
                 /*int result =*/
                 UnidadDeTrabajo.SqlConnection.Execute(command);
@@ -99,10 +99,10 @@ namespace API_Infraestructura.Repositorios
             CitaCliente citaCliente = null;
             DynamicParameters parameters = new();
             parameters.Add("@idCita", idCita, DbType.Guid);
-            CommandDefinition command = new("ConsultarCitaPorId", parameters, commandType: CommandType.StoredProcedure);
+            CommandDefinition command = new("ConsultarCitaClientePorId", parameters, commandType: CommandType.StoredProcedure);
             DTOCitaCliente dTOCitaCliente = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOCitaCliente>(command);
-            if (dTOCitaCliente is null) throw new ArgumentNullException("No se encontro cita para el id ingresado");
-            citaCliente = CitaCliente.Crear(dTOCitaCliente.ClienteCita_id, dTOCitaCliente.ClienteCita_id, dTOCitaCliente.ClienteCita_ClienteId, dTOCitaCliente.ClienteCita_Fecha, dTOCitaCliente.ClienteCita_Anticipo, dTOCitaCliente.ClienteCita_MontoAnticipa, dTOCitaCliente.ClienteCita_TatuadorId,dTOCitaCliente.Tatuador_Nombre);
+            if (dTOCitaCliente is null) return null;
+            citaCliente = CitaCliente.Crear(dTOCitaCliente.ClienteCita_id, dTOCitaCliente.ClienteCita_CitaId, dTOCitaCliente.ClienteCita_ClienteId, dTOCitaCliente.ClienteCita_Fecha, dTOCitaCliente.ClienteCita_Anticipo, dTOCitaCliente.ClienteCita_MontoAnticipa, dTOCitaCliente.ClienteCita_TatuadorId,dTOCitaCliente.Tatuador_Nombre);
             return citaCliente;
         }
        

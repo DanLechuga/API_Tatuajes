@@ -44,7 +44,7 @@ namespace API_Infraestructura.Repositorios
             parameters.Add("@idTatuaje", idTatuaje, System.Data.DbType.Int32);
             CommandDefinition command = new("ConsultarDetalleTatuaje",parameters, commandType: System.Data.CommandType.StoredProcedure, commandTimeout: 0);
             DTOCatalogoDeTatuajes dTOCatalogoDeTatuajes = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOCatalogoDeTatuajes>(command);
-            if (dTOCatalogoDeTatuajes is null) throw new Exception("No se pudo consultar el detalle para el id dado");
+            if (dTOCatalogoDeTatuajes is null) return null;
             detalle = DetalleDeTatuaje.Crear(dTOCatalogoDeTatuajes.id_Tatuaje, dTOCatalogoDeTatuajes.nombreTatuaje, dTOCatalogoDeTatuajes.precioTatuaje);
             return detalle;
         }

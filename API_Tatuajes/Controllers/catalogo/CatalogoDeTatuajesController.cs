@@ -12,11 +12,11 @@ namespace API_Tatuajes.Controllers.catalogo
 {
     ///<Summary></Summary>
     [Route("[controller]")]
-    [ApiController]    
+    [ApiController]
     public class CatalogoDeTatuajesController : ControllerBase
     {
         ///<Summary></Summary>
-        public IServicioError ServicioError { get;  }
+        public IServicioError ServicioError { get; }
         ///<Summary></Summary>
         public IServicioCatalogoDeTatuajes ServicioCatalogoDeTatuajes { get; }
 
@@ -29,16 +29,16 @@ namespace API_Tatuajes.Controllers.catalogo
         ///<Summary></Summary>
         [HttpGet]
         [Route("/ConsultarCatalogoTatuajes")]
-        [ProducesResponseType(StatusCodes.Status409Conflict,Type = typeof(InternalExpcetionMessage))]
-        [ProducesResponseType(StatusCodes.Status200OK,Type =typeof(IEnumerable<DTOCatalogoTatuajes>))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DTOCatalogoTatuajes>))]
         public ObjectResult ConsultarCatalogoTatuajes()
         {
             ObjectResult result = new(true);
             try
             {
                 IEnumerable<DTOCatalogoTatuajes> catalogoTatuajes = ServicioCatalogoDeTatuajes.ConsultarCatalogoDeTatuajes();
-                result.Value = catalogoTatuajes;                
-                result.StatusCode = 200;                
+                result.Value = catalogoTatuajes;
+                result.StatusCode = 200;
             }
             catch (Exception ex)
             {
@@ -53,6 +53,7 @@ namespace API_Tatuajes.Controllers.catalogo
         [Route("/ConsultarDetalleTatuaje")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTODetalleTatuaje))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(CriticalException))]
         public ObjectResult ConsultarDetalleTatuaje(int idTatuaje)
         {
             ObjectResult result = new(true);
@@ -62,9 +63,15 @@ namespace API_Tatuajes.Controllers.catalogo
                 result.Value = dTODetalle;
                 result.StatusCode = 200;
             }
+            catch (DTOBusinessException capex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = capex });
+                result = Conflict(new InternalExpcetionMessage() { Id = capex.Source, Message = capex.Message, IdDataBase = response });
+            }
             catch (Exception ex)
-            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { Origin = ex.Source, Messages = new[] { ex.Message }, TrakingCode = response });
             }
             return result;
         }
@@ -73,19 +80,26 @@ namespace API_Tatuajes.Controllers.catalogo
         [Route("/ConsultarDetalleTatuajePorIdCita")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTODetalleTatuaje))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(CriticalException))]
         public ObjectResult ConsultarDetalleTatuajePorIdCita(Guid idCita)
         {
             ObjectResult result = new(true);
-            
+
             try
             {
                 DTODetalleTatuaje dTODetalle = ServicioCatalogoDeTatuajes.ConsultarDetalleTatuajePorIdCita(idCita);
                 result.Value = dTODetalle;
                 result.StatusCode = 200;
             }
+            catch (DTOBusinessException capex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = capex });
+                result = Conflict(new InternalExpcetionMessage() { Id = capex.Source, Message = capex.Message, IdDataBase = response });
+            }
             catch (Exception ex)
-            {string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
-                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { Origin = ex.Source, Messages = new[] { ex.Message }, TrakingCode = response });
             }
             return result;
         }

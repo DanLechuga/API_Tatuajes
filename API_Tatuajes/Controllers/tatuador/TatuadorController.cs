@@ -40,6 +40,7 @@ namespace API_Tatuajes.Controllers.tatuador
         [Route("/ConsultarInfoTatuador")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOTatuador))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(CriticalException))]
        public ObjectResult ConsultarInfoTatuador(string correoTatuador)
         {
             if (string.IsNullOrEmpty(correoTatuador)) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -52,10 +53,15 @@ namespace API_Tatuajes.Controllers.tatuador
                 result.Value = tatuadorConsultado;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
+            catch (DTOBusinessException ex)
             {
                 string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
 
@@ -69,6 +75,7 @@ namespace API_Tatuajes.Controllers.tatuador
         [Route("/ConsultarTatuador")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOTatuador))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(CriticalException))]
         public ObjectResult ConsultarTatuador(Guid idTatuador)
         {
             if (Guid.Empty == idTatuador) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -81,10 +88,15 @@ namespace API_Tatuajes.Controllers.tatuador
                 result.Value = tatuadorConsultado;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
+            catch (DTOBusinessException ex)
             {
                 string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
 
@@ -98,6 +110,7 @@ namespace API_Tatuajes.Controllers.tatuador
         [Route("/ConsultaDeCitasTatuador")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DTOCitasTatuador>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type =typeof(CriticalException))]
         public ObjectResult ConsultaDeCitasTatuador(Guid idTatuador)
         {
             if (Guid.Empty == idTatuador) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -110,10 +123,15 @@ namespace API_Tatuajes.Controllers.tatuador
                 result.Value = tatuadorConsultado;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
+            catch (DTOBusinessException ex)
             {
                 string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
         }
@@ -127,6 +145,7 @@ namespace API_Tatuajes.Controllers.tatuador
         [Route("/DetalleCitaVista")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Guid>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(CriticalException))]
         public ObjectResult DetalleCitaVista(Guid idTatuador)
         {
             if (Guid.Empty == idTatuador) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -139,10 +158,15 @@ namespace API_Tatuajes.Controllers.tatuador
                 result.Value = tatuadorConsultado;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
+            catch (DTOBusinessException ex)
             {
                 string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
 
@@ -157,6 +181,7 @@ namespace API_Tatuajes.Controllers.tatuador
         [Route("/DetalleCita")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DTOCitasTatuador))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(CriticalException))]
         public ObjectResult DetalleCita(Guid idTatuador, Guid idCita)
         {
             if (Guid.Empty == idTatuador && Guid.Empty == idCita) throw new ArgumentNullException("No se puede utlizar valores vacios o nulos");
@@ -169,10 +194,15 @@ namespace API_Tatuajes.Controllers.tatuador
                 result.Value = tatuadorConsultado;
                 result.StatusCode = 200;
             }
-            catch (Exception ex)
+            catch (DTOBusinessException ex)
             {
                 string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
                 result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { TrakingCode = response, Origin = ex.Source, Messages = new[] { ex.Message } });
             }
             return result;
 
