@@ -78,7 +78,7 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@fechaActualizada", agregado.FechaCitaRegistrada.ToLocalTime(), DbType.DateTime);
+                parameters.Add("@fechaActualizada", agregado.FechaCitaRegistrada, DbType.DateTime);
                 parameters.Add("@idCita", agregado.IdCita, DbType.Guid);
                 CommandDefinition command = new("ActualizarClienteCitaPorId", parameters, commandType: CommandType.StoredProcedure);
                 if (UnidadDeTrabajo.SqlConnection.State == ConnectionState.Closed) UnidadDeTrabajo.SqlConnection.Open();
