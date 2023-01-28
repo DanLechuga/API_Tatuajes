@@ -12,5 +12,6 @@ namespace API_Aplicacion.Interfaces
         IEnumerable<Guid> ConsultasIds(DTOUsuario dTOUsuario);
         DTOCitas ConsultarCita(DTOCitas dTOCitas);
         void ActualizarCita(DTOCitas dTOCitas);
+        void EliminarCitaPorId(Guid idCita);
     }
 }

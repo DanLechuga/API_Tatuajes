@@ -67,6 +67,13 @@
         <member name="M:API_Tatuajes.Controllers.citas.CitasController.EditarCita(API_Tatuajes.Modelos.ModeloActualizarCita)">
             <Summary>Editar Cita</Summary>
         </member>
+        <member name="M:API_Tatuajes.Controllers.citas.CitasController.EliminarCita(System.Guid)">
+            <summary>
+            Eliminar Cita por Id
+            </summary>
+            <param name="idCita"></param>
+            <returns></returns>
+        </member>
         <member name="T:API_Tatuajes.Controllers.creadores.CreadoresController">
             <summary>
             

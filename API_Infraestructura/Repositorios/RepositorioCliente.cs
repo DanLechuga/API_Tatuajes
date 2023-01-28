@@ -3,6 +3,7 @@ using API_DominioTatuajes.Agregados;
 using API_Infraestructura.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@idCliente", id,System.Data.DbType.Guid);
+                parameters.Add("@idCliente", id,DbType.Guid);
                 CommandDefinition command = new("ConsultaInformacionClientePorId", parameters,commandType:System.Data.CommandType.StoredProcedure,commandTimeout: 0);
                 DTOCliente clienteConsultado = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOCliente>(command);
                 if (clienteConsultado == null) throw new ArgumentNullException("No se encontro cliente para el id ingresado");
@@ -58,11 +59,11 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@Cliente_id", agregado.Id, System.Data.DbType.Guid);
-                parameters.Add("@Cliente_nombre", agregado.Cliente_nombre, System.Data.DbType.String);
-                parameters.Add("@Cliente_correo", agregado.Cliente_correo.Cadenavalida, System.Data.DbType.String);
-                parameters.Add("@Cliente_numeroTel", agregado.Cliente_numeroTel, System.Data.DbType.String);
-                parameters.Add("@Cliente_password", agregado.Password.ContraseniaValida, System.Data.DbType.String);
+                parameters.Add("@Cliente_id", agregado.Id, DbType.Guid);
+                parameters.Add("@Cliente_nombre", agregado.Cliente_nombre, DbType.String);
+                parameters.Add("@Cliente_correo", agregado.Cliente_correo.Cadenavalida, DbType.String);
+                parameters.Add("@Cliente_numeroTel", agregado.Cliente_numeroTel, DbType.String);
+                parameters.Add("@Cliente_password", agregado.Password.ContraseniaValida, DbType.String);
                 CommandDefinition command = new("CrearCliente", parameters, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
                 if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
                 UnidadDeTrabajo.SqlConnection.Execute(command);
@@ -84,6 +85,7 @@ namespace API_Infraestructura.Repositorios
 
         public void EliminarPorId(Guid id)
         {
+            
             throw new NotImplementedException();
         }
 
@@ -94,7 +96,7 @@ namespace API_Infraestructura.Repositorios
             {
                 Cliente clienteConsultado = null;
                 DynamicParameters parameters = new();
-                parameters.Add("@correo", correoElectronico, System.Data.DbType.String);
+                parameters.Add("@correo", correoElectronico, DbType.String);
                 CommandDefinition command = new("ConsultarClientePorCorreo", parameters, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
                 DTOCliente DtoCliente = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOCliente>(command);
                  if (DtoCliente == null) throw new ArgumentNullException("No se encontro registro para correo ingresado");

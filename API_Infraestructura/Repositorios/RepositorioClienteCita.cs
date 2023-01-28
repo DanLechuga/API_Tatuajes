@@ -70,7 +70,19 @@ namespace API_Infraestructura.Repositorios
 
         public void EliminarPorId(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idCita", id, DbType.Guid);
+                CommandDefinition command = new("EliminarCitaPorIdClienteCita", parameters, commandType: CommandType.StoredProcedure);
+                this.UnidadDeTrabajo.SqlConnection.Execute(command);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public void Update(CitaCliente agregado)

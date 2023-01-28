@@ -148,6 +148,7 @@ namespace API_Tatuajes.Controllers.citas
         [Route("/EditarCita")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(CriticalException))]
         public ObjectResult EditarCita(ModeloActualizarCita modelo)
         {
             
@@ -169,6 +170,37 @@ namespace API_Tatuajes.Controllers.citas
                 result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { Origin = ex.Source, Messages = new[] { ex.Message }, TrakingCode = response });
             }
 
+            return result;
+        }
+        /// <summary>
+        /// Eliminar Cita por Id
+        /// </summary>
+        /// <param name="idCita"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("/EliminarCita")]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(CriticalException))]
+        public ObjectResult EliminarCita(Guid idCita)
+        {
+            ObjectResult result = new(true);
+            try
+            {
+                ServicioDeCitas.EliminarCitaPorId(idCita);
+                result.Value = true;
+                result.StatusCode = 200;
+            }
+            catch (DTOBusinessException ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = Conflict(new InternalExpcetionMessage() { Id = ex.Source, Message = ex.Message, IdDataBase = response });
+            }
+            catch (Exception ex)
+            {
+                string response = ServicioError.RegistrarError(new DTOException() { Exception = ex });
+                result = StatusCode(StatusCodes.Status500InternalServerError, new CriticalException { Origin = ex.Source, Messages = new[] { ex.Message }, TrakingCode = response });
+            }
             return result;
         }
 

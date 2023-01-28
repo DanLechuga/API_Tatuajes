@@ -121,6 +121,18 @@ namespace API_Aplicacion.Implementacion
                 RepositorioCita.Update(cita);
 
         }
+
+        public void EliminarCitaPorId(Guid idCita)
+        {
+            if (idCita.Equals(Guid.Empty)) throw new DTOBusinessException("No se acepta valores vacios");
+            CitaCliente citaC = RepositorioClienteCita.ConsultarCitaClientePorId(idCita);
+            if (citaC is null) throw new DTOBusinessException($"No se encontro cita para el id ingresado: {idCita}");
+            Cita cita = RepositorioCita.ConsultaCitaPorId(idCita);
+            if (cita is null) throw new DTOBusinessException($"No se encontro cita para el id ingresado: {idCita}");
+            RepositorioClienteCita.EliminarPorId(idCita);
+            RepositorioCita.EliminarPorId(idCita);
+            
+        }
     }
 
   
