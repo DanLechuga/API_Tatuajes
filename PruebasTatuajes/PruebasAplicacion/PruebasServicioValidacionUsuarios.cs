@@ -39,13 +39,13 @@ namespace PruebasTatuajes.PruebasAplicacion
         {
 
             DTOUsuario FakeDtoUsuario = null;
-            Assert.Throws<Exception>(() => { ServicioValidacion.ValidacionUsuario(FakeDtoUsuario); });
+            Assert.Throws<DTOBusinessException>(() => { ServicioValidacion.ValidacionUsuario(FakeDtoUsuario); });
         }
         [Fact]
         public void ServicioValidacionUsuarios_ValidacionUsuario_DTOVacio()
         {
             DTOUsuario FakeDtoUsuario = new();
-            Assert.Throws<Exception>(() => { ServicioValidacion.ValidacionUsuario(FakeDtoUsuario); });
+            Assert.Throws<DTOBusinessException>(() => { ServicioValidacion.ValidacionUsuario(FakeDtoUsuario); });
         }
         [Fact]
         public void ServicioValidacionUsuarios_ValidacionUsuario_DTOConUsuarioRegistrado()
@@ -58,19 +58,19 @@ namespace PruebasTatuajes.PruebasAplicacion
         public void ServicioValidacionUsuarios_ValidacionUsuario_DTOConPasswordErroneo()
         {
             DTOUsuario FakeDtoUsuario = new() { Username = "tester@mail.com", Password = "Contraseña123!" };
-            Assert.Throws<Exception>(() => { DTOUsuario usuarioConsultado = ServicioValidacion.ValidacionUsuario(FakeDtoUsuario); });
+            Assert.Throws<DTOBusinessException>(() => { DTOUsuario usuarioConsultado = ServicioValidacion.ValidacionUsuario(FakeDtoUsuario); });
         }
         [Fact]
         public void ServicioValidacionUsuarios_ConsultaInformacionCliente_DTONulo()
         {
             DTOUsuario FakeDTOUsuario = null;
-            Assert.Throws<Exception>(() => { ServicioValidacion.ConsultaInformacionCliente(FakeDTOUsuario); });
+            Assert.Throws<DTOBusinessException>(() => { ServicioValidacion.ConsultaInformacionCliente(FakeDTOUsuario); });
         }
         [Fact]
         public void ServicioValidacionUsuarios_ConsultaInformacionCliente_DTOVacio()
         {
             DTOUsuario FakeDtoUsuario = new();
-            Assert.Throws<Exception>(() => { ServicioValidacion.ConsultaInformacionCliente(FakeDtoUsuario); });
+            Assert.Throws<DTOBusinessException>(() => { ServicioValidacion.ConsultaInformacionCliente(FakeDtoUsuario); });
         }
         [Fact]
         public void ServicioValidacionUsuarios_ConsultaInformacionCliente_DTOCompleto()
@@ -85,19 +85,19 @@ namespace PruebasTatuajes.PruebasAplicacion
         public void ServicioValidacionUsuarios_ConsultaInformacionCliente_ConsultaInformacionConDtoNulo()
         {
             DTOCliente FakeCliente = null;
-            Assert.Throws<Exception>(() => { ServicioValidacion.ConsultaInformacionCliente(FakeCliente); });
+            Assert.Throws<DTOBusinessException>(() => { ServicioValidacion.ConsultaInformacionCliente(FakeCliente); });
         }
         [Fact]
         public void ServicioValidacionUsuarios_ConsultaInformacionCliente_ConsultaInformacionConIdClienteVacio()
         {
             DTOCliente FakeCliente = new() { IdCliente = Guid.Empty };
-            Assert.Throws<Exception>(() => { ServicioValidacion.ConsultaInformacionCliente(FakeCliente); });
+            Assert.Throws<DTOBusinessException>(() => { ServicioValidacion.ConsultaInformacionCliente(FakeCliente); });
         }
         [Fact]
         public void ServicioValidacionUsuarios_ConsultaInformacionCliente_ConsultaInformacionConIdClienteAleatorio()
         {
             DTOCliente FakeCliente = new() { IdCliente = Guid.NewGuid() };
-            Assert.Throws<Exception>(() => { ServicioValidacion.ConsultaInformacionCliente(FakeCliente); });
+            Assert.Throws<DTOBusinessException>(() => { ServicioValidacion.ConsultaInformacionCliente(FakeCliente); });
             
         }
         [Fact]

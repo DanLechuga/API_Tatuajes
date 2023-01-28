@@ -43,7 +43,7 @@ namespace PruebasTatuajes.PruebasUI
         {
             ModeloSession modelo = null;
             var response = SessionController.CrearSession(modelo);
-            Assert.Equal(409,response.StatusCode);
+            Assert.Equal(500,response.StatusCode);
 
         }
         [Fact]
@@ -51,14 +51,14 @@ namespace PruebasTatuajes.PruebasUI
         {
             ModeloSession modelo = new() { idSession = Guid.Empty};
             var response = SessionController.CrearSession(modelo);
-            Assert.Equal(409, response.StatusCode);
+            Assert.Equal(500, response.StatusCode);
         }
         [Fact]
         public void SessionController_CrearSession_CrearSessionConIdUsuarioVacio()
         {
             ModeloSession modelo = new() { idSession = Guid.NewGuid(), idSessionUsuario = Guid.Empty };
             var response = SessionController.CrearSession(modelo);
-            Assert.Equal(409, response.StatusCode);
+            Assert.Equal(500, response.StatusCode);
         }
         [Fact]
         public void SessionController_CrearSession_CrearSessionCorrecto()

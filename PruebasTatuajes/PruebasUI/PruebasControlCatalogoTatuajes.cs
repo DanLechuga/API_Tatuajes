@@ -63,7 +63,7 @@ namespace PruebasTatuajes.PruebasUI
         public void ConsultaDeCatalogo_CatalogoControl_ConsultaDetalleTatuajeIdInexistente()
         {
             var response = CatalogoDeTatuajes.ConsultarDetalleTatuaje(10);
-            Assert.Equal(409,response.StatusCode);
+            Assert.Equal(500,response.StatusCode);
         }
         [Fact]
         public void ConsultaDeCatalogo_CatalogoControl_ConsultaDEtallePorCitaCorrecto()

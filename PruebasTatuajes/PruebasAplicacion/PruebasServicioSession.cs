@@ -6,6 +6,7 @@ using PruebasTatuajes.PruebasInfraestructura;
 using System;
 using API_Tatuajes.AutoMap;
 using API_Aplicacion.AutoMap;
+
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,13 +44,13 @@ namespace PruebasTatuajes.PruebasAplicacion
         {
             DTOSession dtoSession = null;
 
-            Assert.Throws<Exception>(() => { ServicioSession.CrearSession(dtoSession); }); 
+            Assert.Throws<DTOBusinessException>(() => { ServicioSession.CrearSession(dtoSession); }); 
         }
         [Fact]
         public void ServicioSession_CrearSession_SessionConIdSessionVacio()
         {
             DTOSession dTOSession = new() { IdSession = Guid.Empty};
-            Assert.Throws<Exception>(() => { ServicioSession.CrearSession(dTOSession); });
+            Assert.Throws<DTOBusinessException>(() => { ServicioSession.CrearSession(dTOSession); });
             
 
         }
@@ -57,7 +58,7 @@ namespace PruebasTatuajes.PruebasAplicacion
         public void ServicioSession_CrearSession_SessionConIdSessionUsuarioVacio()
         {
             DTOSession dTOSession = new() { IdSession = Guid.NewGuid(),IdSessionUsuario = Guid.Empty };
-            Assert.Throws<Exception>(() => { ServicioSession.CrearSession(dTOSession); });
+            Assert.Throws<DTOBusinessException>(() => { ServicioSession.CrearSession(dTOSession); });
         }
         [Fact]
         public void ServicioSession_CrearSession_SessionCreada()
@@ -70,14 +71,14 @@ namespace PruebasTatuajes.PruebasAplicacion
         public void ServicioSession_ConsultaSessionCliente_SessionConDTONulo()
         {
             DTOCliente dTOCliente = null;
-            Assert.Throws<Exception>(() => { ServicioSession.ConsultaSessionCliente(dTOCliente); }); 
+            Assert.Throws<DTOBusinessException>(() => { ServicioSession.ConsultaSessionCliente(dTOCliente); }); 
             
         } 
         [Fact]
         public void ServicioSession_ConsultaSessionCliente_SessionidClienteVacio()
         {
             DTOCliente dTOCliente = new() { IdCliente = Guid.Empty};
-            Assert.Throws<Exception>(() => { ServicioSession.ConsultaSessionCliente(dTOCliente); });
+            Assert.Throws<DTOBusinessException>(() => { ServicioSession.ConsultaSessionCliente(dTOCliente); });
         }
         [Fact]
         public void ServicioSession_ConsultaSessionCliente_ConsultaDTOSession()

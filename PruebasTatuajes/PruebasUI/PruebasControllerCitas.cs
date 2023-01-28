@@ -53,7 +53,7 @@ namespace PruebasTatuajes.PruebasUI
         {            
             Guid idCita = Guid.Empty;
             var response = CitasController.ConsultaCitaPorId(idCita);
-            Assert.Equal(409,response.StatusCode);
+            Assert.Equal(500,response.StatusCode);
 
             
         }
@@ -62,7 +62,7 @@ namespace PruebasTatuajes.PruebasUI
         {
             Guid idUsuariuo = Guid.Empty;
             var response = CitasController.ConsultaDeCitas(idUsuariuo);
-            Assert.Equal(409,response.StatusCode);
+            Assert.Equal(500,response.StatusCode);
         }
         [Fact]
         public void ConsultaDeCitas_Citas_ConsultaDeCitasCorrecto()
