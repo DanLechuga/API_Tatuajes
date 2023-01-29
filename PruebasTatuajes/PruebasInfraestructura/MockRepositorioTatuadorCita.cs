@@ -40,5 +40,10 @@ namespace PruebasTatuajes.PruebasInfraestructura
         {
             return ListaTatuadesCitas;
         }
+
+        public TatuadorCita ConsultarCitaPorId(Guid idCita)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

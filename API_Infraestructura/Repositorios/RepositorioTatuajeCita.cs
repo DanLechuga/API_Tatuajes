@@ -1,10 +1,7 @@
 ﻿using API_DominioTatuajes.Agregados;
 using API_Infraestructura.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 using API_Comun;
 using Dapper;
 namespace API_Infraestructura.Repositorios
@@ -29,11 +26,11 @@ namespace API_Infraestructura.Repositorios
             try
             {
                 DynamicParameters parameters = new();
-                parameters.Add("@idTatuajeCita", agregado.Id, System.Data.DbType.Guid);
-                parameters.Add("@idCatalogo", agregado.TatuajeCita_IdCatalogo, System.Data.DbType.Int32);
-                parameters.Add("@idCita", agregado.TatuajeCita_IdCita, System.Data.DbType.Guid);
-                parameters.Add("@nombreTatuajeCustom",agregado.TatuajeCita_NombreTatuajeCustom,System.Data.DbType.String);
-                CommandDefinition command = new("CrearTatuajeCita", parameters,commandTimeout:0,commandType: System.Data.CommandType.StoredProcedure);
+                parameters.Add("@idTatuajeCita", agregado.Id, DbType.Guid);
+                parameters.Add("@idCatalogo", agregado.TatuajeCita_IdCatalogo, DbType.Int32);
+                parameters.Add("@idCita", agregado.TatuajeCita_IdCita, DbType.Guid);
+                parameters.Add("@nombreTatuajeCustom",agregado.TatuajeCita_NombreTatuajeCustom, DbType.String);
+                CommandDefinition command = new("CrearTatuajeCita", parameters,commandTimeout:0,commandType: CommandType.StoredProcedure);
                 if (UnidadDeTrabajo.SqlConnection.State == 0) UnidadDeTrabajo.SqlConnection.Open();
                 UnidadDeTrabajo.SqlConnection.Execute(command);
                 UnidadDeTrabajo.Dispose();
@@ -47,7 +44,18 @@ namespace API_Infraestructura.Repositorios
 
         public void EliminarPorId(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idCita", id, DbType.Guid);
+                CommandDefinition command = new("EliminarTatuajeCitaPorIdCita", parameters, commandType: CommandType.StoredProcedure);
+                this.UnidadDeTrabajo.SqlConnection.Execute(command);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public void Update(TatuajeCita agregado)
@@ -59,8 +67,8 @@ namespace API_Infraestructura.Repositorios
         {
             TatuajeCita tatuajeCita;
             DynamicParameters parameters = new();
-            parameters.Add("@idCita", idCita, System.Data.DbType.Guid);
-            CommandDefinition command = new("ConsultarTatuajeCitaPorId", parameters, commandType: System.Data.CommandType.StoredProcedure);
+            parameters.Add("@idCita", idCita, DbType.Guid);
+            CommandDefinition command = new("ConsultarTatuajeCitaPorId", parameters, commandType: CommandType.StoredProcedure);
             DTOTatuajeCita dTOTatuajeCita = UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOTatuajeCita>(command);
             if (dTOTatuajeCita is null) return null;
             tatuajeCita = TatuajeCita.Crear(dTOTatuajeCita.TatuajeCita_Id, dTOTatuajeCita.TatuajeCita_IdCita, dTOTatuajeCita.TatuajeCita_IdCatalogo,dTOTatuajeCita.TatuajeCita_NombreTatuajeCustom);

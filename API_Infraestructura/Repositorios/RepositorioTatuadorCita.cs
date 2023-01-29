@@ -46,7 +46,18 @@ namespace API_Infraestructura.Repositorios
 
         public void EliminarPorId(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idCita", id, DbType.Guid);
+                CommandDefinition command = new("EliminarTatuadorCitaPorIdCita", parameters, commandType: CommandType.StoredProcedure);
+                this.UnidadDeTrabajo.SqlConnection.Execute(command);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public void Update(TatuadorCita agregado)
@@ -66,6 +77,26 @@ namespace API_Infraestructura.Repositorios
                 ListaCitasCliente.Add(TatuadorCita.Crear(item.TatuadorCita_Id,item.TatuadorCita_IdTatuador,item.TatuadorCita_IdCita));
             }
             return ListaCitasCliente;
+        }
+
+        public TatuadorCita ConsultarCitaPorId(Guid idCita)
+        {
+            TatuadorCita tatuadorCita;
+            try
+            {
+                DynamicParameters parameters = new();
+                parameters.Add("@idCita",idCita,DbType.Guid);
+                CommandDefinition command = new("ConsultarCitaTatuadorPorIdCita",parameters,commandType:CommandType.StoredProcedure);
+                DTOTatuadorCita dTOTatuadorCita = this.UnidadDeTrabajo.SqlConnection.QueryFirstOrDefault<DTOTatuadorCita>(command);
+                if (dTOTatuadorCita is null) return null;
+                tatuadorCita = TatuadorCita.Crear(dTOTatuadorCita.TatuadorCita_Id, dTOTatuadorCita.TatuadorCita_IdTatuador, dTOTatuadorCita.TatuadorCita_IdCita);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return tatuadorCita;
         }
     }
 }

@@ -129,9 +129,15 @@ namespace API_Aplicacion.Implementacion
             if (citaC is null) throw new DTOBusinessException($"No se encontro cita para el id ingresado: {idCita}");
             Cita cita = RepositorioCita.ConsultaCitaPorId(idCita);
             if (cita is null) throw new DTOBusinessException($"No se encontro cita para el id ingresado: {idCita}");
+            TatuajeCita tatuajeCita = RepositorioTatuajeCita.ConsultarPorIdCita(idCita);
+            if (tatuajeCita is null) throw new DTOBusinessException($"No se encontro cita para el id ingresado: {idCita}");
+            TatuadorCita tatuadorCita = RepositorioTatuadorCita.ConsultarCitaPorId(idCita);
+            if (tatuadorCita is null) throw new DTOBusinessException($"No se encontro cita para el id ingresado: {idCita}");
             RepositorioClienteCita.EliminarPorId(idCita);
             RepositorioCita.EliminarPorId(idCita);
-            
+
+            RepositorioTatuajeCita.EliminarPorId(idCita);
+            RepositorioTatuadorCita.EliminarPorId(idCita);
         }
     }
 

@@ -11,5 +11,6 @@ namespace API_Infraestructura.Interfaces
     public interface IRepositorioTatuadorCita : IRepositorio<TatuadorCita>
     {
         IEnumerable<TatuadorCita> ConsultarCitasPorTatuador(Tatuador tatuador);
+        TatuadorCita ConsultarCitaPorId(Guid idCita);
     }
 }
