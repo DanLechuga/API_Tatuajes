@@ -49,6 +49,7 @@ namespace API_Aplicacion.Implementacion
             var detalle = ConsultarDetalleTatuaje(tatuajeCita.TatuajeCita_IdCatalogo);
             mapper.Map(detalle, dtoDetalle);            
             if (tatuajeCita.TatuajeCita_IdCatalogo == 25 && string.IsNullOrEmpty(tatuajeCita.TatuajeCita_NombreTatuajeCustom)) throw new DTOBusinessException($"No se registro nombre para el tatuaje dado por el cliente:");
+            dtoDetalle.NombreTatuajeCustom = tatuajeCita.TatuajeCita_NombreTatuajeCustom;
             return dtoDetalle;
         }
     }
