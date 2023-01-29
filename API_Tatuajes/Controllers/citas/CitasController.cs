@@ -177,7 +177,7 @@ namespace API_Tatuajes.Controllers.citas
         /// </summary>
         /// <param name="idCita"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpGet]
         [Route("/EliminarCita")]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(InternalExpcetionMessage))]
         [ProducesResponseType(StatusCodes.Status200OK)]
